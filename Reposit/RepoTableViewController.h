@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  RepoTableViewController.h
 //  Reposit
 //
 //  Created by Morgan Chen on 1/1/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface RepoTableViewController : UITableViewController
 
 @end
-

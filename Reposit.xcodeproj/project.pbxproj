@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */; };
+		8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */; };
 		8DFB4C7D1A56208900FA334B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB4C7C1A56208900FA334B /* main.m */; };
 		8DFB4C801A56208900FA334B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB4C7F1A56208900FA334B /* AppDelegate.m */; };
 		8DFB4C831A56208900FA334B /* Reposit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB4C811A56208900FA334B /* Reposit.xcdatamodeld */; };
-		8DFB4C861A56208900FA334B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB4C851A56208900FA334B /* ViewController.m */; };
 		8DFB4C891A56208900FA334B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DFB4C871A56208900FA334B /* Main.storyboard */; };
 		8DFB4C8B1A56208900FA334B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DFB4C8A1A56208900FA334B /* Images.xcassets */; };
 		8DFB4C8E1A56208900FA334B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFB4C8C1A56208900FA334B /* LaunchScreen.xib */; };
@@ -28,14 +29,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8DA3D9AA1A5625D2005AA177 /* RepoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoTableViewController.h; sourceTree = "<group>"; };
+		8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoTableViewController.m; sourceTree = "<group>"; };
+		8DA3D9AD1A5628BD005AA177 /* GitHubHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubHelper.h; sourceTree = "<group>"; };
+		8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubHelper.m; sourceTree = "<group>"; };
 		8DFB4C771A56208900FA334B /* Reposit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reposit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DFB4C7B1A56208900FA334B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DFB4C7C1A56208900FA334B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8DFB4C7E1A56208900FA334B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8DFB4C7F1A56208900FA334B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8DFB4C821A56208900FA334B /* Reposit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Reposit.xcdatamodel; sourceTree = "<group>"; };
-		8DFB4C841A56208900FA334B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		8DFB4C851A56208900FA334B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8DFB4C881A56208900FA334B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8DFB4C8A1A56208900FA334B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8DFB4C8D1A56208900FA334B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -85,9 +88,9 @@
 			children = (
 				8DFB4C7E1A56208900FA334B /* AppDelegate.h */,
 				8DFB4C7F1A56208900FA334B /* AppDelegate.m */,
-				8DFB4C841A56208900FA334B /* ViewController.h */,
-				8DFB4C851A56208900FA334B /* ViewController.m */,
 				8DFB4C871A56208900FA334B /* Main.storyboard */,
+				8DA3D9AA1A5625D2005AA177 /* RepoTableViewController.h */,
+				8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */,
 				8DFB4C8A1A56208900FA334B /* Images.xcassets */,
 				8DFB4C8C1A56208900FA334B /* LaunchScreen.xib */,
 				8DFB4C811A56208900FA334B /* Reposit.xcdatamodeld */,
@@ -101,6 +104,8 @@
 			children = (
 				8DFB4C7B1A56208900FA334B /* Info.plist */,
 				8DFB4C7C1A56208900FA334B /* main.m */,
+				8DA3D9AD1A5628BD005AA177 /* GitHubHelper.h */,
+				8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -223,8 +228,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DFB4C831A56208900FA334B /* Reposit.xcdatamodeld in Sources */,
+				8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */,
 				8DFB4C801A56208900FA334B /* AppDelegate.m in Sources */,
-				8DFB4C861A56208900FA334B /* ViewController.m in Sources */,
+				8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */,
 				8DFB4C7D1A56208900FA334B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +424,7 @@
 				8DFB4C9F1A56208900FA334B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8DFB4CA01A56208900FA334B /* Build configuration list for PBXNativeTarget "RepositTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +433,7 @@
 				8DFB4CA21A56208900FA334B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
