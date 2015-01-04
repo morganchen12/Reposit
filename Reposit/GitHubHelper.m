@@ -20,7 +20,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 
 @implementation GitHubHelper
 
-#pragma mark - Initializers
+#pragma mark - Initializers / Factory methods
 
 - (instancetype)init {
     self = [super init];

@@ -19,12 +19,22 @@
 
 #pragma mark - Life cycle
 
-- (void)viewWillAppear:(BOOL)animated {
-    // fetch repos from github
-    [[GitHubHelper sharedHelper] publicReposFromCurrentUserWithCompletion:^(NSArray *repos) {
-        self.fetchedRepositories = repos;
-        [self.tableView reloadData];
-    }];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.refreshControl.backgroundColor = [UIColor purpleColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self action:@selector(refreshRepos) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // fetch repos from Github
+    [self.refreshControl beginRefreshing];
+    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl.frame.size.height)
+                            animated:YES];
+    [self.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -37,6 +47,16 @@
         [[GitHubHelper sharedHelper] saveContext];
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+#pragma mark - UIRefreshControl
+
+- (void)refreshRepos {
+    [[GitHubHelper sharedHelper] publicReposFromCurrentUserWithCompletion:^(NSArray *repos) {
+        self.fetchedRepositories = repos;
+        [self.tableView reloadData];
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 #pragma mark - Table view data source
