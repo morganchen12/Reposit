@@ -7,6 +7,7 @@
 //
 
 #import "RepoTableViewController.h"
+#import "RepoDetailViewController.h"
 #import "GitHubHelper.h"
 #import "Repository.h"
 
@@ -23,14 +24,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // preserve selection between presentations
-    self.clearsSelectionOnViewWillAppear = NO;
+    // don't preserve selection between presentations
+    self.clearsSelectionOnViewWillAppear = YES;
     
     // display an Edit button in the navigation bar for this view controller
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     // if github username is defined, fetch recent commits
     if ([GitHubHelper sharedHelper].currentUser) {
         self.repositories = [GitHubHelper sharedHelper].getRepos;
@@ -38,6 +41,8 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     // prompt user to enter their github username
     if (![GitHubHelper sharedHelper].currentUser) {
         [self performSegueWithIdentifier:@"ShowSettings" sender:self];
@@ -89,6 +94,32 @@
     return cell;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.repositories.count) {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        self.tableView.backgroundView = nil;
+        return 1;
+    }
+    else {
+        // display message when table is empty
+        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
+                                                                          0,
+                                                                          self.view.bounds.size.width,
+                                                                          self.view.bounds.size.height)];
+        messageLabel.text = @"No active repositories :(\n\nTap the '+' in the upper right corner to get started.";
+        messageLabel.textColor = [UIColor blackColor];
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+        messageLabel.font = [UIFont systemFontOfSize:22];
+        [messageLabel sizeToFit];
+        
+        self.tableView.backgroundView = messageLabel;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+        return 1;
+    }
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     return @"Remove";
 }
@@ -100,6 +131,10 @@
         self.repositories = [GitHubHelper sharedHelper].getRepos;
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"ShowRepoDetail" sender:self];
 }
 
 
@@ -117,14 +152,21 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"ShowRepoDetail"]) {
+        self.navigationItem.backBarButtonItem.title = @"Active Repos";
+        RepoDetailViewController *destination = (RepoDetailViewController *)[segue destinationViewController];
+        NSUInteger selection = [self.tableView indexPathForSelectedRow].row;
+        destination.repository = self.repositories[selection];
+    }
+    else if ([segue.identifier isEqualToString:@"ShowAddReposTableViewController"]) {
+        self.navigationItem.backBarButtonItem.title = @"Add";
+    }
 }
-*/
+
 
 @end

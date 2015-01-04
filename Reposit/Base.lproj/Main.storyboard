@@ -94,6 +94,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Active Repos" id="gTu-cU-eEE">
+                        <barButtonItem key="backBarButtonItem" title="Add" id="2aQ-Q4-eTG"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="GBT-jH-i5p">
                             <connections>
                                 <segue destination="Fts-s2-g3E" kind="show" identifier="ShowAddReposTableViewController" id="HIK-8h-uTL"/>
@@ -102,11 +103,75 @@
                     </navigationItem>
                     <connections>
                         <segue destination="HtF-p8-xPX" kind="show" identifier="ShowSettings" id="aTi-Ay-b3V"/>
+                        <segue destination="MWE-uV-Aeg" kind="show" identifier="ShowRepoDetail" id="gue-ur-EJ2"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jwn-84-2HU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="820" y="369"/>
+        </scene>
+        <!--Repo Detail View Controller-->
+        <scene sceneID="Pel-GW-wMp">
+            <objects>
+                <viewController id="MWE-uV-Aeg" customClass="RepoDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="70Z-cK-hJF"/>
+                        <viewControllerLayoutGuide type="bottom" id="thM-Eh-Hzn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Du0-kB-f62">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BYZ-iZ-xWx">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6ub-dN-K68">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yqd-kQ-83I">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="fuE-Wj-t0e"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="Back" id="shG-xU-5Nc">
+                                        <connections>
+                                            <action selector="backButtonPressed:" destination="MWE-uV-Aeg" id="mMl-Wk-UnB"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem enabled="NO" style="plain" systemItem="flexibleSpace" id="LOE-vF-aby"/>
+                                    <barButtonItem title="Forward" id="yzu-32-N4i">
+                                        <connections>
+                                            <action selector="forwardButtonPressed:" destination="MWE-uV-Aeg" id="g0Z-9D-Dzd"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="BYZ-iZ-xWx" secondAttribute="trailing" id="B7p-Ir-DFa"/>
+                            <constraint firstItem="thM-Eh-Hzn" firstAttribute="top" secondItem="Yqd-kQ-83I" secondAttribute="bottom" id="I9Y-xZ-9xa"/>
+                            <constraint firstAttribute="centerY" secondItem="6ub-dN-K68" secondAttribute="centerY" id="Lfb-LE-8Xv"/>
+                            <constraint firstItem="BYZ-iZ-xWx" firstAttribute="top" secondItem="Du0-kB-f62" secondAttribute="top" id="Pkq-m8-Lu5"/>
+                            <constraint firstAttribute="centerX" secondItem="6ub-dN-K68" secondAttribute="centerX" id="XPU-g8-OnO"/>
+                            <constraint firstAttribute="trailing" secondItem="Yqd-kQ-83I" secondAttribute="trailing" id="YRS-RK-Qtd"/>
+                            <constraint firstItem="Yqd-kQ-83I" firstAttribute="top" secondItem="BYZ-iZ-xWx" secondAttribute="bottom" id="gvi-Ne-Rtw"/>
+                            <constraint firstItem="BYZ-iZ-xWx" firstAttribute="leading" secondItem="Du0-kB-f62" secondAttribute="leading" id="qI0-I1-giF"/>
+                            <constraint firstItem="Yqd-kQ-83I" firstAttribute="leading" secondItem="Du0-kB-f62" secondAttribute="leading" id="rga-fs-bf1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="6ub-dN-K68" id="FMl-vh-7jo"/>
+                        <outlet property="backButton" destination="shG-xU-5Nc" id="lmH-C4-zto"/>
+                        <outlet property="forwardButton" destination="yzu-32-N4i" id="KYb-Lr-0kC"/>
+                        <outlet property="webView" destination="BYZ-iZ-xWx" id="vYd-QC-Lf0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JDR-3W-gRu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="820" y="1080"/>
         </scene>
         <!--My Repos-->
         <scene sceneID="gaq-X6-bIw">
@@ -130,11 +195,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="My Repos" id="4zn-BB-XWX">
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="GC9-2A-zLX">
-                            <connections>
-                                <action selector="addButtonPressed:" destination="Fts-s2-g3E" id="1EJ-iB-ikZ"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="backBarButtonItem" title="Add" id="6yx-oO-4H0"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IMc-2v-f0f" userLabel="First Responder" sceneMemberID="firstResponder"/>

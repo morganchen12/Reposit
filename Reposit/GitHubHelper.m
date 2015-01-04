@@ -84,6 +84,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
             
             if (serializationError) {
                 // handle serialization error
+                NSLog(@"%@", serializationError.description);
             }
             else {
                 // pass data into completion handler asynchronously
@@ -94,6 +95,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
         }
         else {
             // handle download error
+            NSLog(@"%@", error.description);
         }
     }];
     
@@ -142,6 +144,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
                                               
             if (serializationError) {
                 // handle serialization error
+                NSLog(@"%@", serializationError.description);
             }
             else {
                 // if no recent commits, pass NSNotFound into completion block
@@ -166,6 +169,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
         }
         else {
             // handle download error
+            NSLog(@"%@", error.description);
         }
     }];
     
@@ -250,11 +254,12 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
     dateComponents.day = day;
     
     // use current calendar to create NSDate from dateComponents
-    NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDate *date = [calendar dateFromComponents:dateComponents];
     
     // calculate day difference
-    double seconds = [[NSDate date] timeIntervalSinceDate:date];
-    return (NSInteger)(seconds / 60 / 60 / 24);
+    NSDateComponents *difference = [calendar components:NSCalendarUnitDay fromDate:date toDate:[NSDate date] options:kNilOptions];
+    return (NSInteger)(difference.day);
 }
 
 @end

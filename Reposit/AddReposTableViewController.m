@@ -27,6 +27,18 @@
     }];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    // save all selected and pop view controller
+    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+    if (selectedRows.count > 0) {
+        for (NSIndexPath *indexPath in selectedRows) {
+            [[GitHubHelper sharedHelper] saveRepoFromJSONObject:self.fetchedRepositories[indexPath.row]];
+        }
+        [[GitHubHelper sharedHelper] saveContext];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -77,27 +89,12 @@
  }
  */
 
-#pragma mark - Interface Builder Outlets
-
-- (IBAction)addButtonPressed:(id)sender {
-    // save all selected and pop view controller
-    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
-    if (selectedRows.count > 0) {
-        for (NSIndexPath *indexPath in selectedRows) {
-            [[GitHubHelper sharedHelper] saveRepoFromJSONObject:self.fetchedRepositories[indexPath.row]];
-        }
-        [[GitHubHelper sharedHelper] saveContext];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
 /*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
 }
 */
 
