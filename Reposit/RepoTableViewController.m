@@ -64,18 +64,30 @@
     NSString *fullname = [NSString stringWithFormat:@"%@ / %@", repo.owner, repo.name];
     
     cell.textLabel.text = fullname;
+    cell.detailTextLabel.text = @"  Checking recent commits...";
+    
+    [[GitHubHelper sharedHelper] currentUserDidCommitToRepo:repo completion:^(NSInteger daysSinceCommit) {
+        if (daysSinceCommit != NSNotFound) {
+            if (daysSinceCommit == 1) {
+                cell.detailTextLabel.text = @"  Last commit yesterday";
+            }
+            else {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"  Last commit %li days ago", (long)daysSinceCommit];
+            }
+            UIColor *green = [UIColor colorWithRed:0.07058823529
+                                             green:0.38823529411
+                                              blue:0.1725490196
+                                             alpha:1.0];
+            cell.detailTextLabel.textColor = green;
+        }
+        else {
+            cell.detailTextLabel.text = @"  No recent commits";
+            cell.detailTextLabel.textColor = [UIColor redColor];
+        }
+    }];
     
     return cell;
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     return @"Remove";
@@ -84,11 +96,10 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [[GitHubHelper sharedHelper] deleteRepository:self.repositories[indexPath.row]];
+        [[GitHubHelper sharedHelper] saveContext];
         self.repositories = [GitHubHelper sharedHelper].getRepos;
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
 
 

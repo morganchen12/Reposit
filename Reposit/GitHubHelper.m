@@ -105,7 +105,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
     [self publicReposFromUser:self.currentUser completion:completion];
 }
 
-- (void)user:(NSString *)username didCommitToRepo:(NSString *)repo inTimeFrame:(NSUInteger)days completion:(void (^)(BOOL))completion {
+- (void)user:(NSString *)username didCommitToRepo:(NSString *)repo inTimeFrame:(NSUInteger)days completion:(void (^)(NSInteger daysSinceCommit))completion {
     
     // boilerplate code to assemble request url from arguments
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -144,10 +144,24 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
                 // handle serialization error
             }
             else {
-                // pass data into completion handler asynchronously
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(!!(downloadedJSON.count));
-                });
+                // if no recent commits, pass NSNotFound into completion block
+                if (!downloadedJSON.count) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(NSNotFound);
+                    });
+                }
+                else {
+                    // get date string on most recent commit
+                    NSString *dateString = downloadedJSON[0][@"commit"][@"author"][@"date"];
+                    
+                    // turn date string into days (integer)
+                    NSInteger daysSinceLastCommit = [self daysSinceDateStringFromNow:dateString];
+                    
+                    // perform completion block
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(daysSinceLastCommit);
+                    });
+                }
             }
         }
         else {
@@ -159,7 +173,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
     [dataTask resume];
 }
 
-- (void)currentUserDidCommitToRepo:(Repository *)repo completion:(void (^)(BOOL))completion {
+- (void)currentUserDidCommitToRepo:(Repository *)repo completion:(void (^)(NSInteger daysSinceCommit))completion {
     NSString *repoName = [NSString stringWithFormat:@"%@/%@", repo.owner, repo.name];
     [self user:self.currentUser didCommitToRepo:repoName inTimeFrame:[repo.reminderPeriod unsignedLongValue] completion:completion];
 }
@@ -215,6 +229,32 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
         return NO;
     }
     return YES;
+}
+
+#pragma mark - Helpers
+
+// dateString must be in format YYYY-MM-DDTHH:MM:SSZ
+- (NSInteger)daysSinceDateStringFromNow:(NSString *)dateString {
+    
+    // separate dateString into components
+    NSString *dateWithoutTime = [dateString componentsSeparatedByString:@"T"][0];
+    NSArray *yearMonthDay = [dateWithoutTime componentsSeparatedByString:@"-"];
+    NSInteger year = ((NSString *)(yearMonthDay[0])).integerValue;
+    NSInteger month = ((NSString *)(yearMonthDay[1])).integerValue;
+    NSInteger day = ((NSString *)(yearMonthDay[2])).integerValue;
+    
+    // create NSDateComponents from components
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    dateComponents.year = year;
+    dateComponents.month = month;
+    dateComponents.day = day;
+    
+    // use current calendar to create NSDate from dateComponents
+    NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
+    
+    // calculate day difference
+    double seconds = [[NSDate date] timeIntervalSinceDate:date];
+    return (NSInteger)(seconds / 60 / 60 / 24);
 }
 
 @end

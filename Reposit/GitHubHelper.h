@@ -31,14 +31,16 @@
 - (void)publicReposFromCurrentUserWithCompletion:(void (^)(NSArray *repos))completion;
 
 /* Check whether or not a user has committed to a repository within the past specified number of days.
+ * If commits are present, completion block will be passed the number of days since the last commit. Otherwise,
+ * the completion block will be passed NSNotFound (NSIntegerMax).
  * This function requires that the repo name be in the format @"username/reponame".
  * Result bool is passed in as a parameter to the completion block.
  */
-- (void)user:(NSString *)username didCommitToRepo:(NSString *)repo inTimeFrame:(NSUInteger)days completion:(void (^)(BOOL committed))completion;
+- (void)user:(NSString *)username didCommitToRepo:(NSString *)repo inTimeFrame:(NSUInteger)days completion:(void (^)(NSInteger daysSinceCommit))completion;
 
 /* Calls user:didCommitToRepo:inTimeFrame:completion with current user as user and a Repository object.
  */
-- (void)currentUserDidCommitToRepo:(Repository *)repo completion:(void (^)(BOOL committed))completion;
+- (void)currentUserDidCommitToRepo:(Repository *)repo completion:(void (^)(NSInteger daysSinceCommit))completion;
 
 #pragma mark - Core Data
 
