@@ -17,16 +17,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter GitHub username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHv-qK-mcW">
-                                <rect key="frame" x="210" y="142" width="180" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GitHub username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHv-qK-mcW">
+                                <rect key="frame" x="233" y="142" width="135" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mg4-tu-mQJ">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mg4-tu-mQJ">
                                 <rect key="frame" x="16" y="183" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -95,6 +95,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Active Repos" id="gTu-cU-eEE">
                         <barButtonItem key="backBarButtonItem" title="Add" id="2aQ-Q4-eTG"/>
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="mwR-sb-KYf">
+                            <connections>
+                                <segue destination="HtF-p8-xPX" kind="show" identifier="" id="mu7-tD-EYn"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="GBT-jH-i5p">
                             <connections>
                                 <segue destination="Fts-s2-g3E" kind="show" identifier="ShowAddReposTableViewController" id="HIK-8h-uTL"/>
@@ -103,23 +108,90 @@
                     </navigationItem>
                     <connections>
                         <segue destination="HtF-p8-xPX" kind="show" identifier="ShowSettings" id="aTi-Ay-b3V"/>
-                        <segue destination="MWE-uV-Aeg" kind="show" identifier="ShowRepoDetail" id="gue-ur-EJ2"/>
+                        <segue destination="3C1-QC-UWG" kind="show" identifier="ShowRepoDetail" id="s71-gs-wBu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jwn-84-2HU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="820" y="369"/>
         </scene>
-        <!--Repo Detail View Controller-->
+        <!--RepoName-->
+        <scene sceneID="jIB-dj-8Ju">
+            <objects>
+                <viewController id="3C1-QC-UWG" customClass="RepoDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ADc-zp-Cp5"/>
+                        <viewControllerLayoutGuide type="bottom" id="uOM-mH-faC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="olB-RO-rGR">
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remind me to push commits every " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="atu-17-jC2">
+                                <rect key="frame" x="164" y="190" width="272" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="days." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3r2-5q-sSd">
+                                <rect key="frame" x="279" y="389" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RVY-4K-rpV">
+                                <rect key="frame" x="0.0" y="219" width="600" height="162"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="162" id="fj7-ZH-rzf"/>
+                                </constraints>
+                            </pickerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVr-BX-s1i">
+                                <rect key="frame" x="279" y="64" width="42" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.28929924242424243" green="0.28929924242424243" blue="0.28929924242424243" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="RVY-4K-rpV" secondAttribute="trailing" id="7PD-lV-jak"/>
+                            <constraint firstAttribute="centerX" secondItem="atu-17-jC2" secondAttribute="centerX" id="JAU-v0-kgN"/>
+                            <constraint firstAttribute="centerX" secondItem="pVr-BX-s1i" secondAttribute="centerX" id="Lln-08-Zby"/>
+                            <constraint firstAttribute="centerX" secondItem="RVY-4K-rpV" secondAttribute="centerX" id="RDb-Cb-V5W"/>
+                            <constraint firstItem="3r2-5q-sSd" firstAttribute="top" secondItem="RVY-4K-rpV" secondAttribute="bottom" constant="8" id="aYn-b6-OdO"/>
+                            <constraint firstItem="pVr-BX-s1i" firstAttribute="top" secondItem="olB-RO-rGR" secondAttribute="top" constant="64" id="bjQ-hD-8PG"/>
+                            <constraint firstItem="RVY-4K-rpV" firstAttribute="top" secondItem="atu-17-jC2" secondAttribute="bottom" constant="8" id="ctZ-7M-SX6"/>
+                            <constraint firstAttribute="centerX" secondItem="3r2-5q-sSd" secondAttribute="centerX" id="dup-Dd-lZM"/>
+                            <constraint firstAttribute="centerY" secondItem="RVY-4K-rpV" secondAttribute="centerY" id="i4e-fp-EWw"/>
+                            <constraint firstItem="RVY-4K-rpV" firstAttribute="leading" secondItem="olB-RO-rGR" secondAttribute="leading" id="mDl-A4-AMX"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="RepoName" id="mXs-TK-Cwo">
+                        <barButtonItem key="rightBarButtonItem" title="Web" id="ygA-8L-Vjz">
+                            <connections>
+                                <segue destination="MWE-uV-Aeg" kind="show" identifier="ShowRepoWebView" id="jBa-0u-Acd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="authorLabel" destination="pVr-BX-s1i" id="Dlb-4M-fpK"/>
+                        <outlet property="pickerView" destination="RVY-4K-rpV" id="KSt-62-GMg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A7Q-pH-kG0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="813" y="1147"/>
+        </scene>
+        <!--Repo Web View Controller-->
         <scene sceneID="Pel-GW-wMp">
             <objects>
-                <viewController id="MWE-uV-Aeg" customClass="RepoDetailViewController" sceneMemberID="viewController">
+                <viewController id="MWE-uV-Aeg" customClass="RepoWebViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="70Z-cK-hJF"/>
                         <viewControllerLayoutGuide type="bottom" id="thM-Eh-Hzn"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Du0-kB-f62">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BYZ-iZ-xWx">
@@ -171,7 +243,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JDR-3W-gRu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="820" y="1080"/>
+            <point key="canvasLocation" x="1526" y="1110"/>
         </scene>
         <!--My Repos-->
         <scene sceneID="gaq-X6-bIw">
@@ -222,4 +294,7 @@
             <point key="canvasLocation" x="0.0" y="369"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="mu7-tD-EYn"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -2,90 +2,95 @@
 //  RepoDetailViewController.m
 //  Reposit
 //
-//  Created by Morgan Chen on 1/3/15.
+//  Created by Morgan Chen on 1/4/15.
 //  Copyright (c) 2015 Morgan Chen. All rights reserved.
 //
 
 #import "RepoDetailViewController.h"
+#import "RepoWebViewController.h"
 #import "Repository.h"
 
 @interface RepoDetailViewController ()
 
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *forwardButton;
+@property (nonatomic, readonly) NSArray *pickerOptions;
+
+@property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
+@property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 
 @end
 
 @implementation RepoDetailViewController
 
-#pragma mark - Life cycle
+#pragma mark - Lifecycle
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        _pickerOptions = @[@2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12, @13, @14];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.webView.delegate = self;
+    
+    // set up picker view
+    self.pickerView.delegate = self;
+    self.pickerView.dataSource = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.backButton.enabled = NO;
-    self.forwardButton.enabled = NO;
     
-    NSString *repoName;
-    if (self.repository) {
-        repoName = [NSString stringWithFormat:@"%@/%@", self.repository.owner, self.repository.name];
-        NSString *urlString = [NSString stringWithFormat:@"https://github.com/%@", repoName];
-        NSURL *url = [NSURL URLWithString:urlString];
-        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-        [self.webView loadRequest:urlRequest];
-    }
-    else {
-        NSLog(@"No repo specified to load!");
-    }
+    // set up author label
+    self.authorLabel.text = self.repository.owner;
+    NSInteger row = [self.pickerOptions indexOfObject:self.repository.reminderPeriod];
+    [self.pickerView selectRow:row inComponent:0 animated:NO];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [self.webView stopLoading];
+#pragma mark - property accessors
+
+- (void)setRepository:(Repository *)repository {
+    _repository = repository;
+    self.navigationItem.title = _repository.name;
+    self.authorLabel.text = _repository.owner;
 }
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - UIPickerViewDelegate
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-    [self.activityIndicator startAnimating];
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 37)];
+    label.text = ((NSNumber *)(self.pickerOptions[row])).stringValue;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.backgroundColor = [UIColor clearColor];
+    return label;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self.activityIndicator stopAnimating];
-    
-    self.backButton.enabled = self.webView.canGoBack;
-    self.forwardButton.enabled = self.webView.canGoForward;
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    NSNumber *selected = (NSNumber *)(self.pickerOptions[row]);
+    self.repository.reminderPeriod = selected;
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    // alert
+#pragma mark - UIPickerViewDataSource
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
 }
 
-#pragma mark - Interface Builder outlets
-
-- (IBAction)backButtonPressed:(id)sender {
-    [self.webView goBack];
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.pickerOptions.count;
 }
 
-- (IBAction)forwardButtonPressed:(id)sender {
-    [self.webView goForward];
-}
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"ShowRepoWebView"]) {
+        RepoWebViewController *destination = (RepoWebViewController *)(segue.destinationViewController);
+        destination.repository = self.repository;
+    }
 }
-*/
+
 
 @end

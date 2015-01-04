@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		8D3D6DE51A58980E003F8C42 /* AddReposTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DE41A58980E003F8C42 /* AddReposTableViewController.m */; };
 		8D3D6DEB1A58A054003F8C42 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEA1A58A054003F8C42 /* Repository.m */; };
-		8D3D6DEF1A58CEE6003F8C42 /* RepoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEE1A58CEE6003F8C42 /* RepoDetailViewController.m */; };
+		8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */; };
+		8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */; };
 		8DA091B31A5747B500F73129 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA091B21A5747B500F73129 /* SettingsViewController.m */; };
 		8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */; };
 		8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */; };
@@ -37,8 +38,10 @@
 		8D3D6DE41A58980E003F8C42 /* AddReposTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReposTableViewController.m; sourceTree = "<group>"; };
 		8D3D6DE91A58A054003F8C42 /* Repository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Repository.h; sourceTree = "<group>"; };
 		8D3D6DEA1A58A054003F8C42 /* Repository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repository.m; sourceTree = "<group>"; };
-		8D3D6DED1A58CEE6003F8C42 /* RepoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoDetailViewController.h; sourceTree = "<group>"; };
-		8D3D6DEE1A58CEE6003F8C42 /* RepoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoDetailViewController.m; sourceTree = "<group>"; };
+		8D3D6DED1A58CEE6003F8C42 /* RepoWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoWebViewController.h; sourceTree = "<group>"; };
+		8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoWebViewController.m; sourceTree = "<group>"; };
+		8D805A291A59C3BD003C97B2 /* RepoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoDetailViewController.h; sourceTree = "<group>"; };
+		8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoDetailViewController.m; sourceTree = "<group>"; };
 		8DA091B11A5747B500F73129 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		8DA091B21A5747B500F73129 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		8DA3D9AA1A5625D2005AA177 /* RepoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoTableViewController.h; sourceTree = "<group>"; };
@@ -104,8 +107,10 @@
 				8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */,
 				8D3D6DE31A58980E003F8C42 /* AddReposTableViewController.h */,
 				8D3D6DE41A58980E003F8C42 /* AddReposTableViewController.m */,
-				8D3D6DED1A58CEE6003F8C42 /* RepoDetailViewController.h */,
-				8D3D6DEE1A58CEE6003F8C42 /* RepoDetailViewController.m */,
+				8D805A291A59C3BD003C97B2 /* RepoDetailViewController.h */,
+				8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */,
+				8D3D6DED1A58CEE6003F8C42 /* RepoWebViewController.h */,
+				8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */,
 				8DA091B11A5747B500F73129 /* SettingsViewController.h */,
 				8DA091B21A5747B500F73129 /* SettingsViewController.m */,
 				8DFB4C871A56208900FA334B /* Main.storyboard */,
@@ -253,8 +258,9 @@
 				8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */,
 				8DFB4C801A56208900FA334B /* AppDelegate.m in Sources */,
 				8DA091B31A5747B500F73129 /* SettingsViewController.m in Sources */,
+				8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */,
 				8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */,
-				8D3D6DEF1A58CEE6003F8C42 /* RepoDetailViewController.m in Sources */,
+				8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */,
 				8DFB4C7D1A56208900FA334B /* main.m in Sources */,
 				8D3D6DEB1A58A054003F8C42 /* Repository.m in Sources */,
 			);

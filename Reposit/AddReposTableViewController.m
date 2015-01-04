@@ -75,6 +75,30 @@
     return cell;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.fetchedRepositories.count) {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        self.tableView.backgroundView = nil;
+    }
+    else {
+        // display message when table is empty
+        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
+                                                                          0,
+                                                                          self.view.bounds.size.width,
+                                                                          self.view.bounds.size.height)];
+        messageLabel.text = @"Loading...\n\nIf this message persists, check your internet connection.";
+        messageLabel.textColor = [UIColor darkGrayColor];
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+        messageLabel.font = [UIFont systemFontOfSize:22];
+        [messageLabel sizeToFit];
+        
+        self.tableView.backgroundView = messageLabel;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    return 1;
+}
+
 /*
  // Override to support conditional editing of the table view.
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

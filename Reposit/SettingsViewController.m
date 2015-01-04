@@ -17,15 +17,29 @@
 
 @implementation SettingsViewController
 
-/*
-#pragma mark - Navigation
+#pragma mark - Life cycle
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.userNameTextField.delegate = self;
 }
-*/
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSString *currentUser = [GitHubHelper sharedHelper].currentUser;
+    if (currentUser) {
+        self.userNameTextField.text = currentUser;
+    }
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
 
 #pragma mark - Interface Builder Outlets
 

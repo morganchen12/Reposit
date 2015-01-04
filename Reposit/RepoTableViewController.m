@@ -26,9 +26,6 @@
     
     // don't preserve selection between presentations
     self.clearsSelectionOnViewWillAppear = YES;
-    
-    // display an Edit button in the navigation bar for this view controller
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -37,7 +34,9 @@
     // if github username is defined, fetch recent commits
     if ([GitHubHelper sharedHelper].currentUser) {
         self.repositories = [GitHubHelper sharedHelper].getRepos;
+        [self.tableView reloadData];
     }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -50,11 +49,6 @@
 }
 
 #pragma mark - Table view data source
-
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    // Return the number of sections.
-//    return 0;
-//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
@@ -69,6 +63,7 @@
     NSString *fullname = [NSString stringWithFormat:@"%@ / %@", repo.owner, repo.name];
     
     cell.textLabel.text = fullname;
+    cell.detailTextLabel.textColor = [UIColor blackColor];
     cell.detailTextLabel.text = @"  Checking recent commits...";
     
     [[GitHubHelper sharedHelper] currentUserDidCommitToRepo:repo completion:^(NSInteger daysSinceCommit) {
@@ -98,7 +93,6 @@
     if (self.repositories.count) {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         self.tableView.backgroundView = nil;
-        return 1;
     }
     else {
         // display message when table is empty
@@ -115,9 +109,8 @@
         
         self.tableView.backgroundView = messageLabel;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
-        return 1;
     }
+    return 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -126,9 +119,15 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        // delete object from core data
         [[GitHubHelper sharedHelper] deleteRepository:self.repositories[indexPath.row]];
         [[GitHubHelper sharedHelper] saveContext];
-        self.repositories = [GitHubHelper sharedHelper].getRepos;
+        
+        // delete object from local array, preserving order
+        NSMutableArray *tempRepos = [self.repositories mutableCopy];
+        [tempRepos removeObjectAtIndex:indexPath.row];
+        self.repositories = [tempRepos copy];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -158,9 +157,9 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowRepoDetail"]) {
-        self.navigationItem.backBarButtonItem.title = @"Active Repos";
+        self.navigationItem.backBarButtonItem.title = @"Save";
         RepoDetailViewController *destination = (RepoDetailViewController *)[segue destinationViewController];
-        NSUInteger selection = [self.tableView indexPathForSelectedRow].row;
+        NSInteger selection = [self.tableView indexPathForSelectedRow].row;
         destination.repository = self.repositories[selection];
     }
     else if ([segue.identifier isEqualToString:@"ShowAddReposTableViewController"]) {
