@@ -7,8 +7,35 @@
 //
 
 #import "GitHubHelper.h"
+#import "AppDelegate.h"
+#import "Repository.h"
+
+static const NSUInteger kDefaultObligationPeriod = 7; // days
+
+@interface GitHubHelper()
+
+@property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
+
+@end
 
 @implementation GitHubHelper
+
+#pragma mark - Initializers
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        // load user from memory if it exists
+        NSString *user = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentUser"];
+        if (user) {
+            _currentUser = user;
+        }
+        
+        // set managedObjectContext for convenience
+        _managedObjectContext = ((AppDelegate *)([UIApplication sharedApplication].delegate)).managedObjectContext;
+    }
+    return self;
+}
 
 + (instancetype)sharedHelper {
     static GitHubHelper *helper;
@@ -18,6 +45,15 @@
     });
     return helper;
 }
+
+#pragma mark - Property accessors
+
+- (void)setCurrentUser:(NSString *)currentUser {
+    _currentUser = currentUser;
+    [[NSUserDefaults standardUserDefaults] setObject:currentUser forKey:@"currentUser"];
+}
+
+#pragma mark - Github API
 
 - (void)publicReposFromUser:(NSString *)username completion:(void (^)(NSArray *))completion {
     
@@ -31,17 +67,13 @@
                                                        timeoutInterval:10.0];
     [request setHTTPMethod:@"GET"];
     
-    // debug
-    NSLog(@"%@", urlString);
-    
     // create session with self as delegate
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
                                                           delegate:self
                                                      delegateQueue:nil];
     
     // perform request
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
-                                                completionHandler:
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:
     ^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
@@ -49,7 +81,6 @@
         if (httpResponse.statusCode == 200 && data) {
             NSError *serializationError;
             NSArray *downloadedJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&serializationError];
-            NSLog(@"%@", downloadedJSON);
             
             if (serializationError) {
                 // handle serialization error
@@ -70,6 +101,10 @@
     [dataTask resume];
 }
 
+- (void)publicReposFromCurrentUserWithCompletion:(void (^)(NSArray *))completion {
+    [self publicReposFromUser:self.currentUser completion:completion];
+}
+
 - (void)user:(NSString *)username didCommitToRepo:(NSString *)repo inTimeFrame:(NSUInteger)days completion:(void (^)(BOOL))completion {
     
     // boilerplate code to assemble request url from arguments
@@ -78,9 +113,9 @@
     dateCalculations.day = -1*days;
     NSDate *referenceDate = [calendar dateByAddingComponents:dateCalculations toDate:[NSDate date] options:kNilOptions];
     NSDateComponents *components = [calendar components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:referenceDate];
-    NSInteger day = components.day;
-    NSInteger month = components.month;
-    NSInteger year = components.year;
+    int day = (int)components.day;
+    int month = (int)components.month;
+    int year = (int)components.year;
     
     NSString *urlString = [NSString stringWithFormat:@"https://api.github.com/repos/%@/commits?since=%4d-%2d-%2d&author=%@", repo, year, month, day, username];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -122,6 +157,64 @@
     
     // actually run data task
     [dataTask resume];
+}
+
+- (void)currentUserDidCommitToRepo:(Repository *)repo completion:(void (^)(BOOL))completion {
+    NSString *repoName = [NSString stringWithFormat:@"%@/%@", repo.owner, repo.name];
+    [self user:self.currentUser didCommitToRepo:repoName inTimeFrame:[repo.reminderPeriod unsignedLongValue] completion:completion];
+}
+
+#pragma mark - Core Data
+
+- (NSArray *)getRepos {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Repository"
+                                                         inManagedObjectContext:self.managedObjectContext];
+    request.entity = entityDescription;
+    
+    NSError *error;
+    NSArray *queryResult = [self.managedObjectContext executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"%@", error.description);
+    }
+    return queryResult;
+}
+
+- (void)saveRepoWithName:(NSString *)name owner:(NSString *)owner obligation:(NSUInteger)obligation {
+    Repository *newRepo = (Repository *)[NSEntityDescription insertNewObjectForEntityForName:@"Repository"
+                                                                      inManagedObjectContext:self.managedObjectContext];
+    newRepo.name = name;
+    newRepo.owner = owner;
+    newRepo.reminderPeriod = @(obligation);
+}
+
+- (void)saveRepoWithName:(NSString *)name owner:(NSString *)owner {
+    [self saveRepoWithName:name owner:owner obligation:kDefaultObligationPeriod];
+}
+
+- (void)saveRepoFromJSONObject:(NSDictionary *)JSONObject {
+    NSString *name = JSONObject[@"name"];
+    NSString *owner = JSONObject[@"owner"][@"login"];
+    
+    [self saveRepoWithName:name owner:owner];
+}
+
+- (void)saveReposFromJSONObjects:(NSArray *)JSONObjects {
+    for (NSDictionary *JSONObject in JSONObjects) {
+        [self saveRepoFromJSONObject:JSONObject];
+    }
+}
+
+- (void)deleteRepository:(Repository *)repo {
+    [self.managedObjectContext deleteObject:repo];
+}
+
+- (BOOL)saveContext {
+    NSError *error;
+    if ([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
+        return NO;
+    }
+    return YES;
 }
 
 @end

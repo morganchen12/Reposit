@@ -8,51 +8,66 @@
 
 #import "RepoTableViewController.h"
 #import "GitHubHelper.h"
+#import "Repository.h"
 
 @interface RepoTableViewController ()
+
+@property (nonatomic, readwrite) NSArray *repositories;
 
 @end
 
 @implementation RepoTableViewController
 
+#pragma mark - Life cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    // preserve selection between presentations
+    self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // display an Edit button in the navigation bar for this view controller
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewWillAppear:(BOOL)animated {
+    // if github username is defined, fetch recent commits
+    if ([GitHubHelper sharedHelper].currentUser) {
+        self.repositories = [GitHubHelper sharedHelper].getRepos;
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    // prompt user to enter their github username
+    if (![GitHubHelper sharedHelper].currentUser) {
+        [self performSegueWithIdentifier:@"ShowSettings" sender:self];
+    }
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//    // Return the number of sections.
+//    return 0;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.repositories.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RepoCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    Repository *repo = (Repository *)(self.repositories[indexPath.row]);
+    NSString *fullname = [NSString stringWithFormat:@"%@ / %@", repo.owner, repo.name];
+    
+    cell.textLabel.text = fullname;
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -62,17 +77,20 @@
 }
 */
 
-/*
-// Override to support editing the table view.
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"Remove";
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
+        [[GitHubHelper sharedHelper] deleteRepository:self.repositories[indexPath.row]];
+        self.repositories = [GitHubHelper sharedHelper].getRepos;
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.

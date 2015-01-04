@@ -2,9 +2,63 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6724" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4l7-sB-7U3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Settings-->
+        <scene sceneID="XEn-wy-vmI">
+            <objects>
+                <viewController id="HtF-p8-xPX" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="I8I-pz-oC0"/>
+                        <viewControllerLayoutGuide type="bottom" id="DaN-Ja-v1s"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DTK-Xx-1o7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter GitHub username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHv-qK-mcW">
+                                <rect key="frame" x="210" y="142" width="180" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mg4-tu-mQJ">
+                                <rect key="frame" x="16" y="183" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mg4-tu-mQJ" firstAttribute="centerX" secondItem="fHv-qK-mcW" secondAttribute="centerX" id="4T2-7V-TRt"/>
+                            <constraint firstItem="mg4-tu-mQJ" firstAttribute="top" secondItem="fHv-qK-mcW" secondAttribute="bottom" constant="20" id="9V0-xg-6vK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mg4-tu-mQJ" secondAttribute="trailing" id="buu-Bv-ls1"/>
+                            <constraint firstItem="mg4-tu-mQJ" firstAttribute="leading" secondItem="DTK-Xx-1o7" secondAttribute="leadingMargin" id="qdS-dZ-goW"/>
+                            <constraint firstItem="fHv-qK-mcW" firstAttribute="top" secondItem="DTK-Xx-1o7" secondAttribute="top" constant="142" id="vIJ-aG-2j1"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="lVE-hG-seC">
+                        <barButtonItem key="leftBarButtonItem" systemItem="save" id="wAB-a0-kfe">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="HtF-p8-xPX" id="bCr-zA-dsK"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="HBz-8j-I8Z">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="HtF-p8-xPX" id="1Ru-MR-Hds"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="userNameTextField" destination="mg4-tu-mQJ" id="yhz-aZ-yV3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bid-GV-GpA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="820" y="-346"/>
+        </scene>
+        <!--Active Repos-->
         <scene sceneID="jij-SH-Ee6">
             <objects>
                 <tableViewController id="iQe-ZY-L4h" customClass="RepoTableViewController" sceneMemberID="viewController">
@@ -25,11 +79,53 @@
                             <outlet property="delegate" destination="iQe-ZY-L4h" id="SOn-ev-tB6"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="gTu-cU-eEE"/>
+                    <navigationItem key="navigationItem" title="Active Repos" id="gTu-cU-eEE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="GBT-jH-i5p">
+                            <connections>
+                                <segue destination="Fts-s2-g3E" kind="show" identifier="ShowAddReposTableViewController" id="HIK-8h-uTL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="HtF-p8-xPX" kind="show" identifier="ShowSettings" id="aTi-Ay-b3V"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jwn-84-2HU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="820" y="369"/>
+        </scene>
+        <!--My Repos-->
+        <scene sceneID="gaq-X6-bIw">
+            <objects>
+                <tableViewController id="Fts-s2-g3E" customClass="AddReposTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zdg-Sl-SHO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddRepoCell" id="9AW-9U-VpW">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9AW-9U-VpW" id="tSF-QH-WF5">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Fts-s2-g3E" id="kvq-V5-EQ3"/>
+                            <outlet property="delegate" destination="Fts-s2-g3E" id="LZi-sh-Uoe"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="My Repos" id="4zn-BB-XWX">
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="GC9-2A-zLX">
+                            <connections>
+                                <action selector="addButtonPressed:" destination="Fts-s2-g3E" id="1EJ-iB-ikZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IMc-2v-f0f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1526" y="369"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nzF-F8-hgW">
