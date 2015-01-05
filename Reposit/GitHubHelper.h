@@ -34,11 +34,12 @@
  * If commits are present, completion block will be passed the number of days since the last commit. Otherwise,
  * the completion block will be passed NSNotFound (NSIntegerMax).
  * This function requires that the repo name be in the format @"username/reponame".
- * Result bool is passed in as a parameter to the completion block.
+ * Result integer is passed in as a parameter to the completion block.
  */
 - (void)user:(NSString *)username didCommitToRepo:(NSString *)repo inTimeFrame:(NSUInteger)days completion:(void (^)(NSInteger daysSinceCommit))completion;
 
-/* Calls user:didCommitToRepo:inTimeFrame:completion with current user as user and a Repository object.
+/* Calls user:didCommitToRepo:inTimeFrame:completion with current user as user and a Repository object. When 
+ * executing the completion block, this function also saves daysSinceCommit to the repository's respective property.
  */
 - (void)currentUserDidCommitToRepo:(Repository *)repo completion:(void (^)(NSInteger daysSinceCommit))completion;
 

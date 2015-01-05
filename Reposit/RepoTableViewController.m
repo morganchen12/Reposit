@@ -42,7 +42,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    // prompt user to enter their github username
+    // prompt user to enter their github username if it's not saved
     if (![GitHubHelper sharedHelper].currentUser) {
         [self performSegueWithIdentifier:@"ShowSettings" sender:self];
     }

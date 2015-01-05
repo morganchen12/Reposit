@@ -179,7 +179,11 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 
 - (void)currentUserDidCommitToRepo:(Repository *)repo completion:(void (^)(NSInteger daysSinceCommit))completion {
     NSString *repoName = [NSString stringWithFormat:@"%@/%@", repo.owner, repo.name];
-    [self user:self.currentUser didCommitToRepo:repoName inTimeFrame:[repo.reminderPeriod unsignedLongValue] completion:completion];
+    [self user:self.currentUser didCommitToRepo:repoName inTimeFrame:[repo.reminderPeriod unsignedLongValue] completion:^(NSInteger daysSinceCommit) {
+        repo.daysSinceCommit = @(daysSinceCommit);
+        [self saveContext];
+        completion(daysSinceCommit);
+    }];
 }
 
 #pragma mark - Core Data

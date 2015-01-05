@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "GitHubHelper.h"
+#import "LocalNotificationHelper.h"
 
 @interface AppDelegate ()
 
@@ -19,6 +20,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // initialize GitHubHelper
     [GitHubHelper sharedHelper];
+    // initialize LocalNotificationHelper
+    [LocalNotificationHelper sharedHelper];
+    
+    // ask for local notifications permission
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+    }
+    
     return YES;
 }
 

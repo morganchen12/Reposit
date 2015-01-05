@@ -14,6 +14,7 @@
 		8DA091B31A5747B500F73129 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA091B21A5747B500F73129 /* SettingsViewController.m */; };
 		8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */; };
 		8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */; };
+		8DFADDB51A5A470600D1CD04 /* LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFADDB41A5A470600D1CD04 /* LocalNotificationHelper.m */; };
 		8DFB4C7D1A56208900FA334B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB4C7C1A56208900FA334B /* main.m */; };
 		8DFB4C801A56208900FA334B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB4C7F1A56208900FA334B /* AppDelegate.m */; };
 		8DFB4C831A56208900FA334B /* Reposit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB4C811A56208900FA334B /* Reposit.xcdatamodeld */; };
@@ -48,6 +49,8 @@
 		8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoTableViewController.m; sourceTree = "<group>"; };
 		8DA3D9AD1A5628BD005AA177 /* GitHubHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubHelper.h; sourceTree = "<group>"; };
 		8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubHelper.m; sourceTree = "<group>"; };
+		8DFADDB31A5A470600D1CD04 /* LocalNotificationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationHelper.h; sourceTree = "<group>"; };
+		8DFADDB41A5A470600D1CD04 /* LocalNotificationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotificationHelper.m; sourceTree = "<group>"; };
 		8DFB4C771A56208900FA334B /* Reposit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reposit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DFB4C7B1A56208900FA334B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DFB4C7C1A56208900FA334B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -129,6 +132,8 @@
 				8DFB4C7C1A56208900FA334B /* main.m */,
 				8DA3D9AD1A5628BD005AA177 /* GitHubHelper.h */,
 				8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */,
+				8DFADDB31A5A470600D1CD04 /* LocalNotificationHelper.h */,
+				8DFADDB41A5A470600D1CD04 /* LocalNotificationHelper.m */,
 				8D3D6DE91A58A054003F8C42 /* Repository.h */,
 				8D3D6DEA1A58A054003F8C42 /* Repository.m */,
 			);
@@ -261,6 +266,7 @@
 				8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */,
 				8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */,
 				8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */,
+				8DFADDB51A5A470600D1CD04 /* LocalNotificationHelper.m in Sources */,
 				8DFB4C7D1A56208900FA334B /* main.m in Sources */,
 				8D3D6DEB1A58A054003F8C42 /* Repository.m in Sources */,
 			);

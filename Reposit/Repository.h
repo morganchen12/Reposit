@@ -15,5 +15,6 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *owner;
 @property (nonatomic, retain) NSNumber *reminderPeriod;
+@property (nonatomic, retain) NSNumber *daysSinceCommit;
 
 @end
