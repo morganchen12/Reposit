@@ -16,6 +16,7 @@
 
 @implementation AppDelegate
 
+#pragma mark - App lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // initialize GitHubHelper
@@ -25,7 +26,8 @@
     
     // ask for local notifications permission
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
-        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+        UIUserNotificationType types = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:types categories:nil]];
     }
     
     return YES;
@@ -54,6 +56,13 @@
     // Saves changes in the application's managed object context before the application terminates.
     [[NSUserDefaults standardUserDefaults] setObject:[GitHubHelper sharedHelper].currentUser forKey:@"currentUser"];
     [self saveContext];
+}
+
+#pragma mark - Local Notifications
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    // debug
+    NSLog(@"notification");
 }
 
 #pragma mark - Core Data stack

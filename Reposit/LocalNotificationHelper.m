@@ -11,33 +11,15 @@
 #import "Repository.h"
 @import UIKit;
 
-// check if should send local notification every hour
-static const NSTimeInterval kTimeBetweenNotificationChecks = 3600;
-
-// time interval between notification scheduling and display
-static const NSTimeInterval kNotificationSleepInterval = 10;
+static const NSTimeInterval kNotificationSleepInterval = 3600; // seconds
 
 @interface LocalNotificationHelper()
-
-@property (nonatomic, readonly) NSTimer *notificationTimer;
 
 @end
 
 @implementation LocalNotificationHelper
 
 #pragma mark - Initializers / Factory methods
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _notificationTimer = [NSTimer scheduledTimerWithTimeInterval:kTimeBetweenNotificationChecks
-                                                              target:self
-                                                            selector:@selector(checkAndSendNotifications)
-                                                            userInfo:nil
-                                                             repeats:YES];
-    }
-    return self;
-}
 
 + (instancetype)sharedHelper {
     static dispatch_once_t once;
@@ -60,13 +42,17 @@ static const NSTimeInterval kNotificationSleepInterval = 10;
     NSArray *allRepos = [[GitHubHelper sharedHelper] getRepos];
     NSMutableArray *oldRepos = [[NSMutableArray alloc] initWithCapacity:allRepos.count];
     for (Repository *repo in allRepos) {
-        if ([repo.daysSinceCommit compare:repo.reminderPeriod] != NSOrderedAscending) {
+        if ([repo.daysSinceCommit compare:repo.reminderPeriod] != NSOrderedAscending ||
+            repo.daysSinceCommit.integerValue < 0) {
             [oldRepos addObject:repo];
         }
     }
     
-    // exit if all repos have recent commits
-    if (oldRepos.count == 0) return;
+    // reset badge num and exit if all repos have recent commits
+    if (oldRepos.count == 0) {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+        return;
+    }
     
     // notification messages
     NSString *action = @"Work on your side projects!";
@@ -80,13 +66,18 @@ static const NSTimeInterval kNotificationSleepInterval = 10;
         body = [NSString stringWithFormat:@"%lu projects need your attention", (unsigned long)(oldRepos.count)];
     }
     
+    // configure notification
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:kNotificationSleepInterval];
     notification.alertBody = body;
     notification.alertAction = action;
     notification.timeZone = [NSTimeZone defaultTimeZone];
-    notification.applicationIconBadgeNumber = [UIApplication sharedApplication].applicationIconBadgeNumber + 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    notification.applicationIconBadgeNumber = oldRepos.count;
+    
+    // cancel old notifications before sending
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+//    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
 @end

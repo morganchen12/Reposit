@@ -8,6 +8,7 @@
 
 #import "RepoTableViewController.h"
 #import "RepoDetailViewController.h"
+#import "LocalNotificationHelper.h"
 #import "GitHubHelper.h"
 #import "Repository.h"
 

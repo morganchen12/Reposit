@@ -7,6 +7,7 @@
 //
 
 #import "GitHubHelper.h"
+#import "LocalNotificationHelper.h"
 #import "AppDelegate.h"
 #import "Repository.h"
 
@@ -182,6 +183,8 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
     [self user:self.currentUser didCommitToRepo:repoName inTimeFrame:[repo.reminderPeriod unsignedLongValue] completion:^(NSInteger daysSinceCommit) {
         repo.daysSinceCommit = @(daysSinceCommit);
         [self saveContext];
+        [[LocalNotificationHelper sharedHelper] checkAndSendNotifications];
+        
         completion(daysSinceCommit);
     }];
 }
@@ -203,6 +206,12 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 }
 
 - (void)saveRepoWithName:(NSString *)name owner:(NSString *)owner obligation:(NSUInteger)obligation {
+    // if saving duplicate repo, exit
+    if (![self repoIsUniqueWithName:name owner:owner]) {
+        return;
+    }
+    
+    // otherwise, save
     Repository *newRepo = (Repository *)[NSEntityDescription insertNewObjectForEntityForName:@"Repository"
                                                                       inManagedObjectContext:self.managedObjectContext];
     newRepo.name = name;
@@ -264,6 +273,21 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
     // calculate day difference
     NSDateComponents *difference = [calendar components:NSCalendarUnitDay fromDate:date toDate:[NSDate date] options:kNilOptions];
     return (NSInteger)(difference.day);
+}
+
+// validate before saving repos
+- (BOOL)repoIsUniqueWithName:(NSString *)name owner:(NSString *)owner {
+    NSArray *allRepos = [self getRepos];
+    for (Repository *repo in allRepos) {
+        if ([name isEqualToString:repo.name] && [owner isEqualToString:repo.owner]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (BOOL)repoIsUnique:(Repository *)repository {
+    return [self repoIsUniqueWithName:repository.name owner:repository.owner];
 }
 
 @end
