@@ -12,6 +12,7 @@
 @interface AddReposTableViewController ()
 
 @property (nonatomic, readwrite) NSArray *fetchedRepositories;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
 
@@ -25,6 +26,16 @@
     self.refreshControl.backgroundColor = [UIColor purpleColor];
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(refreshRepos) forControlEvents:UIControlEventValueChanged];
+    
+    self.searchBar.delegate = self;
+    self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.searchBar.text = [GitHubHelper sharedHelper].currentUser;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -32,8 +43,8 @@
     
     // fetch repos from Github
     [self.refreshControl beginRefreshing];
-    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl.frame.size.height)
-                            animated:YES];
+    NSInteger offset = self.tableView.contentOffset.y-self.refreshControl.frame.size.height;
+    [self.tableView setContentOffset:CGPointMake(0, offset) animated:YES];
     [self.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
@@ -51,12 +62,30 @@
 
 #pragma mark - UIRefreshControl
 
+// do not call directly! use [self.refreshControl beginRefreshing instead]
 - (void)refreshRepos {
-    [[GitHubHelper sharedHelper] publicReposFromCurrentUserWithCompletion:^(NSArray *repos) {
-        self.fetchedRepositories = repos;
-        [self.tableView reloadData];
-        [self.refreshControl endRefreshing];
-    }];
+    NSCharacterSet *whiteSpaceAndNewLine = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    NSString *userNameTrimmed = [self.searchBar.text stringByTrimmingCharactersInSet:whiteSpaceAndNewLine];
+    
+    BOOL userNameIsValid = ([userNameTrimmed rangeOfCharacterFromSet:whiteSpaceAndNewLine].location == NSNotFound);
+    
+    if (userNameIsValid) {
+        [[GitHubHelper sharedHelper] publicReposFromUser:self.searchBar.text completion:^(NSArray *repos) {
+            self.fetchedRepositories = repos;
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        }];
+    }
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self.searchBar resignFirstResponder];
+    [self.refreshControl beginRefreshing];
+    NSInteger offset = self.tableView.contentOffset.y-self.refreshControl.frame.size.height-(self.searchBar.frame.size.height+20);
+    [self.tableView setContentOffset:CGPointMake(0, offset) animated:YES];
+    [self.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 #pragma mark - Table view data source

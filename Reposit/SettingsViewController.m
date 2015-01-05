@@ -44,9 +44,11 @@
 #pragma mark - Interface Builder Outlets
 
 - (IBAction)saveButtonPressed:(id)sender {
-    NSString *userNameTrimmed = [self.userNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSCharacterSet *whiteSpaceAndNewLine = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    NSString *userNameTrimmed = [self.userNameTextField.text stringByTrimmingCharactersInSet:whiteSpaceAndNewLine];
     
-    BOOL userNameIsValid = ([userNameTrimmed rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].location == NSNotFound);
+    // user name is valid if there are no internal spaces
+    BOOL userNameIsValid = ([userNameTrimmed rangeOfCharacterFromSet:whiteSpaceAndNewLine].location == NSNotFound);
     
     // save current user if field is valid (does not contain whitespace)
     if (userNameIsValid) {

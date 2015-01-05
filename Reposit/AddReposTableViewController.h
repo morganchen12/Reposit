@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddReposTableViewController : UITableViewController
+@interface AddReposTableViewController : UITableViewController <UISearchBarDelegate>
 
 @end
