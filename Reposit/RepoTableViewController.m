@@ -83,7 +83,10 @@
         }
         else {
             cell.detailTextLabel.text = @"  No recent commits";
-            cell.detailTextLabel.textColor = [UIColor redColor];
+            cell.detailTextLabel.textColor = [UIColor colorWithRed:214.0 / 255
+                                                             green:0.0   / 255
+                                                              blue:21.0  / 255
+                                                             alpha:1.0];
         }
     }];
     

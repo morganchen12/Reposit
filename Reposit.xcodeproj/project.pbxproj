@@ -10,6 +10,7 @@
 		8D3D6DE51A58980E003F8C42 /* AddReposTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DE41A58980E003F8C42 /* AddReposTableViewController.m */; };
 		8D3D6DEB1A58A054003F8C42 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEA1A58A054003F8C42 /* Repository.m */; };
 		8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */; };
+		8D5DBFCD1A5B794A009E0FC9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D5DBFCC1A5B794A009E0FC9 /* Media.xcassets */; };
 		8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */; };
 		8DA091B31A5747B500F73129 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA091B21A5747B500F73129 /* SettingsViewController.m */; };
 		8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */; };
@@ -41,6 +42,7 @@
 		8D3D6DEA1A58A054003F8C42 /* Repository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repository.m; sourceTree = "<group>"; };
 		8D3D6DED1A58CEE6003F8C42 /* RepoWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoWebViewController.h; sourceTree = "<group>"; };
 		8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoWebViewController.m; sourceTree = "<group>"; };
+		8D5DBFCC1A5B794A009E0FC9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		8D805A291A59C3BD003C97B2 /* RepoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoDetailViewController.h; sourceTree = "<group>"; };
 		8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoDetailViewController.m; sourceTree = "<group>"; };
 		8DA091B11A5747B500F73129 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 		8DFB4C6E1A56208900FA334B = {
 			isa = PBXGroup;
 			children = (
+				8D5DBFCC1A5B794A009E0FC9 /* Media.xcassets */,
 				8DFB4C791A56208900FA334B /* Reposit */,
 				8DFB4C961A56208900FA334B /* RepositTests */,
 				8DFB4C781A56208900FA334B /* Products */,
@@ -240,6 +243,7 @@
 			files = (
 				8DFB4C891A56208900FA334B /* Main.storyboard in Resources */,
 				8DFB4C8E1A56208900FA334B /* LaunchScreen.xib in Resources */,
+				8D5DBFCD1A5B794A009E0FC9 /* Media.xcassets in Resources */,
 				8DFB4C8B1A56208900FA334B /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

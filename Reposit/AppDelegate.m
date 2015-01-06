@@ -35,6 +35,16 @@
         application.applicationIconBadgeNumber = 0;
     }
     
+    // customize appearance
+    [application setStatusBarStyle:UIStatusBarStyleLightContent];
+    UIColor *tealish = [UIColor colorWithRed:0.0   / 255
+                                       green:144.0 / 255
+                                        blue:163.0 / 255
+                                       alpha:1.0];
+    [[UINavigationBar appearance] setBarTintColor:tealish];
+    [[UIToolbar appearance] setBarTintColor:tealish];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }];
+    
     return YES;
 }
 
