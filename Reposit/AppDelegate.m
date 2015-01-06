@@ -30,6 +30,11 @@
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:types categories:nil]];
     }
     
+    // clear notification icons if no repos locally
+    if ([GitHubHelper sharedHelper].getRepos.count == 0) {
+        application.applicationIconBadgeNumber = 0;
+    }
+    
     return YES;
 }
 

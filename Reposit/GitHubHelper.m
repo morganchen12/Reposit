@@ -110,10 +110,14 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 
 - (void)user:(NSString *)username didCommitToRepo:(NSString *)repo inTimeFrame:(NSUInteger)days completion:(void (^)(NSInteger daysSinceCommit))completion {
     
+    // workaround because github api doesn't accept calls with since < 5 days
+    __block NSUInteger tempDays = 0;
+    tempDays = (days < 5) ? 5 : days;
+    
     // boilerplate code to assemble request url from arguments
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *dateCalculations = [[NSDateComponents alloc] init];
-    dateCalculations.day = -1*days;
+    dateCalculations.day = -1*tempDays;
     NSDate *referenceDate = [calendar dateByAddingComponents:dateCalculations toDate:[NSDate date] options:kNilOptions];
     NSDateComponents *components = [calendar components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:referenceDate];
     int day = (int)components.day;
@@ -160,6 +164,13 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
                     
                     // turn date string into days (integer)
                     NSInteger daysSinceLastCommit = [self daysSinceDateStringFromNow:dateString];
+                    
+                    // work around github api
+                    if (tempDays != days) {
+                        if (daysSinceLastCommit > days) {
+                            daysSinceLastCommit = NSNotFound;
+                        }
+                    }
                     
                     // perform completion block
                     dispatch_async(dispatch_get_main_queue(), ^{
