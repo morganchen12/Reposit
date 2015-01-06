@@ -23,6 +23,11 @@
     [super viewDidLoad];
     
     self.userNameTextField.delegate = self;
+    UIColor *tealish = [UIColor colorWithRed:0.0   / 255
+                                       green:144.0 / 255
+                                        blue:163.0 / 255
+                                       alpha:1.0];
+    self.userNameTextField.tintColor = tealish;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

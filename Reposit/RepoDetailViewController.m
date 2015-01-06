@@ -44,6 +44,7 @@
     
     // set up author label
     self.authorLabel.text = self.repository.owner;
+    self.authorLabel.textColor = [UIColor grayColor];
     NSInteger row = [self.pickerOptions indexOfObject:self.repository.reminderPeriod];
     [self.pickerView selectRow:row inComponent:0 animated:NO];
 }
@@ -54,6 +55,7 @@
     _repository = repository;
     self.navigationItem.title = _repository.name;
     self.authorLabel.text = _repository.owner;
+    self.authorLabel.textColor = [UIColor grayColor];
 }
 
 #pragma mark - UIPickerViewDelegate

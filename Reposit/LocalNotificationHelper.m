@@ -76,8 +76,8 @@ static const NSTimeInterval kNotificationSleepInterval = 3600; // seconds
     
     // cancel old notifications before sending
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
-//    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+//    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
 @end

@@ -13,6 +13,7 @@
 
 @property (nonatomic, readwrite) NSArray *fetchedRepositories;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, readwrite) NSMutableArray *selectedIndexPaths;
 
 @end
 
@@ -23,7 +24,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.refreshControl.backgroundColor = [UIColor purpleColor];
+    self.selectedIndexPaths = [[NSMutableArray alloc] init];
+    
+    UIColor *tealish = [UIColor colorWithRed:0.0  / 255
+                                       green:81.0 / 255
+                                        blue:92.0 / 255
+                                       alpha:1.0];
+    self.refreshControl.backgroundColor = tealish;
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(refreshRepos) forControlEvents:UIControlEventValueChanged];
     
@@ -46,18 +53,6 @@
     NSInteger offset = self.tableView.contentOffset.y-self.refreshControl.frame.size.height;
     [self.tableView setContentOffset:CGPointMake(0, offset) animated:YES];
     [self.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    // save all selected and pop view controller
-    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
-    if (selectedRows.count > 0) {
-        for (NSIndexPath *indexPath in selectedRows) {
-            [[GitHubHelper sharedHelper] saveRepoFromJSONObject:self.fetchedRepositories[indexPath.row]];
-        }
-        [[GitHubHelper sharedHelper] saveContext];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
 }
 
 #pragma mark - UIRefreshControl
@@ -88,6 +83,16 @@
     [self.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.selectedIndexPaths addObject:indexPath];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.selectedIndexPaths removeObject:indexPath];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -99,7 +104,31 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddRepoCell" forIndexPath:indexPath];
     
+    UIColor *tealish = [UIColor colorWithRed:0.0   / 255
+                                       green:144.0 / 255
+                                        blue:163.0 / 255
+                                       alpha:1.0];
+    cell.tintColor = tealish;
+    
     cell.textLabel.text = self.fetchedRepositories[indexPath.row][@"name"]; // use @"full_name" maybe
+    
+    // set description if provided
+    cell.detailTextLabel.textColor = [UIColor grayColor];
+    NSString *description = self.fetchedRepositories[indexPath.row][@"description"];
+    if (description) {
+        cell.detailTextLabel.text = description;
+    }
+    else {
+        cell.detailTextLabel.text = @"";
+    }
+    
+    // check marks
+    if ([self.selectedIndexPaths containsObject:indexPath]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     
     return cell;
 }
@@ -161,6 +190,26 @@
  return YES;
  }
  */
+
+#pragma mark - Interface builder outlets
+
+- (IBAction)cancelButtonPressed:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)saveButtonPressed:(id)sender {
+    // save all selected and pop view controller
+    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+    if (selectedRows.count > 0) {
+        for (NSIndexPath *indexPath in selectedRows) {
+            [[GitHubHelper sharedHelper] saveRepoFromJSONObject:self.fetchedRepositories[indexPath.row]];
+        }
+        [[GitHubHelper sharedHelper] saveContext];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 /*
 #pragma mark - Navigation

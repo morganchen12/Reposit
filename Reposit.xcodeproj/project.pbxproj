@@ -10,11 +10,11 @@
 		8D3D6DE51A58980E003F8C42 /* AddReposTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DE41A58980E003F8C42 /* AddReposTableViewController.m */; };
 		8D3D6DEB1A58A054003F8C42 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEA1A58A054003F8C42 /* Repository.m */; };
 		8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */; };
-		8D5DBFCD1A5B794A009E0FC9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D5DBFCC1A5B794A009E0FC9 /* Media.xcassets */; };
 		8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */; };
 		8DA091B31A5747B500F73129 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA091B21A5747B500F73129 /* SettingsViewController.m */; };
 		8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */; };
 		8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */; };
+		8DA8DC631A5B7E62006D3D3C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DA8DC621A5B7E62006D3D3C /* Media.xcassets */; };
 		8DFADDB51A5A470600D1CD04 /* LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFADDB41A5A470600D1CD04 /* LocalNotificationHelper.m */; };
 		8DFB4C7D1A56208900FA334B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB4C7C1A56208900FA334B /* main.m */; };
 		8DFB4C801A56208900FA334B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB4C7F1A56208900FA334B /* AppDelegate.m */; };
@@ -42,7 +42,6 @@
 		8D3D6DEA1A58A054003F8C42 /* Repository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repository.m; sourceTree = "<group>"; };
 		8D3D6DED1A58CEE6003F8C42 /* RepoWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoWebViewController.h; sourceTree = "<group>"; };
 		8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoWebViewController.m; sourceTree = "<group>"; };
-		8D5DBFCC1A5B794A009E0FC9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		8D805A291A59C3BD003C97B2 /* RepoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoDetailViewController.h; sourceTree = "<group>"; };
 		8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoDetailViewController.m; sourceTree = "<group>"; };
 		8DA091B11A5747B500F73129 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -51,6 +50,7 @@
 		8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoTableViewController.m; sourceTree = "<group>"; };
 		8DA3D9AD1A5628BD005AA177 /* GitHubHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubHelper.h; sourceTree = "<group>"; };
 		8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubHelper.m; sourceTree = "<group>"; };
+		8DA8DC621A5B7E62006D3D3C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		8DFADDB31A5A470600D1CD04 /* LocalNotificationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationHelper.h; sourceTree = "<group>"; };
 		8DFADDB41A5A470600D1CD04 /* LocalNotificationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotificationHelper.m; sourceTree = "<group>"; };
 		8DFB4C771A56208900FA334B /* Reposit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reposit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,7 +88,7 @@
 		8DFB4C6E1A56208900FA334B = {
 			isa = PBXGroup;
 			children = (
-				8D5DBFCC1A5B794A009E0FC9 /* Media.xcassets */,
+				8DA8DC621A5B7E62006D3D3C /* Media.xcassets */,
 				8DFB4C791A56208900FA334B /* Reposit */,
 				8DFB4C961A56208900FA334B /* RepositTests */,
 				8DFB4C781A56208900FA334B /* Products */,
@@ -243,7 +243,7 @@
 			files = (
 				8DFB4C891A56208900FA334B /* Main.storyboard in Resources */,
 				8DFB4C8E1A56208900FA334B /* LaunchScreen.xib in Resources */,
-				8D5DBFCD1A5B794A009E0FC9 /* Media.xcassets in Resources */,
+				8DA8DC631A5B7E62006D3D3C /* Media.xcassets in Resources */,
 				8DFB4C8B1A56208900FA334B /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

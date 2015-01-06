@@ -166,9 +166,6 @@
         NSInteger selection = [self.tableView indexPathForSelectedRow].row;
         destination.repository = self.repositories[selection];
     }
-    else if ([segue.identifier isEqualToString:@"ShowAddReposTableViewController"]) {
-        self.navigationItem.backBarButtonItem.title = @"Add";
-    }
 }
 
 
