@@ -30,10 +30,8 @@
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:types categories:nil]];
     }
     
-    // clear notification icons if no repos locally
-    if ([GitHubHelper sharedHelper].getRepos.count == 0) {
-        application.applicationIconBadgeNumber = 0;
-    }
+    // clear notification icons
+    application.applicationIconBadgeNumber = 0;
     
     // customize appearance
     [application setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -43,7 +41,7 @@
                                        alpha:1.0];
     [[UINavigationBar appearance] setBarTintColor:tealish];
     [[UIToolbar appearance] setBarTintColor:tealish];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor] }];
     
     return YES;
 }
@@ -59,7 +57,7 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
