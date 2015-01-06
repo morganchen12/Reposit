@@ -34,6 +34,7 @@
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(refreshRepos) forControlEvents:UIControlEventValueChanged];
     
+    self.searchBar.tintColor = tealish;
     self.searchBar.delegate = self;
     self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -62,15 +63,19 @@
     NSCharacterSet *whiteSpaceAndNewLine = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     NSString *userNameTrimmed = [self.searchBar.text stringByTrimmingCharactersInSet:whiteSpaceAndNewLine];
     
-    BOOL userNameIsValid = ([userNameTrimmed rangeOfCharacterFromSet:whiteSpaceAndNewLine].location == NSNotFound);
-    
-    if (userNameIsValid) {
-        [[GitHubHelper sharedHelper] publicReposFromUser:self.searchBar.text completion:^(NSArray *repos) {
-            self.fetchedRepositories = repos;
-            [self.tableView reloadData];
-            [self.refreshControl endRefreshing];
-        }];
+    BOOL userNameIsValid = ([userNameTrimmed rangeOfString:@" "].location == NSNotFound);
+
+    if (!userNameIsValid) {
+        // stop refreshing and return
+        [self.refreshControl endRefreshing];
+        return;
     }
+    
+    [[GitHubHelper sharedHelper] publicReposFromUser:userNameTrimmed completion:^(NSArray *repos) {
+        self.fetchedRepositories = repos;
+        [self.tableView reloadData];
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 #pragma mark - UISearchBarDelegate
@@ -117,7 +122,7 @@
     // set description if provided
     cell.detailTextLabel.textColor = [UIColor grayColor];
     NSString *description = self.fetchedRepositories[indexPath.row][@"description"];
-    if (description) {
+    if (description && (NSNull *)description != [NSNull null]) {
         cell.detailTextLabel.text = description;
     }
     else {
