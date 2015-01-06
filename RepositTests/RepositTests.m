@@ -24,12 +24,4 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    [[GitHubHelper sharedHelper] publicReposFromUser:@"morganchen12" completion:^(NSArray *repos) {
-        NSLog(@"%@", repos);
-    }];
-    sleep(1);
-    XCTAssert(YES, @"Pass");
-}
-
 @end
