@@ -124,7 +124,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
     int month = (int)components.month;
     int year = (int)components.year;
     
-    NSString *urlString = [NSString stringWithFormat:@"https://api.github.com/repos/%@/commits?since=%4d-%2d-%2d&author=%@", repo, year, month, day, username];
+    NSString *urlString = [NSString stringWithFormat:@"https://api.github.com/repos/%@/commits?since=%04d-%02d-%02d&author=%@", repo, year, month, day, username];
     NSURL *url = [NSURL URLWithString:urlString];
     
     // create request using URL
