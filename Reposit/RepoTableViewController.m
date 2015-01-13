@@ -69,7 +69,10 @@
     
     [[GitHubHelper sharedHelper] currentUserDidCommitToRepo:repo completion:^(NSInteger daysSinceCommit) {
         if (daysSinceCommit != NSNotFound) {
-            if (daysSinceCommit == 1) {
+            if (daysSinceCommit == 0) {
+                cell.detailTextLabel.text = @"  Last commit today";
+            }
+            else if (daysSinceCommit == 1) {
                 cell.detailTextLabel.text = @"  Last commit yesterday";
             }
             else {

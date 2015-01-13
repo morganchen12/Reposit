@@ -245,7 +245,7 @@
             </objects>
             <point key="canvasLocation" x="1526" y="1110"/>
         </scene>
-        <!--Repos-->
+        <!--Search-->
         <scene sceneID="gaq-X6-bIw">
             <objects>
                 <tableViewController id="Fts-s2-g3E" customClass="AddReposTableViewController" sceneMemberID="viewController">
@@ -288,7 +288,7 @@
                             <outlet property="delegate" destination="Fts-s2-g3E" id="LZi-sh-Uoe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Repos" id="4zn-BB-XWX">
+                    <navigationItem key="navigationItem" title="Search" id="4zn-BB-XWX">
                         <barButtonItem key="backBarButtonItem" title="Add" id="6yx-oO-4H0"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="EkJ-O6-gVE">
                             <connections>
