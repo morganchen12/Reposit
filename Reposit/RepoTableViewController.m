@@ -60,6 +60,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RepoCell" forIndexPath:indexPath];
     
+    // assemble "username / Repository" format for cell text from core data objects
     Repository *repo = (Repository *)(self.repositories[indexPath.row]);
     NSString *fullname = [NSString stringWithFormat:@"%@ / %@", repo.owner, repo.name];
     
@@ -67,23 +68,38 @@
     cell.detailTextLabel.textColor = [UIColor blackColor];
     cell.detailTextLabel.text = @"  Checking recent commits...";
     
+    // check if user has recently committed to their projects
+    // note: this method may cause excessive api calls for a large number of Repository objects
+    // (i.e. scrolling would call this method repeatedly), but it's generally unlikely that a
+    // user has enough side projects to actually fill the entire page. If the GitHub API rate
+    // limit becomes problematic, look here
     [[GitHubHelper sharedHelper] currentUserDidCommitToRepo:repo completion:^(NSInteger daysSinceCommit) {
+        
+        // recent commits found
         if (daysSinceCommit != NSNotFound) {
+            
+            // update label on case-by-case basis for commits pushed today and yesterday
             if (daysSinceCommit == 0) {
                 cell.detailTextLabel.text = @"  Last commit today";
             }
             else if (daysSinceCommit == 1) {
                 cell.detailTextLabel.text = @"  Last commit yesterday";
             }
+            
+            // otherwise, generalize "x days ago"
             else {
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"  Last commit %li days ago", (long)daysSinceCommit];
             }
+            
+            // this green should really be a global constant somewhere
             UIColor *green = [UIColor colorWithRed:0.07058823529
                                              green:0.38823529411
                                               blue:0.1725490196
                                              alpha:1.0];
             cell.detailTextLabel.textColor = green;
         }
+        
+        // no recent commits, berate user
         else {
             cell.detailTextLabel.text = @"  No recent commits";
             cell.detailTextLabel.textColor = [UIColor colorWithRed:214.0 / 255
@@ -97,12 +113,17 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
     if (self.repositories.count) {
+        
+        // clean up first-time user experience view if necessary
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         self.tableView.backgroundView = nil;
     }
+    
     else {
-        // display message when table is empty
+        
+        // display message when table is empty (also doubles as first-time user experience)
         UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
                                                                           0,
                                                                           self.view.bounds.size.width,
@@ -146,6 +167,8 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    // boilerplate to pass along Repository object and assign back button text
     if ([segue.identifier isEqualToString:@"ShowRepoDetail"]) {
         self.navigationItem.backBarButtonItem.title = @"Save";
         RepoDetailViewController *destination = (RepoDetailViewController *)[segue destinationViewController];
