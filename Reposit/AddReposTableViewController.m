@@ -82,6 +82,13 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self.searchBar resignFirstResponder];
+    
+    // deselect all cells before refreshing
+    NSArray *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
+    for (NSIndexPath *indexPath in selectedIndexPaths) {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
+    
     [self.refreshControl beginRefreshing];
     NSInteger offset = self.tableView.contentOffset.y-self.refreshControl.frame.size.height-(self.searchBar.frame.size.height+20);
     [self.tableView setContentOffset:CGPointMake(0, offset) animated:YES];
