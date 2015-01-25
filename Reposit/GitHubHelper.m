@@ -19,6 +19,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 @interface GitHubHelper()
 
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, readonly) OCTClient *client;
 
 @end
 
@@ -39,6 +40,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
         _managedObjectContext = ((AppDelegate *)([UIApplication sharedApplication].delegate)).managedObjectContext;
         
         // set OCTClient ID and secret;
+        [OCTClient setClientID:kOctoKitClientID clientSecret:kOctoKitClientSecret];
     }
     return self;
 }
@@ -110,7 +112,17 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 }
 
 - (void)publicReposFromCurrentUserWithCompletion:(void (^)(NSArray *))completion {
-    [self publicReposFromUser:self.currentUser completion:completion];
+    RACSignal *request = [self.client fetchUserRepositories];
+    [[request collect] subscribeNext:^(NSArray *repositories) {
+        NSLog(@"%@", repositories.description);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(repositories);
+        });
+    } error:^(NSError *error) {
+        NSLog(@"%@", error.description);
+    } completed:^{
+        
+    }];
 }
 
 - (void)user:(NSString *)username didCommitToRepo:(NSString *)repo inTimeFrame:(NSUInteger)days completion:(void (^)(NSInteger daysSinceCommit))completion {
@@ -307,5 +319,22 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 }
 
 #pragma mark - OctoKit
+
+- (BOOL)signInToGitHub {
+    __block BOOL success;
+    [[OCTClient signInToServerUsingWebBrowser:[OCTServer dotComServer] scopes:OCTClientAuthorizationScopesUser] subscribeNext:^(id x) {
+        success = YES;
+        
+        // set up properties
+        _client = (OCTClient *)x;
+        OCTUser *user = ((OCTClient *)x).user;
+        self.currentUser = user.login;
+    } error:^(NSError *error) {
+        NSLog(@"%@", error.description);
+        success = NO;
+    }];
+    
+    return success;
+}
 
 @end

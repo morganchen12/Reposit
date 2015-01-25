@@ -76,4 +76,8 @@
  */
 - (BOOL)saveContext;
 
+#pragma mark - OctoKit
+
+- (BOOL)signInToGitHub;
+
 @end

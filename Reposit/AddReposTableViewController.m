@@ -71,11 +71,20 @@
         return;
     }
     
-    [[GitHubHelper sharedHelper] publicReposFromUser:userNameTrimmed completion:^(NSArray *repos) {
-        self.fetchedRepositories = repos;
-        [self.tableView reloadData];
-        [self.refreshControl endRefreshing];
-    }];
+    if ([[GitHubHelper sharedHelper].currentUser isEqualToString:userNameTrimmed]) {
+        [[GitHubHelper sharedHelper] publicReposFromCurrentUserWithCompletion:^(NSArray *repos) {
+            self.fetchedRepositories = repos;
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        }];
+    }
+    else {
+        [[GitHubHelper sharedHelper] publicReposFromUser:userNameTrimmed completion:^(NSArray *repos) {
+            self.fetchedRepositories = repos;
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        }];
+    }
 }
 
 #pragma mark - UISearchBarDelegate

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Morgan Chen. All rights reserved.
 //
 
+#import <OctoKit/OctoKit.h>
+
 #import "AppDelegate.h"
 #import "GitHubHelper.h"
 #import "LocalNotificationHelper.h"
@@ -76,6 +78,20 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     // debug
     NSLog(@"notification");
+}
+
+#pragma mark - URL Callback
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    // callback url is reposit://oauth
+    if ([url.host isEqualToString:@"oauth"]) {
+        [OCTClient completeSignInWithCallbackURL:url];
+        return YES;
+    }
+    else {
+        return NO;
+    }
 }
 
 #pragma mark - Core Data stack

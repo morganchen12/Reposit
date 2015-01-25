@@ -45,7 +45,8 @@
     
     // prompt user to enter their github username if it's not saved
     if (![GitHubHelper sharedHelper].currentUser) {
-        [self performSegueWithIdentifier:@"ShowSettings" sender:self];
+//        [self performSegueWithIdentifier:@"ShowSettings" sender:self];
+        [[GitHubHelper sharedHelper] signInToGitHub];
     }
 }
 
