@@ -14,3 +14,6 @@ xcuserdata
 
 # Exclude libraries pulled through Carthage
 Carthage/.
+
+# Ignore GitHub API ID/Secret
+Reposit/Secret.m

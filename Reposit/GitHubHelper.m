@@ -6,10 +6,13 @@
 //  Copyright (c) 2015 Morgan Chen. All rights reserved.
 //
 
+#import <OctoKit/OctoKit.h>
+
 #import "GitHubHelper.h"
 #import "LocalNotificationHelper.h"
 #import "AppDelegate.h"
 #import "Repository.h"
+#import "Secret.h"
 
 static const NSUInteger kDefaultObligationPeriod = 7; // days
 
@@ -34,6 +37,8 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
         
         // set managedObjectContext for convenience
         _managedObjectContext = ((AppDelegate *)([UIApplication sharedApplication].delegate)).managedObjectContext;
+        
+        // set OCTClient ID and secret;
     }
     return self;
 }
@@ -300,5 +305,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 - (BOOL)repoIsUnique:(Repository *)repository {
     return [self repoIsUniqueWithName:repository.name owner:repository.owner];
 }
+
+#pragma mark - OctoKit
 
 @end

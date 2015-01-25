@@ -16,6 +16,8 @@
 		8D9EF25D1A756BBA00E36EB4 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF2581A756BBA00E36EB4 /* Mantle.framework */; };
 		8D9EF25E1A756BBA00E36EB4 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF2591A756BBA00E36EB4 /* OctoKit.framework */; };
 		8D9EF25F1A756BBA00E36EB4 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF25A1A756BBA00E36EB4 /* ReactiveCocoa.framework */; };
+		8D9EF2621A75701500E36EB4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF2611A75701500E36EB4 /* MobileCoreServices.framework */; };
+		8D9EF2661A7571FB00E36EB4 /* Secret.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EF2651A7571FB00E36EB4 /* Secret.m */; };
 		8DA091B31A5747B500F73129 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA091B21A5747B500F73129 /* SettingsViewController.m */; };
 		8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */; };
 		8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */; };
@@ -54,6 +56,9 @@
 		8D9EF2581A756BBA00E36EB4 /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = Carthage/Build/iOS/Mantle.framework; sourceTree = "<group>"; };
 		8D9EF2591A756BBA00E36EB4 /* OctoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OctoKit.framework; path = Carthage/Build/iOS/OctoKit.framework; sourceTree = "<group>"; };
 		8D9EF25A1A756BBA00E36EB4 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		8D9EF2611A75701500E36EB4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		8D9EF2641A7571ED00E36EB4 /* Secret.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Secret.h; sourceTree = "<group>"; };
+		8D9EF2651A7571FB00E36EB4 /* Secret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Secret.m; sourceTree = "<group>"; };
 		8DA091B11A5747B500F73129 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		8DA091B21A5747B500F73129 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		8DA3D9AA1A5625D2005AA177 /* RepoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoTableViewController.h; sourceTree = "<group>"; };
@@ -82,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D9EF2621A75701500E36EB4 /* MobileCoreServices.framework in Frameworks */,
 				8D9EF25C1A756BBA00E36EB4 /* ISO8601DateFormatter.framework in Frameworks */,
 				8D9EF25B1A756BBA00E36EB4 /* AFNetworking.framework in Frameworks */,
 				8D9EF25E1A756BBA00E36EB4 /* OctoKit.framework in Frameworks */,
@@ -116,6 +122,7 @@
 		8DFB4C6E1A56208900FA334B = {
 			isa = PBXGroup;
 			children = (
+				8D9EF2611A75701500E36EB4 /* MobileCoreServices.framework */,
 				8DA8DC621A5B7E62006D3D3C /* Media.xcassets */,
 				8DFB4C791A56208900FA334B /* Reposit */,
 				8DFB4C961A56208900FA334B /* RepositTests */,
@@ -162,6 +169,8 @@
 			children = (
 				8DFB4C7B1A56208900FA334B /* Info.plist */,
 				8DFB4C7C1A56208900FA334B /* main.m */,
+				8D9EF2641A7571ED00E36EB4 /* Secret.h */,
+				8D9EF2651A7571FB00E36EB4 /* Secret.m */,
 				8DA3D9AD1A5628BD005AA177 /* GitHubHelper.h */,
 				8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */,
 				8DFADDB31A5A470600D1CD04 /* LocalNotificationHelper.h */,
@@ -199,6 +208,7 @@
 				8DFB4C731A56208900FA334B /* Sources */,
 				8DFB4C741A56208900FA334B /* Frameworks */,
 				8DFB4C751A56208900FA334B /* Resources */,
+				8D9EF2601A756D1100E36EB4 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -286,6 +296,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8D9EF2601A756D1100E36EB4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/AFNetworking.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ISO8601DateFormatter.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Mantle.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/OctoKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8DFB4C731A56208900FA334B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -296,6 +327,7 @@
 				8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */,
 				8DFB4C801A56208900FA334B /* AppDelegate.m in Sources */,
 				8DA091B31A5747B500F73129 /* SettingsViewController.m in Sources */,
+				8D9EF2661A7571FB00E36EB4 /* Secret.m in Sources */,
 				8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */,
 				8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */,
 				8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */,
