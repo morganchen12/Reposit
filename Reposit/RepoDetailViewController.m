@@ -61,6 +61,8 @@
 #pragma mark - UIPickerViewDelegate
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    
+    // center text in label in picker view
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 37)];
     label.text = ((NSNumber *)(self.pickerOptions[row])).stringValue;
     label.textAlignment = NSTextAlignmentCenter;

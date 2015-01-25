@@ -78,6 +78,7 @@
         // recent commits found
         if (daysSinceCommit != NSNotFound) {
             
+            // use spaces as poor man's indentation
             // update label on case-by-case basis for commits pushed today and yesterday
             if (daysSinceCommit == 0) {
                 cell.detailTextLabel.text = @"  Last commit today";
@@ -91,7 +92,7 @@
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"  Last commit %li days ago", (long)daysSinceCommit];
             }
             
-            // this green should really be a global constant somewhere
+            // darkish green
             UIColor *green = [UIColor colorWithRed:0.07058823529
                                              green:0.38823529411
                                               blue:0.1725490196
@@ -101,6 +102,7 @@
         
         // no recent commits, berate user
         else {
+            // darkish red
             cell.detailTextLabel.text = @"  No recent commits";
             cell.detailTextLabel.textColor = [UIColor colorWithRed:214.0 / 255
                                                              green:0.0   / 255
