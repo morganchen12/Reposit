@@ -11,6 +11,11 @@
 		8D3D6DEB1A58A054003F8C42 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEA1A58A054003F8C42 /* Repository.m */; };
 		8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */; };
 		8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */; };
+		8D9EF25B1A756BBA00E36EB4 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF2561A756BBA00E36EB4 /* AFNetworking.framework */; };
+		8D9EF25C1A756BBA00E36EB4 /* ISO8601DateFormatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF2571A756BBA00E36EB4 /* ISO8601DateFormatter.framework */; };
+		8D9EF25D1A756BBA00E36EB4 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF2581A756BBA00E36EB4 /* Mantle.framework */; };
+		8D9EF25E1A756BBA00E36EB4 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF2591A756BBA00E36EB4 /* OctoKit.framework */; };
+		8D9EF25F1A756BBA00E36EB4 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF25A1A756BBA00E36EB4 /* ReactiveCocoa.framework */; };
 		8DA091B31A5747B500F73129 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA091B21A5747B500F73129 /* SettingsViewController.m */; };
 		8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */; };
 		8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */; };
@@ -44,6 +49,11 @@
 		8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoWebViewController.m; sourceTree = "<group>"; };
 		8D805A291A59C3BD003C97B2 /* RepoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoDetailViewController.h; sourceTree = "<group>"; };
 		8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoDetailViewController.m; sourceTree = "<group>"; };
+		8D9EF2561A756BBA00E36EB4 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
+		8D9EF2571A756BBA00E36EB4 /* ISO8601DateFormatter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601DateFormatter.framework; path = Carthage/Build/iOS/ISO8601DateFormatter.framework; sourceTree = "<group>"; };
+		8D9EF2581A756BBA00E36EB4 /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = Carthage/Build/iOS/Mantle.framework; sourceTree = "<group>"; };
+		8D9EF2591A756BBA00E36EB4 /* OctoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OctoKit.framework; path = Carthage/Build/iOS/OctoKit.framework; sourceTree = "<group>"; };
+		8D9EF25A1A756BBA00E36EB4 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		8DA091B11A5747B500F73129 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		8DA091B21A5747B500F73129 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		8DA3D9AA1A5625D2005AA177 /* RepoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoTableViewController.h; sourceTree = "<group>"; };
@@ -72,6 +82,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D9EF25C1A756BBA00E36EB4 /* ISO8601DateFormatter.framework in Frameworks */,
+				8D9EF25B1A756BBA00E36EB4 /* AFNetworking.framework in Frameworks */,
+				8D9EF25E1A756BBA00E36EB4 /* OctoKit.framework in Frameworks */,
+				8D9EF25D1A756BBA00E36EB4 /* Mantle.framework in Frameworks */,
+				8D9EF25F1A756BBA00E36EB4 /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +100,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D9EF2551A756B8E00E36EB4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8D9EF2561A756BBA00E36EB4 /* AFNetworking.framework */,
+				8D9EF2571A756BBA00E36EB4 /* ISO8601DateFormatter.framework */,
+				8D9EF2581A756BBA00E36EB4 /* Mantle.framework */,
+				8D9EF2591A756BBA00E36EB4 /* OctoKit.framework */,
+				8D9EF25A1A756BBA00E36EB4 /* ReactiveCocoa.framework */,
+			);
+			name = Frameworks;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		8DFB4C6E1A56208900FA334B = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +152,7 @@
 				8DFB4C8A1A56208900FA334B /* Images.xcassets */,
 				8DFB4C811A56208900FA334B /* Reposit.xcdatamodeld */,
 				8DFB4C7A1A56208900FA334B /* Supporting Files */,
+				8D9EF2551A756B8E00E36EB4 /* Frameworks */,
 			);
 			path = Reposit;
 			sourceTree = "<group>";
@@ -386,6 +415,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Reposit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -398,6 +431,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Reposit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

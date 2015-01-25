@@ -13,4 +13,4 @@
 xcuserdata
 
 # Exclude libraries pulled through Carthage
-Carthage/*
+Carthage/.
