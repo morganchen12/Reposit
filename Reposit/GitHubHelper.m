@@ -28,6 +28,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        
         // load user from disk if it exists
         NSString *user = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentUser"];
         if (user) {
