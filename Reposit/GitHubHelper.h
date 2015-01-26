@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 @class Repository;
+@class OCTClient;
 
 @interface GitHubHelper : NSObject <NSURLSessionDelegate>
 
 @property (nonatomic, readwrite) NSString *currentUser;
+@property (nonatomic, readonly) OCTClient *client;
+
 
 #pragma mark - Factory
 
@@ -42,39 +45,6 @@
  * executing the completion block, this function also saves daysSinceCommit to the repository's respective property.
  */
 - (void)currentUserDidCommitToRepo:(Repository *)repo completion:(void (^)(NSInteger daysSinceCommit))completion;
-
-#pragma mark - Core Data
-
-/* Fetch all repositories from Core Data.
- */
-- (NSArray *)getRepos;
-
-/* Creates and saves a Repository object with the given parameters. The "obligation" parameter specifies
- * the number of days a user has to commit before the app will remind them. This method is directly or
- * indirectly called by every other save method listed below. Does not actually save the managed object context.
- */
-- (void)saveRepoWithName:(NSString *)name owner:(NSString *)owner obligation:(NSUInteger)obligation;
-
-/* Calls saveRepoWithName:owner:obligation: with a default obligation period of 7 days.
- */
-- (void)saveRepoWithName:(NSString *)name owner:(NSString *)owner;
-
-/* Creates and saves a single Repository object from JSON downloaded from the Github API.
- * Calls saveRepoWithName:owner: with data from the JSON dictionary.
- */
-- (void)saveRepoFromJSONObject:(NSDictionary *)JSONObject;
-
-/* Calls saveRepoFromJSONObject: with an array of JSON objects.
- */
-- (void)saveReposFromJSONObjects:(NSArray *)JSONObjects;
-
-/* Deletes a repo from the managed object context. Does not actually save the managed object context.
- */
-- (void)deleteRepository:(Repository *)repo;
-
-/* Actually save the managed object context to disk. Returns YES if save was successful.
- */
-- (BOOL)saveContext;
 
 #pragma mark - OctoKit
 

@@ -6,8 +6,11 @@
 //  Copyright (c) 2015 Morgan Chen. All rights reserved.
 //
 
+#import <OctoKit/OctoKit.h>
+
 #import "AddReposTableViewController.h"
 #import "GitHubHelper.h"
+#import "CoreDataHelper.h"
 
 @interface AddReposTableViewController ()
 
@@ -26,7 +29,7 @@
 
     self.selectedIndexPaths = [[NSMutableArray alloc] init];
     
-    UIColor *tealish = [UIColor colorWithRed:0.0  / 255
+    UIColor *tealish = [UIColor colorWithRed: 0.0 / 255
                                        green:81.0 / 255
                                         blue:92.0 / 255
                                        alpha:1.0];
@@ -71,20 +74,11 @@
         return;
     }
     
-    if ([[GitHubHelper sharedHelper].currentUser isEqualToString:userNameTrimmed]) {
-        [[GitHubHelper sharedHelper] publicReposFromCurrentUserWithCompletion:^(NSArray *repos) {
-            self.fetchedRepositories = repos;
-            [self.tableView reloadData];
-            [self.refreshControl endRefreshing];
-        }];
-    }
-    else {
-        [[GitHubHelper sharedHelper] publicReposFromUser:userNameTrimmed completion:^(NSArray *repos) {
-            self.fetchedRepositories = repos;
-            [self.tableView reloadData];
-            [self.refreshControl endRefreshing];
-        }];
-    }
+    [[GitHubHelper sharedHelper] publicReposFromUser:userNameTrimmed completion:^(NSArray *repos) {
+        self.fetchedRepositories = repos;
+        [self.tableView reloadData];
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 #pragma mark - UISearchBarDelegate
@@ -133,11 +127,14 @@
                                        alpha:1.0];
     cell.tintColor = tealish;
     
-    cell.textLabel.text = self.fetchedRepositories[indexPath.row][@"name"]; // use @"full_name" maybe
+    OCTResponse *response = (OCTResponse *)(self.fetchedRepositories[indexPath.row]);
+    NSDictionary *result = (NSDictionary *)(response.parsedResult);
+    
+    cell.textLabel.text = result[@"name"]; // use @"full_name" maybe
     
     // set description if provided
     cell.detailTextLabel.textColor = [UIColor grayColor];
-    NSString *description = self.fetchedRepositories[indexPath.row][@"description"];
+    NSString *description = result[@"description"];
     if (description && (NSNull *)description != [NSNull null]) {
         cell.detailTextLabel.text = description;
     }
@@ -191,9 +188,11 @@
     NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
     if (selectedRows.count > 0) {
         for (NSIndexPath *indexPath in selectedRows) {
-            [[GitHubHelper sharedHelper] saveRepoFromJSONObject:self.fetchedRepositories[indexPath.row]];
+            NSDictionary *JSONObject = ((OCTResponse *)(self.fetchedRepositories[indexPath.row])).parsedResult;
+            
+            [[CoreDataHelper sharedHelper] saveRepoFromJSONObject:JSONObject];
         }
-        [[GitHubHelper sharedHelper] saveContext];
+        [[CoreDataHelper sharedHelper] saveContext];
         [self.navigationController popViewControllerAnimated:YES];
     }
     

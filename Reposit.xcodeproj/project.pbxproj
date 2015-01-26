@@ -18,9 +18,9 @@
 		8D9EF25F1A756BBA00E36EB4 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF25A1A756BBA00E36EB4 /* ReactiveCocoa.framework */; };
 		8D9EF2621A75701500E36EB4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF2611A75701500E36EB4 /* MobileCoreServices.framework */; };
 		8D9EF2661A7571FB00E36EB4 /* Secret.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EF2651A7571FB00E36EB4 /* Secret.m */; };
-		8DA091B31A5747B500F73129 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA091B21A5747B500F73129 /* SettingsViewController.m */; };
 		8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */; };
 		8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */; };
+		8DA483BE1A76E857002EE56E /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA483BD1A76E857002EE56E /* CoreDataHelper.m */; };
 		8DA8DC631A5B7E62006D3D3C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DA8DC621A5B7E62006D3D3C /* Media.xcassets */; };
 		8DBCC45E1A5BBA2C0084BE1F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DBCC45D1A5BBA2C0084BE1F /* LaunchScreen.xib */; };
 		8DFADDB51A5A470600D1CD04 /* LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFADDB41A5A470600D1CD04 /* LocalNotificationHelper.m */; };
@@ -59,12 +59,12 @@
 		8D9EF2611A75701500E36EB4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8D9EF2641A7571ED00E36EB4 /* Secret.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Secret.h; sourceTree = "<group>"; };
 		8D9EF2651A7571FB00E36EB4 /* Secret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Secret.m; sourceTree = "<group>"; };
-		8DA091B11A5747B500F73129 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		8DA091B21A5747B500F73129 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		8DA3D9AA1A5625D2005AA177 /* RepoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoTableViewController.h; sourceTree = "<group>"; };
 		8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoTableViewController.m; sourceTree = "<group>"; };
 		8DA3D9AD1A5628BD005AA177 /* GitHubHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubHelper.h; sourceTree = "<group>"; };
 		8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubHelper.m; sourceTree = "<group>"; };
+		8DA483BC1A76E857002EE56E /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
+		8DA483BD1A76E857002EE56E /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataHelper.m; sourceTree = "<group>"; };
 		8DA8DC621A5B7E62006D3D3C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		8DBCC45D1A5BBA2C0084BE1F /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		8DFADDB31A5A470600D1CD04 /* LocalNotificationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationHelper.h; sourceTree = "<group>"; };
@@ -109,6 +109,7 @@
 		8D9EF2551A756B8E00E36EB4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8D9EF2611A75701500E36EB4 /* MobileCoreServices.framework */,
 				8D9EF2561A756BBA00E36EB4 /* AFNetworking.framework */,
 				8D9EF2571A756BBA00E36EB4 /* ISO8601DateFormatter.framework */,
 				8D9EF2581A756BBA00E36EB4 /* Mantle.framework */,
@@ -122,7 +123,6 @@
 		8DFB4C6E1A56208900FA334B = {
 			isa = PBXGroup;
 			children = (
-				8D9EF2611A75701500E36EB4 /* MobileCoreServices.framework */,
 				8DA8DC621A5B7E62006D3D3C /* Media.xcassets */,
 				8DFB4C791A56208900FA334B /* Reposit */,
 				8DFB4C961A56208900FA334B /* RepositTests */,
@@ -152,8 +152,6 @@
 				8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */,
 				8D3D6DED1A58CEE6003F8C42 /* RepoWebViewController.h */,
 				8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */,
-				8DA091B11A5747B500F73129 /* SettingsViewController.h */,
-				8DA091B21A5747B500F73129 /* SettingsViewController.m */,
 				8DFB4C871A56208900FA334B /* Main.storyboard */,
 				8DBCC45D1A5BBA2C0084BE1F /* LaunchScreen.xib */,
 				8DFB4C8A1A56208900FA334B /* Images.xcassets */,
@@ -173,6 +171,8 @@
 				8D9EF2651A7571FB00E36EB4 /* Secret.m */,
 				8DA3D9AD1A5628BD005AA177 /* GitHubHelper.h */,
 				8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */,
+				8DA483BC1A76E857002EE56E /* CoreDataHelper.h */,
+				8DA483BD1A76E857002EE56E /* CoreDataHelper.m */,
 				8DFADDB31A5A470600D1CD04 /* LocalNotificationHelper.h */,
 				8DFADDB41A5A470600D1CD04 /* LocalNotificationHelper.m */,
 				8D3D6DE91A58A054003F8C42 /* Repository.h */,
@@ -326,12 +326,12 @@
 				8DFB4C831A56208900FA334B /* Reposit.xcdatamodeld in Sources */,
 				8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */,
 				8DFB4C801A56208900FA334B /* AppDelegate.m in Sources */,
-				8DA091B31A5747B500F73129 /* SettingsViewController.m in Sources */,
 				8D9EF2661A7571FB00E36EB4 /* Secret.m in Sources */,
 				8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */,
 				8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */,
 				8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */,
 				8DFADDB51A5A470600D1CD04 /* LocalNotificationHelper.m in Sources */,
+				8DA483BE1A76E857002EE56E /* CoreDataHelper.m in Sources */,
 				8DFB4C7D1A56208900FA334B /* main.m in Sources */,
 				8D3D6DEB1A58A054003F8C42 /* Repository.m in Sources */,
 			);

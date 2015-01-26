@@ -10,6 +10,7 @@
 #import "RepoDetailViewController.h"
 #import "LocalNotificationHelper.h"
 #import "GitHubHelper.h"
+#import "CoreDataHelper.h"
 #import "Repository.h"
 
 @interface RepoTableViewController ()
@@ -34,7 +35,7 @@
     
     // if github username is defined, fetch recent commits
     if ([GitHubHelper sharedHelper].currentUser) {
-        self.repositories = [GitHubHelper sharedHelper].getRepos;
+        self.repositories = [CoreDataHelper sharedHelper].getRepos;
         [self.tableView reloadData];
     }
     
@@ -44,8 +45,9 @@
     [super viewDidAppear:animated];
     
     // prompt user to enter their github username if it's not saved
-    if (![GitHubHelper sharedHelper].currentUser) {
-//        [self performSegueWithIdentifier:@"ShowSettings" sender:self];
+    if (!([GitHubHelper sharedHelper].currentUser &&
+          [GitHubHelper sharedHelper].client)) {
+        
         [[GitHubHelper sharedHelper] signInToGitHub];
     }
 }
@@ -152,8 +154,8 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         // delete object from core data
-        [[GitHubHelper sharedHelper] deleteRepository:self.repositories[indexPath.row]];
-        [[GitHubHelper sharedHelper] saveContext];
+        [[CoreDataHelper sharedHelper] deleteRepository:self.repositories[indexPath.row]];
+        [[CoreDataHelper sharedHelper] saveContext];
         
         // delete object from local array, preserving order
         NSMutableArray *tempRepos = [self.repositories mutableCopy];
