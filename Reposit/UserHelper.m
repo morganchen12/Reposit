@@ -73,7 +73,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
     // otherwise create new user with username
     else {
         helper.username = username;
-        [helper saveUserWithName:username];
+        helper.user = [helper saveUserWithName:username];
     }
     
     return helper;
@@ -100,17 +100,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 #pragma mark Repositories
 
 - (NSArray *)getRepos {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Repository"
-                                                         inManagedObjectContext:self.managedObjectContext];
-    request.entity = entityDescription;
-    
-    NSError *error;
-    NSArray *queryResult = [self.managedObjectContext executeFetchRequest:request error:&error];
-    if (error) {
-        NSLog(@"%@", error.description);
-    }
-    return queryResult;
+    return self.user.repos.array;
 }
 
 - (void)saveRepoWithName:(NSString *)name owner:(NSString *)owner obligation:(NSUInteger)obligation {
@@ -125,6 +115,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
     newRepo.name = name;
     newRepo.owner = owner;
     newRepo.reminderPeriod = @(obligation);
+    newRepo.relationship = self.user;
 }
 
 - (void)saveRepoWithName:(NSString *)name owner:(NSString *)owner {
@@ -171,10 +162,12 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 
 #pragma mark Users
 
-- (void)saveUserWithName:(NSString *)name {
+- (User *)saveUserWithName:(NSString *)name {
     User *newUser = (User *)[NSEntityDescription insertNewObjectForEntityForName:@"User"
                                                           inManagedObjectContext:self.managedObjectContext];
     newUser.name = name;
+    
+    return newUser;
 }
 
 #pragma mark - Helpers

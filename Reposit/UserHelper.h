@@ -30,7 +30,7 @@
 
 #pragma mark - Core Data
 
-/* Fetch all repositories from Core Data.
+/* Fetch the current user's repositories from Core Data.
  */
 - (NSArray *)getRepos;
 
