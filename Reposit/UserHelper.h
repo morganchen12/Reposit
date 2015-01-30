@@ -1,5 +1,5 @@
 //
-//  CoreDataHelper.h
+//  UserHelper.h
 //  Reposit
 //
 //  Created by Morgan Chen on 1/26/15.
@@ -11,15 +11,22 @@
 @class OCTRepository;
 @class Repository;
 
-@interface CoreDataHelper : NSObject
+@interface UserHelper : NSObject
 
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, readwrite) NSString *username;
+
 
 #pragma mark - Factory
 
-/* Return a singleton instance of GitHubHelper.
+/* Returns a helper for the given username. This method attempts to look up the user based on username from 
+ * Core Data. If no results are found, a new User object will be created and saved.
  */
-+ (instancetype)sharedHelper;
++ (instancetype)helperForUsername:(NSString *)username;
+
+/* Return a the current SessionHelper's user property.
+ */
++ (instancetype)currentHelper;
 
 #pragma mark - Core Data
 

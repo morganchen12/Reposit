@@ -10,7 +10,8 @@
 
 #import "AddReposTableViewController.h"
 #import "GitHubHelper.h"
-#import "CoreDataHelper.h"
+#import "UserHelper.h"
+#import "SessionHelper.h"
 
 // animation constants
 static const float kCellPopulationAnimationDelay    = 0.01;
@@ -50,7 +51,7 @@ static const float kCellPopulationAnimationDuration = 0.4;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.searchBar.text = [GitHubHelper sharedHelper].currentUser;
+    self.searchBar.text = [SessionHelper currentSession].currentUser.username;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -207,9 +208,9 @@ static const float kCellPopulationAnimationDuration = 0.4;
         for (NSIndexPath *indexPath in selectedRows) {
             NSDictionary *JSONObject = ((OCTResponse *)(self.fetchedRepositories[indexPath.row])).parsedResult;
             
-            [[CoreDataHelper sharedHelper] saveRepoFromJSONObject:JSONObject];
+            [[UserHelper currentHelper] saveRepoFromJSONObject:JSONObject];
         }
-        [[CoreDataHelper sharedHelper] saveContext];
+        [[UserHelper currentHelper] saveContext];
         [self.navigationController popViewControllerAnimated:YES];
     }
     

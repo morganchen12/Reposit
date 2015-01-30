@@ -10,7 +10,8 @@
 #import "RepoDetailViewController.h"
 #import "LocalNotificationHelper.h"
 #import "GitHubHelper.h"
-#import "CoreDataHelper.h"
+#import "SessionHelper.h"
+#import "UserHelper.h"
 #import "Repository.h"
 
 // animation constants
@@ -37,9 +38,9 @@ static const float kCellPopulationAnimationDuration = 0.25;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    // if github username is defined, fetch recent commits
-    if ([GitHubHelper sharedHelper].currentUser) {
-        self.repositories = [CoreDataHelper sharedHelper].getRepos;
+    // if current user exists, fetch recent commits
+    if ([SessionHelper currentSession].currentUser) {
+        self.repositories = [UserHelper currentHelper].getRepos;
         [self.tableView reloadData];
     }
     
@@ -49,7 +50,7 @@ static const float kCellPopulationAnimationDuration = 0.25;
     [super viewDidAppear:animated];
     
     // prompt user to enter their github username if it's not saved
-    if (!([GitHubHelper sharedHelper].currentUser &&
+    if (!([SessionHelper currentSession].currentUser &&
           [GitHubHelper sharedHelper].client)) {
         
         [[GitHubHelper sharedHelper] signInToGitHub];
@@ -172,8 +173,8 @@ static const float kCellPopulationAnimationDuration = 0.25;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         // delete object from core data
-        [[CoreDataHelper sharedHelper] deleteRepository:self.repositories[indexPath.row]];
-        [[CoreDataHelper sharedHelper] saveContext];
+        [[UserHelper currentHelper] deleteRepository:self.repositories[indexPath.row]];
+        [[UserHelper currentHelper] saveContext];
         
         // delete object from local array, preserving order
         NSMutableArray *tempRepos = [self.repositories mutableCopy];

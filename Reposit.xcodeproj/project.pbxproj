@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D2D0A3A1A7C31A000E31B14 /* SessionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2D0A391A7C31A000E31B14 /* SessionHelper.m */; };
+		8D2D0A3D1A7C3E5B00E31B14 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2D0A3C1A7C3E5B00E31B14 /* User.m */; };
+		8D2D0A401A7C3EA000E31B14 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2D0A3F1A7C3EA000E31B14 /* Repository.m */; };
 		8D3D6DE51A58980E003F8C42 /* AddReposTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DE41A58980E003F8C42 /* AddReposTableViewController.m */; };
-		8D3D6DEB1A58A054003F8C42 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEA1A58A054003F8C42 /* Repository.m */; };
 		8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */; };
 		8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */; };
 		8D9EF25B1A756BBA00E36EB4 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF2561A756BBA00E36EB4 /* AFNetworking.framework */; };
@@ -20,7 +22,7 @@
 		8D9EF2661A7571FB00E36EB4 /* Secret.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EF2651A7571FB00E36EB4 /* Secret.m */; };
 		8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */; };
 		8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */; };
-		8DA483BE1A76E857002EE56E /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA483BD1A76E857002EE56E /* CoreDataHelper.m */; };
+		8DA483BE1A76E857002EE56E /* UserHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA483BD1A76E857002EE56E /* UserHelper.m */; };
 		8DA8DC631A5B7E62006D3D3C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DA8DC621A5B7E62006D3D3C /* Media.xcassets */; };
 		8DBCC45E1A5BBA2C0084BE1F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DBCC45D1A5BBA2C0084BE1F /* LaunchScreen.xib */; };
 		8DFADDB51A5A470600D1CD04 /* LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFADDB41A5A470600D1CD04 /* LocalNotificationHelper.m */; };
@@ -43,10 +45,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8D2D0A381A7C31A000E31B14 /* SessionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionHelper.h; sourceTree = "<group>"; };
+		8D2D0A391A7C31A000E31B14 /* SessionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionHelper.m; sourceTree = "<group>"; };
+		8D2D0A3B1A7C3E5B00E31B14 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		8D2D0A3C1A7C3E5B00E31B14 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		8D2D0A3E1A7C3EA000E31B14 /* Repository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Repository.h; sourceTree = "<group>"; };
+		8D2D0A3F1A7C3EA000E31B14 /* Repository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repository.m; sourceTree = "<group>"; };
 		8D3D6DE31A58980E003F8C42 /* AddReposTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReposTableViewController.h; sourceTree = "<group>"; };
 		8D3D6DE41A58980E003F8C42 /* AddReposTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReposTableViewController.m; sourceTree = "<group>"; };
-		8D3D6DE91A58A054003F8C42 /* Repository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Repository.h; sourceTree = "<group>"; };
-		8D3D6DEA1A58A054003F8C42 /* Repository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repository.m; sourceTree = "<group>"; };
 		8D3D6DED1A58CEE6003F8C42 /* RepoWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoWebViewController.h; sourceTree = "<group>"; };
 		8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoWebViewController.m; sourceTree = "<group>"; };
 		8D805A291A59C3BD003C97B2 /* RepoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoDetailViewController.h; sourceTree = "<group>"; };
@@ -63,8 +69,8 @@
 		8DA3D9AB1A5625D2005AA177 /* RepoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoTableViewController.m; sourceTree = "<group>"; };
 		8DA3D9AD1A5628BD005AA177 /* GitHubHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubHelper.h; sourceTree = "<group>"; };
 		8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubHelper.m; sourceTree = "<group>"; };
-		8DA483BC1A76E857002EE56E /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
-		8DA483BD1A76E857002EE56E /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataHelper.m; sourceTree = "<group>"; };
+		8DA483BC1A76E857002EE56E /* UserHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserHelper.h; sourceTree = "<group>"; };
+		8DA483BD1A76E857002EE56E /* UserHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserHelper.m; sourceTree = "<group>"; };
 		8DA8DC621A5B7E62006D3D3C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		8DBCC45D1A5BBA2C0084BE1F /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		8DFADDB31A5A470600D1CD04 /* LocalNotificationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationHelper.h; sourceTree = "<group>"; };
@@ -171,12 +177,16 @@
 				8D9EF2651A7571FB00E36EB4 /* Secret.m */,
 				8DA3D9AD1A5628BD005AA177 /* GitHubHelper.h */,
 				8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */,
-				8DA483BC1A76E857002EE56E /* CoreDataHelper.h */,
-				8DA483BD1A76E857002EE56E /* CoreDataHelper.m */,
+				8D2D0A381A7C31A000E31B14 /* SessionHelper.h */,
+				8D2D0A391A7C31A000E31B14 /* SessionHelper.m */,
+				8DA483BC1A76E857002EE56E /* UserHelper.h */,
+				8DA483BD1A76E857002EE56E /* UserHelper.m */,
 				8DFADDB31A5A470600D1CD04 /* LocalNotificationHelper.h */,
 				8DFADDB41A5A470600D1CD04 /* LocalNotificationHelper.m */,
-				8D3D6DE91A58A054003F8C42 /* Repository.h */,
-				8D3D6DEA1A58A054003F8C42 /* Repository.m */,
+				8D2D0A3E1A7C3EA000E31B14 /* Repository.h */,
+				8D2D0A3F1A7C3EA000E31B14 /* Repository.m */,
+				8D2D0A3B1A7C3E5B00E31B14 /* User.h */,
+				8D2D0A3C1A7C3E5B00E31B14 /* User.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -329,11 +339,13 @@
 				8D9EF2661A7571FB00E36EB4 /* Secret.m in Sources */,
 				8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */,
 				8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */,
+				8D2D0A401A7C3EA000E31B14 /* Repository.m in Sources */,
 				8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */,
+				8D2D0A3D1A7C3E5B00E31B14 /* User.m in Sources */,
 				8DFADDB51A5A470600D1CD04 /* LocalNotificationHelper.m in Sources */,
-				8DA483BE1A76E857002EE56E /* CoreDataHelper.m in Sources */,
+				8DA483BE1A76E857002EE56E /* UserHelper.m in Sources */,
 				8DFB4C7D1A56208900FA334B /* main.m in Sources */,
-				8D3D6DEB1A58A054003F8C42 /* Repository.m in Sources */,
+				8D2D0A3A1A7C31A000E31B14 /* SessionHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

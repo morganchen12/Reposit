@@ -7,7 +7,7 @@
         <attribute name="reminderPeriod" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="repos" inverseEntity="User" syncable="YES"/>
     </entity>
-    <entity name="User" syncable="YES">
+    <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="repos" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Repository" inverseName="relationship" inverseEntity="Repository" syncable="YES"/>
     </entity>

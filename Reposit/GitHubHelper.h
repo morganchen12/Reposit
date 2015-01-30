@@ -12,7 +12,6 @@
 
 @interface GitHubHelper : NSObject <NSURLSessionDelegate>
 
-@property (nonatomic, readwrite) NSString *currentUser;
 @property (nonatomic, readonly) OCTClient *client;
 
 

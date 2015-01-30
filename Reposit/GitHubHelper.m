@@ -8,8 +8,9 @@
 
 #import <OctoKit/OctoKit.h>
 
+#import "SessionHelper.h"
 #import "GitHubHelper.h"
-#import "CoreDataHelper.h"
+#import "UserHelper.h"
 #import "LocalNotificationHelper.h"
 #import "AppDelegate.h"
 #import "Repository.h"
@@ -29,12 +30,6 @@
     self = [super init];
     if (self) {
         
-        // load user from disk if it exists
-        NSString *user = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentUser"];
-        if (user) {
-            _currentUser = user;
-        }
-        
         // set OCTClient ID and secret;
         [OCTClient setClientID:kOctoKitClientID clientSecret:kOctoKitClientSecret];
     }
@@ -50,16 +45,11 @@
     return helper;
 }
 
-#pragma mark - Property accessors
-
-- (void)setCurrentUser:(NSString *)currentUser {
-    _currentUser = currentUser;
-    [[NSUserDefaults standardUserDefaults] setObject:currentUser forKey:@"currentUser"];
-}
-
 #pragma mark - Github API
 
 - (void)publicReposFromUser:(NSString *)username completion:(void (^)(NSArray *))completion {
+    NSAssert(!!username && username.length > 0, @"username must not be nil or empty!");
+    
     // assemble url from username
     NSString *urlString = [NSString stringWithFormat:@"users/%@/repos?sort=updated", username];
     
@@ -80,7 +70,7 @@
 }
 
 - (void)publicReposFromCurrentUserWithCompletion:(void (^)(NSArray *))completion {
-    [self publicReposFromUser:self.currentUser completion:completion];
+    [self publicReposFromUser:[SessionHelper currentSession].currentUser.username completion:completion];
 }
 
 - (void)user:(NSString *)username didCommitToRepo:(NSString *)repo inTimeFrame:(NSUInteger)days completion:(void (^)(NSInteger daysSinceCommit))completion {
@@ -166,9 +156,15 @@
 
 - (void)currentUserDidCommitToRepo:(Repository *)repo completion:(void (^)(NSInteger daysSinceCommit))completion {
     NSString *repoName = [NSString stringWithFormat:@"%@/%@", repo.owner, repo.name];
-    [self user:self.currentUser didCommitToRepo:repoName inTimeFrame:[repo.reminderPeriod unsignedLongValue] completion:^(NSInteger daysSinceCommit) {
+    
+    // extremely ugly method indentation
+    [self user:[SessionHelper currentSession].currentUser.username
+didCommitToRepo:repoName
+   inTimeFrame:[repo.reminderPeriod unsignedLongValue]
+    completion:^(NSInteger daysSinceCommit) {
+        
         repo.daysSinceCommit = @(daysSinceCommit);
-        [[CoreDataHelper sharedHelper] saveContext];
+        [[UserHelper currentHelper] saveContext];
         [[LocalNotificationHelper sharedHelper] checkAndSendNotifications];
         
         completion(daysSinceCommit);
@@ -214,7 +210,7 @@
         // set up properties
         _client = (OCTClient *)x;
         OCTUser *user = ((OCTClient *)x).user;
-        self.currentUser = user.login;
+        [SessionHelper currentSession].currentUser = [UserHelper helperForUsername:user.login];
     } error:^(NSError *error) {
         NSLog(@"%@", error.description);
         success = NO;

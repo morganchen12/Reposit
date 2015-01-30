@@ -1,5 +1,5 @@
 //
-//  CoreDataHelper.m
+//  UserHelper.m
 //  Reposit
 //
 //  Created by Morgan Chen on 1/26/15.
@@ -8,19 +8,21 @@
 
 #import <OctoKit/OctoKit.h>
 
-#import "CoreDataHelper.h"
+#import "UserHelper.h"
+#import "User.h"
 #import "Repository.h"
 #import "AppDelegate.h"
+#import "SessionHelper.h"
 
 static const NSUInteger kDefaultObligationPeriod = 7; // days
 
-@interface CoreDataHelper()
+@interface UserHelper()
 
-
+@property (nonatomic, readwrite, strong) User *user;
 
 @end
 
-@implementation CoreDataHelper
+@implementation UserHelper
 
 #pragma mark - Initializers / Life Cycle Methods
 
@@ -28,22 +30,74 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
     self = [super init];
     if (self) {
 
+        // load user from disk if it exists
+        NSString *user = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+        if (user) {
+            _username = user;
+        }
+        
         // set managedObjectContext for convenience
         _managedObjectContext = ((AppDelegate *)([UIApplication sharedApplication].delegate)).managedObjectContext;
     }
     return self;
 }
 
-+ (instancetype)sharedHelper {
-    static CoreDataHelper *helper;
-    static dispatch_once_t once;
-    dispatch_once(&once, ^{
-        helper = [[CoreDataHelper alloc] init];
-    });
++ (instancetype)helperForUsername:(NSString *)username {
+    NSAssert(!!username, @"username must not be nil!");
+    
+    UserHelper *helper = [[UserHelper alloc] init];
+    
+    // configure request to look up user by username in Core Data
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:helper.managedObjectContext];
+    request.entity = entity;
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name LIKE %@", username];
+    request.predicate = predicate;
+    
+    // execute fetch request
+    NSError *error;
+    NSArray *results = [helper.managedObjectContext executeFetchRequest:request error:&error];
+    
+    // handle error
+    if (error) {
+        NSLog(@"%@", error.description);
+    }
+    
+    // if results, create helper based on results
+    if (results.count == 1) {
+        User *user = (User *)(results[0]);
+        helper.username = user.name;
+    }
+    
+    // otherwise create new user with username
+    else {
+        helper.username = username;
+        [helper saveUserWithName:username];
+    }
+    
     return helper;
 }
 
++ (instancetype)currentHelper {
+    
+    // sanity check
+    UserHelper *helper = [SessionHelper currentSession].currentUser;
+    NSAssert(!!helper, @"Helper must not be nil!");
+    
+    return helper;
+}
+
+#pragma mark - Property accessors
+
+- (void)setUsername:(NSString *)username {
+    _username = username;
+    [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"username"];
+}
+
 #pragma mark - Core Data
+
+#pragma mark Repositories
 
 - (NSArray *)getRepos {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -113,6 +167,14 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
         return NO;
     }
     return YES;
+}
+
+#pragma mark Users
+
+- (void)saveUserWithName:(NSString *)name {
+    User *newUser = (User *)[NSEntityDescription insertNewObjectForEntityForName:@"User"
+                                                          inManagedObjectContext:self.managedObjectContext];
+    newUser.name = name;
 }
 
 #pragma mark - Helpers

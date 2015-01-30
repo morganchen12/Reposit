@@ -8,7 +8,7 @@
 
 #import "LocalNotificationHelper.h"
 #import "GitHubHelper.h"
-#import "CoreDataHelper.h"
+#import "UserHelper.h"
 #import "Repository.h"
 @import UIKit;
 
@@ -40,7 +40,7 @@ static const NSTimeInterval kNotificationSleepInterval = 3600; // seconds
     }
     
     // fetch repos from core data and check if they have recent commits
-    NSArray *allRepos = [[CoreDataHelper sharedHelper] getRepos];
+    NSArray *allRepos = [[UserHelper currentHelper] getRepos];
     NSMutableArray *oldRepos = [[NSMutableArray alloc] initWithCapacity:allRepos.count];
     for (Repository *repo in allRepos) {
         if ([repo.daysSinceCommit compare:repo.reminderPeriod] != NSOrderedAscending ||
