@@ -68,6 +68,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
     if (results.count == 1) {
         User *user = (User *)(results[0]);
         helper.username = user.name;
+        helper.user = user;
     }
     
     // otherwise create new user with username
