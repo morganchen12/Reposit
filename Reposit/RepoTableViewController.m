@@ -13,6 +13,10 @@
 #import "CoreDataHelper.h"
 #import "Repository.h"
 
+// animation constants
+static const float kCellPopulationAnimationDelay    = 0.05;
+static const float kCellPopulationAnimationDuration = 0.25;
+
 @interface RepoTableViewController ()
 
 @property (nonatomic, readwrite) NSArray *repositories;
@@ -68,7 +72,7 @@
     NSString *fullname = [NSString stringWithFormat:@"%@ / %@", repo.owner, repo.name];
     
     cell.textLabel.text = fullname;
-    cell.detailTextLabel.textColor = [UIColor blackColor];
+    cell.detailTextLabel.textColor = [UIColor grayColor];
     cell.detailTextLabel.text = @"  Checking recent commits...";
     
     // check if user has recently committed to their projects
@@ -80,6 +84,15 @@
         
         // recent commits found
         if (daysSinceCommit != NSNotFound) {
+            
+            // animate fade out label
+            [UIView animateWithDuration:kCellPopulationAnimationDuration
+                                  delay:kCellPopulationAnimationDelay
+                                options:kNilOptions animations:^{
+                                    cell.detailTextLabel.alpha = 0.0;
+                                } completion:^(BOOL finished) {
+                                    
+                                }];
             
             // use spaces as poor man's indentation
             // update label on case-by-case basis for commits pushed today and yesterday
@@ -105,13 +118,18 @@
         
         // no recent commits, berate user
         else {
-            // darkish red
             cell.detailTextLabel.text = @"  No recent commits";
-            cell.detailTextLabel.textColor = [UIColor colorWithRed:214.0 / 255
-                                                             green:0.0   / 255
-                                                              blue:21.0  / 255
-                                                             alpha:1.0];
+            cell.detailTextLabel.textColor = [UIColor grayColor];
         }
+        
+        // animate fade in label
+        [UIView animateWithDuration:kCellPopulationAnimationDuration
+                              delay:(kCellPopulationAnimationDelay)
+                            options:kNilOptions animations:^{
+                                cell.detailTextLabel.alpha = 1.0;
+                            } completion:^(BOOL finished) {
+                                
+                            }];
     }];
     
     return cell;

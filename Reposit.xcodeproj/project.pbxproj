@@ -109,11 +109,11 @@
 		8D9EF2551A756B8E00E36EB4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8D9EF2591A756BBA00E36EB4 /* OctoKit.framework */,
 				8D9EF2611A75701500E36EB4 /* MobileCoreServices.framework */,
 				8D9EF2561A756BBA00E36EB4 /* AFNetworking.framework */,
 				8D9EF2571A756BBA00E36EB4 /* ISO8601DateFormatter.framework */,
 				8D9EF2581A756BBA00E36EB4 /* Mantle.framework */,
-				8D9EF2591A756BBA00E36EB4 /* OctoKit.framework */,
 				8D9EF25A1A756BBA00E36EB4 /* ReactiveCocoa.framework */,
 			);
 			name = Frameworks;

@@ -12,6 +12,10 @@
 #import "GitHubHelper.h"
 #import "CoreDataHelper.h"
 
+// animation constants
+static const float kCellPopulationAnimationDelay    = 0.01;
+static const float kCellPopulationAnimationDuration = 0.4;
+
 @interface AddReposTableViewController ()
 
 @property (nonatomic, readwrite) NSArray *fetchedRepositories;
@@ -149,6 +153,19 @@
     else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
+    
+    // animate
+    cell.textLabel.alpha = 0.0;
+    cell.detailTextLabel.alpha = 0.0;
+    
+    [UIView animateWithDuration:kCellPopulationAnimationDuration
+                          delay:(kCellPopulationAnimationDelay)
+                        options:kNilOptions animations:^{
+                            cell.textLabel.alpha = 1.0;
+                            cell.detailTextLabel.alpha = 1.0;
+                        } completion:^(BOOL finished) {
+                            
+                        }];
     
     return cell;
 }
