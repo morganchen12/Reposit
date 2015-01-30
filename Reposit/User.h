@@ -13,7 +13,7 @@
 
 @interface User : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSOrderedSet *repos;
 
 @end
