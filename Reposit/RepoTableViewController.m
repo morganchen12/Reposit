@@ -177,9 +177,6 @@ static const float kCellPopulationAnimationDuration = 0.25;
         [[UserHelper currentHelper] saveContext];
         
         // delete object from local array, preserving order
-        NSMutableArray *tempRepos = [self.repositories mutableCopy];
-        [tempRepos removeObjectAtIndex:indexPath.row];
-        self.repositories = [tempRepos copy];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
