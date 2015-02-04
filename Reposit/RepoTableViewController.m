@@ -16,7 +16,7 @@
 
 // animation constants
 static const float kCellPopulationAnimationDelay    = 0.05;
-static const float kCellPopulationAnimationDuration = 0.25;
+static const float kCellPopulationAnimationDuration = 0.3;
 
 @interface RepoTableViewController ()
 
