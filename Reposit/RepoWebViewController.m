@@ -35,14 +35,18 @@
     NSString *repoName;
     if (self.repository) {
         repoName = [NSString stringWithFormat:@"%@/%@", self.repository.owner, self.repository.name];
-        NSString *urlString = [NSString stringWithFormat:@"https://github.com/%@", repoName];
-        NSURL *url = [NSURL URLWithString:urlString];
-        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-        [self.webView loadRequest:urlRequest];
     }
     else {
         NSLog(@"No repo specified to load!");
+        
+        // default to shameless self-plug if somehow repo isn't defined
+        repoName = @"morganchen12/Reposit";
     }
+    
+    NSString *urlString = [NSString stringWithFormat:@"https://github.com/%@", repoName];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    [self.webView loadRequest:urlRequest];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
