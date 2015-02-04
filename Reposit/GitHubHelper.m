@@ -15,10 +15,11 @@
 #import "AppDelegate.h"
 #import "Repository.h"
 #import "Secret.h"
+#import "KeychainWrapper.h"
 
 @interface GitHubHelper()
 
-@property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, readonly) KeychainWrapper *keychainWrapper;
 
 @end
 
@@ -29,6 +30,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        
+        // initialize keychain wrapper
+        _keychainWrapper = [[KeychainWrapper alloc] init];
         
         // set OCTClient ID and secret;
         [OCTClient setClientID:kOctoKitClientID clientSecret:kOctoKitClientSecret];
@@ -203,6 +207,23 @@ didCommitToRepo:repoName
 #pragma mark - OAuth
 
 - (BOOL)signInToGitHub {
+    
+    // check keychain before authenticating
+    
+    NSString *rawLogin = [self.keychainWrapper myObjectForKey:(__bridge id)kSecAttrAccount];
+    NSString *token    = [self.keychainWrapper myObjectForKey:(__bridge id)kSecValueData];
+    
+    if (rawLogin.length && token.length) {
+        OCTUser *user = [OCTUser userWithRawLogin:rawLogin server:[OCTServer dotComServer]];
+        OCTClient *client = [OCTClient authenticatedClientWithUser:user token:token];
+        
+        _client = client;
+        [SessionHelper currentSession].currentUser = [UserHelper helperForUsername:user.rawLogin];
+        
+        return YES;
+    }
+    
+    // if nothing in keychain, authenticate
     __block BOOL success;
     [[OCTClient signInToServerUsingWebBrowser:[OCTServer dotComServer] scopes:OCTClientAuthorizationScopesUser] subscribeNext:^(id x) {
         success = YES;
@@ -211,6 +232,10 @@ didCommitToRepo:repoName
         _client = (OCTClient *)x;
         OCTUser *user = ((OCTClient *)x).user;
         [SessionHelper currentSession].currentUser = [UserHelper helperForUsername:user.login];
+        
+        // set up stuff in keychain
+        [self.keychainWrapper mySetObject:self.client.user.rawLogin forKey:(__bridge id)kSecAttrAccount];
+        [self.keychainWrapper mySetObject:self.client.token forKey:(__bridge id)kSecValueData];
     } error:^(NSError *error) {
         NSLog(@"%@", error.description);
         success = NO;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D1443CE1A816F3700FD17CA /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D1443CD1A816F3700FD17CA /* KeychainWrapper.m */; };
 		8D2D0A3A1A7C31A000E31B14 /* SessionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2D0A391A7C31A000E31B14 /* SessionHelper.m */; };
 		8D2D0A3D1A7C3E5B00E31B14 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2D0A3C1A7C3E5B00E31B14 /* User.m */; };
 		8D2D0A401A7C3EA000E31B14 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2D0A3F1A7C3EA000E31B14 /* Repository.m */; };
@@ -45,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8D1443CC1A816F3700FD17CA /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
+		8D1443CD1A816F3700FD17CA /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		8D2D0A381A7C31A000E31B14 /* SessionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionHelper.h; sourceTree = "<group>"; };
 		8D2D0A391A7C31A000E31B14 /* SessionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionHelper.m; sourceTree = "<group>"; };
 		8D2D0A3B1A7C3E5B00E31B14 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -179,6 +182,8 @@
 				8DA3D9AE1A5628BD005AA177 /* GitHubHelper.m */,
 				8D2D0A381A7C31A000E31B14 /* SessionHelper.h */,
 				8D2D0A391A7C31A000E31B14 /* SessionHelper.m */,
+				8D1443CC1A816F3700FD17CA /* KeychainWrapper.h */,
+				8D1443CD1A816F3700FD17CA /* KeychainWrapper.m */,
 				8DA483BC1A76E857002EE56E /* UserHelper.h */,
 				8DA483BD1A76E857002EE56E /* UserHelper.m */,
 				8DFADDB31A5A470600D1CD04 /* LocalNotificationHelper.h */,
@@ -341,6 +346,7 @@
 				8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */,
 				8D2D0A401A7C3EA000E31B14 /* Repository.m in Sources */,
 				8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */,
+				8D1443CE1A816F3700FD17CA /* KeychainWrapper.m in Sources */,
 				8D2D0A3D1A7C3E5B00E31B14 /* User.m in Sources */,
 				8DFADDB51A5A470600D1CD04 /* LocalNotificationHelper.m in Sources */,
 				8DA483BE1A76E857002EE56E /* UserHelper.m in Sources */,
