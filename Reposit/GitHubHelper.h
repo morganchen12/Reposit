@@ -23,7 +23,7 @@
 
 #pragma mark - Github API
 
-/* Return a list of public repositories belonging to a GitHub user. Takes in a username string as a parameter.
+/* Retreive a list of public repositories belonging to a GitHub user. Takes in a username string as a parameter.
  * Result array is passed in as a parameter to the completion block.
  */
 - (void)publicReposFromUser:(NSString *)username completion:(void (^)(NSArray *repos))completion;
@@ -31,6 +31,14 @@
 /* Calls publicReposFromUser:completion: with user as the current user.
  */
 - (void)publicReposFromCurrentUserWithCompletion:(void (^)(NSArray *repos))completion;
+
+/* Retreive the commit activity for a particular repository.
+ */
+- (void)participationForRepositoryWithName:(NSString *)name owner:(NSString *)owner completion:(void (^)(NSDictionary *results))completion;
+
+/* Calls commitActivityForRepositoryWithName:owner: with the given Repository's name and owner
+ */
+- (void)participationForRepository:(Repository *)repo completion:(void (^)(NSDictionary *results))completion;
 
 /* Check whether or not a user has committed to a repository within the past specified number of days.
  * If commits are present, completion block will be passed the number of days since the last commit. Otherwise,

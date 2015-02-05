@@ -77,6 +77,35 @@
     [self publicReposFromUser:[SessionHelper currentSession].currentUser.username completion:completion];
 }
 
+- (void)participationForRepositoryWithName:(NSString *)name owner:(NSString *)owner completion:(void (^)(NSDictionary *stats))completion {
+    NSAssert(!!owner && owner.length > 0, @"owner must not be nil or empty!");
+    NSAssert(!!name && name.length > 0, @"name must not be nil or empty!");
+    
+    // assemble url from username
+    NSString *urlString = [NSString stringWithFormat:@"repos/%@/%@/stats/participation", owner, name];
+    
+    // create request
+    NSMutableURLRequest *request = [self.client requestWithMethod:@"GET"
+                                                             path:urlString parameters:nil
+                                                  notMatchingEtag:@"GetRepoStats"];
+    
+    // enqueue request
+    RACSignal *signal = [self.client enqueueRequest:request resultClass:nil];
+    
+    // perform request and completion block
+    [[signal collect] subscribeNext:^(NSDictionary *results) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(results);
+        });
+    } error:^(NSError *error) {
+        NSLog(@"%@", error.description);
+    }];
+}
+
+- (void)participationForRepository:(Repository *)repo completion:(void (^)(NSDictionary *))completion {
+    [self participationForRepositoryWithName:repo.name owner:repo.owner completion:completion];
+}
+
 - (void)user:(NSString *)username didCommitToRepo:(NSString *)repo inTimeFrame:(NSUInteger)days completion:(void (^)(NSInteger daysSinceCommit))completion {
     
     // workaround because github api doesn't accept calls with since < 5 days
