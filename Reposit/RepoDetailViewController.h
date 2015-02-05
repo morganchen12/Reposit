@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 @class Repository;
+@protocol PickerViewToolBarButtonDelegate;
 
-@interface RepoDetailViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface RepoDetailViewController : UIViewController <UIPickerViewDataSource,
+                                                        UIPickerViewDelegate,
+                                                        UIToolbarDelegate,
+                                                        PickerViewToolBarButtonDelegate>
 
 @property (nonatomic, readwrite, weak) Repository *repository;
 

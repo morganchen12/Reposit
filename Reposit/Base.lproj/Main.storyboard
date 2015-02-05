@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6724" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4l7-sB-7U3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Active Repos-->
@@ -68,43 +69,49 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remind me to push commits every " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="atu-17-jC2">
-                                <rect key="frame" x="164" y="190" width="272" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="days." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3r2-5q-sSd">
-                                <rect key="frame" x="279" y="389" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RVY-4K-rpV">
-                                <rect key="frame" x="0.0" y="219" width="600" height="162"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="162" id="fj7-ZH-rzf"/>
-                                </constraints>
-                            </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVr-BX-s1i">
                                 <rect key="frame" x="279" y="64" width="42" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.28929924242424243" green="0.28929924242424243" blue="0.28929924242424243" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remind me to push commits every " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="atu-17-jC2">
+                                <rect key="frame" x="16" y="95" width="243" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="amB-0G-HSx"/>
+                                    <constraint firstAttribute="width" constant="243" id="jpJ-hF-HcB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MWH-Ff-caG">
+                                <rect key="frame" x="255" y="89" width="33" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="W42-LC-XEl"/>
+                                    <constraint firstAttribute="width" constant="33" id="h7d-qF-4GC"/>
+                                </constraints>
+                                <color key="textColor" red="0.24588505002274075" green="0.64861505681818188" blue="0.13893782754793749" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="days." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3r2-5q-sSd">
+                                <rect key="frame" x="288" y="95" width="37" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="RVY-4K-rpV" secondAttribute="trailing" id="7PD-lV-jak"/>
-                            <constraint firstAttribute="centerX" secondItem="atu-17-jC2" secondAttribute="centerX" id="JAU-v0-kgN"/>
-                            <constraint firstAttribute="centerX" secondItem="pVr-BX-s1i" secondAttribute="centerX" id="Lln-08-Zby"/>
-                            <constraint firstAttribute="centerX" secondItem="RVY-4K-rpV" secondAttribute="centerX" id="RDb-Cb-V5W"/>
-                            <constraint firstItem="3r2-5q-sSd" firstAttribute="top" secondItem="RVY-4K-rpV" secondAttribute="bottom" constant="8" id="aYn-b6-OdO"/>
-                            <constraint firstItem="pVr-BX-s1i" firstAttribute="top" secondItem="olB-RO-rGR" secondAttribute="top" constant="64" id="bjQ-hD-8PG"/>
-                            <constraint firstItem="RVY-4K-rpV" firstAttribute="top" secondItem="atu-17-jC2" secondAttribute="bottom" constant="8" id="ctZ-7M-SX6"/>
-                            <constraint firstAttribute="centerX" secondItem="3r2-5q-sSd" secondAttribute="centerX" id="dup-Dd-lZM"/>
-                            <constraint firstAttribute="centerY" secondItem="RVY-4K-rpV" secondAttribute="centerY" id="i4e-fp-EWw"/>
-                            <constraint firstItem="RVY-4K-rpV" firstAttribute="leading" secondItem="olB-RO-rGR" secondAttribute="leading" id="mDl-A4-AMX"/>
+                            <constraint firstItem="atu-17-jC2" firstAttribute="top" secondItem="pVr-BX-s1i" secondAttribute="bottom" constant="14" id="651-pJ-7p9"/>
+                            <constraint firstItem="3r2-5q-sSd" firstAttribute="leading" secondItem="MWH-Ff-caG" secondAttribute="trailing" id="8tD-HF-XOc"/>
+                            <constraint firstItem="3r2-5q-sSd" firstAttribute="top" secondItem="pVr-BX-s1i" secondAttribute="bottom" constant="14" id="CHn-Xr-H2l"/>
+                            <constraint firstAttribute="centerX" secondItem="pVr-BX-s1i" secondAttribute="centerX" id="Q9c-6S-luc"/>
+                            <constraint firstItem="MWH-Ff-caG" firstAttribute="top" secondItem="pVr-BX-s1i" secondAttribute="bottom" constant="8" id="QC1-r2-ma9"/>
+                            <constraint firstItem="MWH-Ff-caG" firstAttribute="leading" secondItem="atu-17-jC2" secondAttribute="trailing" constant="-4" id="iqA-ed-7EK"/>
+                            <constraint firstItem="pVr-BX-s1i" firstAttribute="top" secondItem="ADc-zp-Cp5" secondAttribute="bottom" id="ocy-KS-h7l"/>
+                            <constraint firstItem="atu-17-jC2" firstAttribute="leading" secondItem="olB-RO-rGR" secondAttribute="leadingMargin" id="sLZ-0L-2Fy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="RepoName" id="mXs-TK-Cwo">
@@ -116,7 +123,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="authorLabel" destination="pVr-BX-s1i" id="Dlb-4M-fpK"/>
-                        <outlet property="pickerView" destination="RVY-4K-rpV" id="KSt-62-GMg"/>
+                        <outlet property="textField" destination="MWH-Ff-caG" id="DLw-eR-eda"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A7Q-pH-kG0" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -150,7 +150,7 @@
         }
         else {
             // handle download error
-            NSLog(@"%@", error.description);
+            NSLog(@"Error fetching commits: %@", error.description);
         }
     }];
     

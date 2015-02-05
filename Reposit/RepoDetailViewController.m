@@ -9,13 +9,19 @@
 #import "RepoDetailViewController.h"
 #import "RepoWebViewController.h"
 #import "Repository.h"
+#import "UserHelper.h"
+#import "SessionHelper.h"
+#import "PickerViewToolBar.h"
 
 @interface RepoDetailViewController ()
 
 @property (nonatomic, readonly) NSArray *pickerOptions;
 
-@property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
+@property (strong, nonatomic) UIPickerView *pickerView;
+@property (strong, nonatomic) PickerViewToolBar *toolBar;
+
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
 
 @end
 
@@ -34,9 +40,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // set up picker view
+    // set up picker view and toolbar
+    if (!(self.pickerView)) self.pickerView = [[UIPickerView alloc] init];
+    if (!(self.toolBar)) self.toolBar = [PickerViewToolBar toolBarFromNib];
+    
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
+    self.toolBar.pickerView = self.pickerView;
+    self.toolBar.buttonDelegate = self;
+    
+    self.textField.inputView = self.pickerView;
+    self.textField.inputAccessoryView = self.toolBar;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -45,8 +59,13 @@
     // set up author label
     self.authorLabel.text = self.repository.owner;
     self.authorLabel.textColor = [UIColor grayColor];
+    
+    // set up picker view
     NSInteger row = [self.pickerOptions indexOfObject:self.repository.reminderPeriod];
     [self.pickerView selectRow:row inComponent:0 animated:NO];
+    
+    // set up text field
+    self.textField.text = [self.repository.reminderPeriod stringValue];
 }
 
 #pragma mark - property accessors
@@ -70,11 +89,6 @@
     return label;
 }
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSNumber *selected = (NSNumber *)(self.pickerOptions[row]);
-    self.repository.reminderPeriod = selected;
-}
-
 #pragma mark - UIPickerViewDataSource
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -85,6 +99,19 @@
     return self.pickerOptions.count;
 }
 
+#pragma mark - PickerViewToolBarButtonDelegate
+
+- (void)toolBarCancelButtonPressed {
+    [self.textField resignFirstResponder];
+}
+
+- (void)toolBarSaveButtonPressed {
+    NSNumber *selection = self.pickerOptions[[self.pickerView selectedRowInComponent:0]];
+    self.repository.reminderPeriod = selection;
+    self.textField.text = [selection stringValue];
+    [[SessionHelper currentSession].currentUser saveContext];
+    [self.textField resignFirstResponder];
+}
 
 #pragma mark - Navigation
 

@@ -13,6 +13,8 @@
 		8D2D0A401A7C3EA000E31B14 /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2D0A3F1A7C3EA000E31B14 /* Repository.m */; };
 		8D3D6DE51A58980E003F8C42 /* AddReposTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DE41A58980E003F8C42 /* AddReposTableViewController.m */; };
 		8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */; };
+		8D603E551A83F9050004E53A /* PickerViewToolBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D603E541A83F9050004E53A /* PickerViewToolBar.xib */; };
+		8D603E581A83FBBD0004E53A /* PickerViewToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D603E571A83FBBD0004E53A /* PickerViewToolBar.m */; };
 		8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */; };
 		8D9EF25B1A756BBA00E36EB4 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF2561A756BBA00E36EB4 /* AFNetworking.framework */; };
 		8D9EF25C1A756BBA00E36EB4 /* ISO8601DateFormatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9EF2571A756BBA00E36EB4 /* ISO8601DateFormatter.framework */; };
@@ -58,6 +60,9 @@
 		8D3D6DE41A58980E003F8C42 /* AddReposTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReposTableViewController.m; sourceTree = "<group>"; };
 		8D3D6DED1A58CEE6003F8C42 /* RepoWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoWebViewController.h; sourceTree = "<group>"; };
 		8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoWebViewController.m; sourceTree = "<group>"; };
+		8D603E541A83F9050004E53A /* PickerViewToolBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickerViewToolBar.xib; sourceTree = "<group>"; };
+		8D603E561A83FBBD0004E53A /* PickerViewToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerViewToolBar.h; sourceTree = "<group>"; };
+		8D603E571A83FBBD0004E53A /* PickerViewToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewToolBar.m; sourceTree = "<group>"; };
 		8D805A291A59C3BD003C97B2 /* RepoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoDetailViewController.h; sourceTree = "<group>"; };
 		8D805A2A1A59C3BD003C97B2 /* RepoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoDetailViewController.m; sourceTree = "<group>"; };
 		8D9EF2561A756BBA00E36EB4 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
@@ -162,6 +167,9 @@
 				8D3D6DED1A58CEE6003F8C42 /* RepoWebViewController.h */,
 				8D3D6DEE1A58CEE6003F8C42 /* RepoWebViewController.m */,
 				8DFB4C871A56208900FA334B /* Main.storyboard */,
+				8D603E561A83FBBD0004E53A /* PickerViewToolBar.h */,
+				8D603E571A83FBBD0004E53A /* PickerViewToolBar.m */,
+				8D603E541A83F9050004E53A /* PickerViewToolBar.xib */,
 				8DBCC45D1A5BBA2C0084BE1F /* LaunchScreen.xib */,
 				8DFB4C8A1A56208900FA334B /* Images.xcassets */,
 				8DFB4C811A56208900FA334B /* Reposit.xcdatamodeld */,
@@ -298,6 +306,7 @@
 				8DBCC45E1A5BBA2C0084BE1F /* LaunchScreen.xib in Resources */,
 				8DFB4C891A56208900FA334B /* Main.storyboard in Resources */,
 				8DA8DC631A5B7E62006D3D3C /* Media.xcassets in Resources */,
+				8D603E551A83F9050004E53A /* PickerViewToolBar.xib in Resources */,
 				8DFB4C8B1A56208900FA334B /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,6 +356,7 @@
 				8D2D0A401A7C3EA000E31B14 /* Repository.m in Sources */,
 				8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */,
 				8D1443CE1A816F3700FD17CA /* KeychainWrapper.m in Sources */,
+				8D603E581A83FBBD0004E53A /* PickerViewToolBar.m in Sources */,
 				8D2D0A3D1A7C3E5B00E31B14 /* User.m in Sources */,
 				8DFADDB51A5A470600D1CD04 /* LocalNotificationHelper.m in Sources */,
 				8DA483BE1A76E857002EE56E /* UserHelper.m in Sources */,
