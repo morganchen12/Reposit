@@ -77,7 +77,7 @@
     [self publicReposFromUser:[SessionHelper currentSession].currentUser.username completion:completion];
 }
 
-- (void)participationForRepositoryWithName:(NSString *)name owner:(NSString *)owner completion:(void (^)(NSDictionary *stats))completion {
+- (void)participationForRepositoryWithName:(NSString *)name owner:(NSString *)owner completion:(void (^)(NSArray *stats))completion {
     NSAssert(!!owner && owner.length > 0, @"owner must not be nil or empty!");
     NSAssert(!!name && name.length > 0, @"name must not be nil or empty!");
     
@@ -94,7 +94,7 @@
     RACSignal *signal = [self.client enqueueRequest:request resultClass:nil];
     
     // perform request and completion block
-    [[signal collect] subscribeNext:^(NSDictionary *results) {
+    [[signal collect] subscribeNext:^(NSArray *results) {
         dispatch_async(dispatch_get_main_queue(), ^{
             completion(results);
         });
@@ -103,7 +103,7 @@
     }];
 }
 
-- (void)participationForRepository:(Repository *)repo completion:(void (^)(NSDictionary *))completion {
+- (void)participationForRepository:(Repository *)repo completion:(void (^)(NSArray *stats))completion {
     [self participationForRepositoryWithName:repo.name owner:repo.owner completion:completion];
 }
 

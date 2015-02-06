@@ -34,11 +34,11 @@
 
 /* Retreive the commit activity for a particular repository.
  */
-- (void)participationForRepositoryWithName:(NSString *)name owner:(NSString *)owner completion:(void (^)(NSDictionary *results))completion;
+- (void)participationForRepositoryWithName:(NSString *)name owner:(NSString *)owner completion:(void (^)(NSArray *results))completion;
 
 /* Calls commitActivityForRepositoryWithName:owner: with the given Repository's name and owner
  */
-- (void)participationForRepository:(Repository *)repo completion:(void (^)(NSDictionary *results))completion;
+- (void)participationForRepository:(Repository *)repo completion:(void (^)(NSArray *results))completion;
 
 /* Check whether or not a user has committed to a repository within the past specified number of days.
  * If commits are present, completion block will be passed the number of days since the last commit. Otherwise,
