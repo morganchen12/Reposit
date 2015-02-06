@@ -86,8 +86,9 @@
     
     // create request
     NSMutableURLRequest *request = [self.client requestWithMethod:@"GET"
-                                                             path:urlString parameters:nil
-                                                  notMatchingEtag:@"GetRepoStats"];
+                                                             path:urlString
+                                                       parameters:nil
+                                                  notMatchingEtag:nil];
     
     // enqueue request
     RACSignal *signal = [self.client enqueueRequest:request resultClass:nil];

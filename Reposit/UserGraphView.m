@@ -7,12 +7,25 @@
 //
 
 #import "UserGraphView.h"
+#import "GitHubHelper.h"
+
+@interface UserGraphView()
+
+@property (nonatomic, readwrite, copy) NSDictionary *stats;
+
+@end
 
 @implementation UserGraphView
 
 
 // draw graph
 - (void)drawRect:(CGRect)rect {
+    [[GitHubHelper sharedHelper] participationForRepositoryWithName:@"Reposit"
+                                                              owner:@"morganchen12"
+                                                         completion:^(NSDictionary *results) {
+                                                             self.stats = results;
+                                                         }];
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
