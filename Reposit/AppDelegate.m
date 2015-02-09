@@ -21,8 +21,10 @@
 #pragma mark - App lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     // initialize GitHubHelper
     [GitHubHelper sharedHelper];
+    
     // initialize LocalNotificationHelper
     [LocalNotificationHelper sharedHelper];
     

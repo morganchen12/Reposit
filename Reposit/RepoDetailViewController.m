@@ -12,6 +12,7 @@
 #import "UserHelper.h"
 #import "SessionHelper.h"
 #import "PickerViewToolBar.h"
+#import "UserGraphView.h"
 
 @interface RepoDetailViewController ()
 
@@ -22,6 +23,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
+
+@property (weak, nonatomic) IBOutlet UserGraphView *graphView;
 
 @end
 
@@ -51,6 +54,9 @@
     
     self.textField.inputView = self.pickerView;
     self.textField.inputAccessoryView = self.toolBar;
+    
+    // set up graph
+    self.graphView.repository = self.repository;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

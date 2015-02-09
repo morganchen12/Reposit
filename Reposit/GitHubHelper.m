@@ -250,6 +250,9 @@ didCommitToRepo:repoName
         _client = client;
         [SessionHelper currentSession].currentUser = [UserHelper helperForUsername:user.rawLogin];
         
+        // should make call to /user here to get current user and check that auth tokens in keychain are
+        // still valid
+        
         return YES;
     }
     

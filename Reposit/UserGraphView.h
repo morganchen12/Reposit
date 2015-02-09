@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Repository;
 
 @interface UserGraphView : UIView
+
+@property (nonatomic, readwrite) Repository *repository;
 
 @end

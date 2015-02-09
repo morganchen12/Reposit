@@ -131,6 +131,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="authorLabel" destination="pVr-BX-s1i" id="Dlb-4M-fpK"/>
+                        <outlet property="graphView" destination="bYt-5L-XKU" id="HeO-02-M6S"/>
                         <outlet property="textField" destination="MWH-Ff-caG" id="DLw-eR-eda"/>
                     </connections>
                 </viewController>
