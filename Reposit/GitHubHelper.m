@@ -78,8 +78,8 @@
 }
 
 - (void)participationForRepositoryWithName:(NSString *)name owner:(NSString *)owner completion:(void (^)(NSArray *stats))completion {
-    NSAssert(!!owner && owner.length > 0, @"owner must not be nil or empty!");
-    NSAssert(!!name && name.length > 0, @"name must not be nil or empty!");
+    NSAssert(owner && owner.length > 0, @"owner must not be nil or empty!");
+    NSAssert(name && name.length > 0, @"name must not be nil or empty!");
     
     // assemble url from username
     NSString *urlString = [NSString stringWithFormat:@"repos/%@/%@/stats/participation", owner, name];
@@ -111,6 +111,8 @@
     
     // workaround because github api doesn't accept calls with since < 5 days
     __block NSUInteger tempDays = 0;
+    
+    // if days < 5, set tempDays to 5
     tempDays = (days < 5) ? 5 : days;
     
     // boilerplate code to assemble request url from arguments
@@ -123,7 +125,8 @@
     int month = (int)components.month;
     int year = (int)components.year;
     
-    NSString *urlString = [NSString stringWithFormat:@"https://api.github.com/repos/%@/commits?since=%04d-%02d-%02d&author=%@", repo, year, month, day, username];
+    NSString *urlString = [NSString stringWithFormat:@"https://api.github.com/repos/%@/commits?since=%04d-%02d-%02d&author=%@",
+                           repo, year, month, day, username];
     NSURL *url = [NSURL URLWithString:urlString];
     
     // create request using URL
@@ -147,7 +150,7 @@
             NSArray *downloadedJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&serializationError];
                                               
             if (serializationError) {
-                // handle serialization error
+                // handle serialization error, this basically never happens
                 NSLog(@"%@", serializationError.description);
             }
             else {

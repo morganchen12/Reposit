@@ -180,14 +180,14 @@ static const UInt8 kKeychainItemIdentifier[] = "com.morganchen.Reposit.KeychainU
         OSStatus errorCode = SecItemUpdate((__bridge CFDictionaryRef)updateItem,
                                            (__bridge CFDictionaryRef)tempCheck);
         NSAssert(errorCode == noErr, @"couldn't update keychain");
-        if (attributes) CFRelease(attributes);
     }
     else {
         OSStatus errorCode = SecItemAdd((__bridge CFDictionaryRef)[self dictionaryToSecItemFormat:self.keychainData],
                                         NULL);
         NSAssert(errorCode == noErr, @"couldn't add keychain item");
-        if (attributes) CFRelease(attributes);
     }
+    
+    if (attributes) CFRelease(attributes);
 }
 
 @end

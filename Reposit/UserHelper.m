@@ -43,7 +43,7 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 }
 
 + (instancetype)helperForUsername:(NSString *)username {
-    NSAssert(!!username, @"username must not be nil!");
+    NSAssert(username && username.length, @"username must not be nil or empty!");
     
     UserHelper *helper = [[UserHelper alloc] init];
     
