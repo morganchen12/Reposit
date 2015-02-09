@@ -64,7 +64,7 @@ static const NSInteger kLabelValueOffset = 10;
     
     // don't draw anything if no data is available
     if (!(self.stats)) {
-        // should draw text in here saying "no data" or something
+        // do nothing in here
         
         return;
     }
@@ -73,10 +73,6 @@ static const NSInteger kLabelValueOffset = 10;
     CGRect graphContainer = CGRectInset(self.bounds, 8, 8);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    // flip context so graphing things makes sense
-    CGContextTranslateCTM(context, 0.0, graphContainer.size.height);
-    CGContextScaleCTM(context, 1.0, -1.0);
     
     NSArray *pointHeights = [self mapStatsToPoints];
     
@@ -87,10 +83,27 @@ static const NSInteger kLabelValueOffset = 10;
     
     // can't draw one or less points
     if (numPoints <= 1) {
-        // should draw text in here saying "insufficient data" or something
+        
+        NSString *errorMessage = @"No data";
+        UIColor *errorColor = [UIColor lightGrayColor];
+        
+        NSDictionary *errorMessageAttributes = @{
+                                                 NSFontAttributeName: [UIFont systemFontOfSize:20],
+                                                 NSForegroundColorAttributeName: errorColor,
+                                                 };
+        
+        CGSize errorMessageSize = [errorMessage sizeWithAttributes:errorMessageAttributes];
+        
+        [errorMessage drawAtPoint:CGPointMake((self.bounds.size.width - errorMessageSize.width) / 2,
+                                              (self.bounds.size.height - errorMessageSize.height) / 2)
+                   withAttributes:errorMessageAttributes];
         
         return;
     }
+    
+    // flip context so graphing things makes sense
+    CGContextTranslateCTM(context, 0.0, graphContainer.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
     
     CGPoint *points = calloc(numPoints, sizeof(CGPoint));
     
