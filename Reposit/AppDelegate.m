@@ -22,8 +22,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    // initialize GitHubHelper
-    [GitHubHelper sharedHelper];
+    // initialize GitHubHelper and attempt to sign into GitHub
+    [[GitHubHelper sharedHelper] signInToGitHub];
     
     // initialize LocalNotificationHelper
     [LocalNotificationHelper sharedHelper];

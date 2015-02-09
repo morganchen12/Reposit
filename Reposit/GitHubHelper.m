@@ -125,70 +125,46 @@
     int month = (int)components.month;
     int year = (int)components.year;
     
-    NSString *urlString = [NSString stringWithFormat:@"https://api.github.com/repos/%@/commits?since=%04d-%02d-%02d&author=%@",
-                           repo, year, month, day, username];
-    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *urlString = [NSString stringWithFormat:@"repos/%@/commits", repo];
     
-    // create request using URL
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                       timeoutInterval:10.0];
-    [request setHTTPMethod:@"GET"];
+    NSDictionary *parameters = @{
+                                 @"since"  : [NSString stringWithFormat:@"%04d-%02d-%02d", year, month, day],
+                                 @"author" : username
+                                 };
     
-    // create session with self as delegate
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
-                                                          delegate:self
-                                                     delegateQueue:nil];
+    // create request
+    NSMutableURLRequest *request = [self.client requestWithMethod:@"GET"
+                                                             path:urlString
+                                                       parameters:parameters
+                                                  notMatchingEtag:nil];
+    
+    // enqueue request
+    RACSignal *signal = [self.client enqueueRequest:request resultClass:nil];
     
     // perform request
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:
-        ^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        // serialize data, handle errors
-        if (httpResponse.statusCode == 200 && data) {
-            NSError *serializationError;
-            NSArray *downloadedJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&serializationError];
-                                              
-            if (serializationError) {
-                // handle serialization error, this basically never happens
-                NSLog(@"%@", serializationError.description);
-            }
-            else {
-                // if no recent commits, pass NSNotFound into completion block
-                if (!downloadedJSON.count) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completion(NSNotFound);
-                    });
-                }
-                else {
-                    // get date string on most recent commit
-                    NSString *dateString = downloadedJSON[0][@"commit"][@"author"][@"date"];
-                    
-                    // turn date string into days (integer)
-                    NSInteger daysSinceLastCommit = [self daysSinceDateStringFromNow:dateString];
-                    
-                    // work around github api
-                    if (tempDays != days) {
-                        if (daysSinceLastCommit > days) {
-                            daysSinceLastCommit = NSNotFound;
-                        }
-                    }
-                    
-                    // perform completion block
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completion(daysSinceLastCommit);
-                    });
-                }
+    [[signal collect] subscribeNext:^(NSArray *results) {
+         // get date string on most recent commit
+        NSString *dateString = ((OCTResponse *)(results[0])).parsedResult[@"commit"][@"author"][@"date"];
+        
+        // turn date string into days (integer)
+        NSInteger daysSinceLastCommit = [self daysSinceDateStringFromNow:dateString];
+        
+        // work around github api
+        if (tempDays != days) {
+            if (daysSinceLastCommit > days) {
+                daysSinceLastCommit = NSNotFound;
             }
         }
-        else {
-            // handle download error
-            NSLog(@"Error fetching commits: %@", error.description);
-        }
+        
+        // perform completion block
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(daysSinceLastCommit);
+        });
+    } error:^(NSError *error) {
+        NSLog(@"Error fetching commits: %@", error.description);
+    } completed:^{
+        
     }];
-    
-    // actually run data task
-    [dataTask resume];
 }
 
 - (void)currentUserDidCommitToRepo:(Repository *)repo completion:(void (^)(NSInteger daysSinceCommit))completion {
@@ -242,7 +218,6 @@ didCommitToRepo:repoName
 - (BOOL)signInToGitHub {
     
     // check keychain before authenticating
-    
     NSString *rawLogin = [self.keychainWrapper myObjectForKey:(__bridge id)kSecAttrAccount];
     NSString *token    = [self.keychainWrapper myObjectForKey:(__bridge id)kSecValueData];
     
