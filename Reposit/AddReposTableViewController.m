@@ -105,10 +105,11 @@ static NSString *kNoResultsMessage = @"No results";
         // if no results, display "no results"
         if (!(repos.count)) {
             self.messageLabel.text = kNoResultsMessage;
+            self.fetchedRepositories = @[];
         }
         
-        [self.tableView reloadData];
         [self.refreshControl endRefreshing];
+        [self.tableView reloadData];
     }];
 }
 
