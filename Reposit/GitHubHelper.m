@@ -69,7 +69,7 @@
 }
 
 - (void)publicReposFromUser:(NSString *)username completion:(void (^)(NSArray *))completion {
-    NSAssert(!!username && username.length > 0, @"username must not be nil or empty!");
+    NSAssert(username, @"username must not be nil!");
     
     // assemble url from username
     NSString *urlString = [NSString stringWithFormat:@"users/%@/repos?sort=updated", username];
