@@ -23,6 +23,10 @@
 
 #pragma mark - Github API
 
+/* Get status for current user.
+ */
+- (void)statsForCurrentUserWithCompletion:(void (^)(id results))completion;
+
 /* Retreive a list of public repositories belonging to a GitHub user. Takes in a username string as a parameter.
  * Result array is passed in as a parameter to the completion block.
  */

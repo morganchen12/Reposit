@@ -51,6 +51,23 @@
 
 #pragma mark - Github API
 
+- (void)statsForCurrentUserWithCompletion:(void (^)(id results))completion {
+    NSString *urlString = @"user";
+    
+    NSMutableURLRequest *request = [self.client requestWithMethod:@"GET" path:urlString parameters:nil notMatchingEtag:nil];
+    RACSignal *signal = [self.client enqueueRequest:request resultClass:nil];
+    
+    [[signal collect] subscribeNext:^(id results) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(results);
+        });
+    } error:^(NSError *error) {
+        NSLog(@"%@", error);
+    } completed:^{
+        
+    }];
+}
+
 - (void)publicReposFromUser:(NSString *)username completion:(void (^)(NSArray *))completion {
     NSAssert(!!username && username.length > 0, @"username must not be nil or empty!");
     
@@ -58,7 +75,7 @@
     NSString *urlString = [NSString stringWithFormat:@"users/%@/repos?sort=updated", username];
     
     // create request
-    NSMutableURLRequest *request = [self.client requestWithMethod:@"GET" path:urlString parameters:nil notMatchingEtag:@"AddRepos"];
+    NSMutableURLRequest *request = [self.client requestWithMethod:@"GET" path:urlString parameters:nil notMatchingEtag:nil];
     
     // enqueue request
     RACSignal *signal = [self.client enqueueRequest:request resultClass:nil];
@@ -70,6 +87,7 @@
         });
     } error:^(NSError *error) {
         NSLog(@"%@", error.description);
+        completion(nil);
     }];
 }
 
@@ -143,7 +161,18 @@
     
     // perform request
     [[signal collect] subscribeNext:^(NSArray *results) {
-         // get date string on most recent commit
+        
+        // check if array is empty
+        if (!(results.count)) {
+            // perform completion block
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(NSNotFound);
+            });
+            
+            return;
+        }
+        
+        // get date string on most recent commit
         NSString *dateString = ((OCTResponse *)(results[0])).parsedResult[@"commit"][@"author"][@"date"];
         
         // turn date string into days (integer)

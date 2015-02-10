@@ -13,6 +13,7 @@
 #import "Repository.h"
 #import "AppDelegate.h"
 #import "SessionHelper.h"
+#import "LocalNotificationHelper.h"
 
 static const NSUInteger kDefaultObligationPeriod = 7; // days
 
@@ -151,6 +152,9 @@ static const NSUInteger kDefaultObligationPeriod = 7; // days
 
 - (void)deleteRepository:(Repository *)repo {
     [self.managedObjectContext deleteObject:repo];
+    
+    // reschedule notifications
+    [[LocalNotificationHelper sharedHelper] checkAndSendNotifications];
 }
 
 - (BOOL)saveContext {

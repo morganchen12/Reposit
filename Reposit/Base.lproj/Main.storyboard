@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6724" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4l7-sB-7U3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7515.2" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4l7-sB-7U3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7512"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -42,7 +42,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Active Repos" id="gTu-cU-eEE">
                         <barButtonItem key="backBarButtonItem" title="Add" id="2aQ-Q4-eTG"/>
-                        <barButtonItem key="leftBarButtonItem" image="settings" id="mwR-sb-KYf"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="GBT-jH-i5p">
                             <connections>
                                 <segue destination="Fts-s2-g3E" kind="show" identifier="ShowAddReposTableViewController" id="HIK-8h-uTL"/>
@@ -85,18 +84,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="7" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MWH-Ff-caG">
-                                <rect key="frame" x="255" y="89" width="33" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="W42-LC-XEl"/>
-                                    <constraint firstAttribute="width" constant="33" id="h7d-qF-4GC"/>
-                                </constraints>
-                                <color key="textColor" red="0.24588505002274075" green="0.64861505681818188" blue="0.13893782754793749" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="days." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3r2-5q-sSd">
-                                <rect key="frame" x="288" y="95" width="37" height="18"/>
+                                <rect key="frame" x="314" y="95" width="37" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -105,17 +94,27 @@
                                 <rect key="frame" x="0.0" y="134" width="600" height="466"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="7" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MWH-Ff-caG">
+                                <rect key="frame" x="267" y="89" width="33" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="W42-LC-XEl"/>
+                                    <constraint firstAttribute="width" constant="33" id="h7d-qF-4GC"/>
+                                </constraints>
+                                <color key="textColor" red="0.24588505002274075" green="0.64861505681818188" blue="0.13893782754793749" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="3r2-5q-sSd" firstAttribute="leading" secondItem="MWH-Ff-caG" secondAttribute="trailing" constant="14" id="3xh-Fy-WH0"/>
                             <constraint firstItem="atu-17-jC2" firstAttribute="top" secondItem="pVr-BX-s1i" secondAttribute="bottom" constant="14" id="651-pJ-7p9"/>
-                            <constraint firstItem="3r2-5q-sSd" firstAttribute="leading" secondItem="MWH-Ff-caG" secondAttribute="trailing" id="8tD-HF-XOc"/>
                             <constraint firstItem="3r2-5q-sSd" firstAttribute="top" secondItem="pVr-BX-s1i" secondAttribute="bottom" constant="14" id="CHn-Xr-H2l"/>
+                            <constraint firstItem="MWH-Ff-caG" firstAttribute="leading" secondItem="atu-17-jC2" secondAttribute="trailing" constant="8" id="DCA-IW-Ywp"/>
                             <constraint firstItem="uOM-mH-faC" firstAttribute="top" secondItem="bYt-5L-XKU" secondAttribute="bottom" id="O8j-Ne-w0A"/>
                             <constraint firstAttribute="centerX" secondItem="pVr-BX-s1i" secondAttribute="centerX" id="Q9c-6S-luc"/>
                             <constraint firstItem="MWH-Ff-caG" firstAttribute="top" secondItem="pVr-BX-s1i" secondAttribute="bottom" constant="8" id="QC1-r2-ma9"/>
                             <constraint firstItem="bYt-5L-XKU" firstAttribute="leading" secondItem="olB-RO-rGR" secondAttribute="leading" id="hyt-Hb-4Mk"/>
-                            <constraint firstItem="MWH-Ff-caG" firstAttribute="leading" secondItem="atu-17-jC2" secondAttribute="trailing" constant="-4" id="iqA-ed-7EK"/>
                             <constraint firstItem="pVr-BX-s1i" firstAttribute="top" secondItem="ADc-zp-Cp5" secondAttribute="bottom" id="ocy-KS-h7l"/>
                             <constraint firstItem="atu-17-jC2" firstAttribute="leading" secondItem="olB-RO-rGR" secondAttribute="leadingMargin" id="sLZ-0L-2Fy"/>
                             <constraint firstItem="bYt-5L-XKU" firstAttribute="top" secondItem="3r2-5q-sSd" secondAttribute="bottom" constant="21" id="yHU-NH-Kw8"/>
@@ -287,7 +286,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="settings" width="22" height="22"/>
         <image name="web" width="22" height="22"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

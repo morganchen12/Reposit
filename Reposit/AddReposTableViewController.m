@@ -22,10 +22,14 @@ static const float kCellPopulationAnimationDuration = 0.4;
 @property (nonatomic, readwrite) NSArray *fetchedRepositories;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, readwrite) NSMutableArray *selectedIndexPaths;
+@property (nonatomic, strong) UILabel *messageLabel;
 
 @end
 
 @implementation AddReposTableViewController
+
+static NSString *kLoadingMessage = @"Loading...\n\nIf this message persists, check your internet connection.";
+static NSString *kNoResultsMessage = @"No results";
 
 #pragma mark - Life cycle
 
@@ -46,6 +50,20 @@ static const float kCellPopulationAnimationDuration = 0.4;
     self.searchBar.delegate = self;
     self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+    
+    if (!(self.messageLabel)) {
+        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
+                                                                          0,
+                                                                          self.view.bounds.size.width,
+                                                                          self.view.bounds.size.height)];
+        messageLabel.text = kLoadingMessage;
+        messageLabel.textColor = [UIColor darkGrayColor];
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+        messageLabel.font = [UIFont systemFontOfSize:22];
+        [messageLabel sizeToFit];
+        self.messageLabel = messageLabel;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -71,6 +89,8 @@ static const float kCellPopulationAnimationDuration = 0.4;
     NSCharacterSet *whiteSpaceAndNewLine = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     NSString *userNameTrimmed = [self.searchBar.text stringByTrimmingCharactersInSet:whiteSpaceAndNewLine];
     
+    self.messageLabel.text = kLoadingMessage;
+    
     BOOL userNameIsValid = ([userNameTrimmed rangeOfString:@" "].location == NSNotFound);
 
     if (!userNameIsValid) {
@@ -81,6 +101,12 @@ static const float kCellPopulationAnimationDuration = 0.4;
     
     [[GitHubHelper sharedHelper] publicReposFromUser:userNameTrimmed completion:^(NSArray *repos) {
         self.fetchedRepositories = repos;
+        
+        // if no results, display "no results"
+        if (!(repos.count)) {
+            self.messageLabel.text = kNoResultsMessage;
+        }
+        
         [self.tableView reloadData];
         [self.refreshControl endRefreshing];
     }];
@@ -178,18 +204,8 @@ static const float kCellPopulationAnimationDuration = 0.4;
     }
     else {
         // display message when table is empty
-        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
-                                                                          0,
-                                                                          self.view.bounds.size.width,
-                                                                          self.view.bounds.size.height)];
-        messageLabel.text = @"Loading...\n\nIf this message persists, check your internet connection.";
-        messageLabel.textColor = [UIColor darkGrayColor];
-        messageLabel.numberOfLines = 0;
-        messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.font = [UIFont systemFontOfSize:22];
-        [messageLabel sizeToFit];
         
-        self.tableView.backgroundView = messageLabel;
+        self.tableView.backgroundView = self.messageLabel;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return 1;

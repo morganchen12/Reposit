@@ -12,7 +12,7 @@
 #import "Repository.h"
 @import UIKit;
 
-static const NSTimeInterval kNotificationSleepInterval = 3600; // seconds
+static const NSTimeInterval kSecondsInDay = 86400;
 
 @interface LocalNotificationHelper()
 
@@ -56,28 +56,35 @@ static const NSTimeInterval kNotificationSleepInterval = 3600; // seconds
     }
     
     // notification messages
-    NSString *action = @"Work on your side projects!";
+    NSString *action = @"dismiss";
     NSString *body;
     
-    if (oldRepos.count == 1) {
-        Repository *repo = oldRepos[0];
-        body = [NSString stringWithFormat:@"%@ needs your attention", repo.name];
-    }
-    else {
-        body = [NSString stringWithFormat:@"%lu projects need your attention", (unsigned long)(oldRepos.count)];
-    }
-    
-    // configure notification
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:kNotificationSleepInterval];
-    notification.alertBody = body;
-    notification.alertAction = action;
-    notification.timeZone = [NSTimeZone defaultTimeZone];
-    notification.applicationIconBadgeNumber = oldRepos.count;
-    
-    // cancel old notifications before sending
+    // cancel old notifications before scheduling new ones
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    
+    for (Repository *repo in oldRepos) {
+        body = [NSString stringWithFormat:@"%@ has no recent commits", repo.name];
+        
+        NSTimeInterval timeIntervalSinceNow;
+        
+        if (repo.daysSinceCommit.integerValue == NSNotFound) {
+            timeIntervalSinceNow = repo.reminderPeriod.doubleValue * kSecondsInDay;
+        }
+        else {
+            timeIntervalSinceNow = (repo.reminderPeriod.doubleValue - repo.daysSinceCommit.doubleValue) * kSecondsInDay;
+        }
+        
+        // configure notification
+        UILocalNotification *notification = [[UILocalNotification alloc] init];
+        notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:timeIntervalSinceNow];
+        notification.alertBody = body;
+        notification.alertAction = action;
+        notification.timeZone = [NSTimeZone defaultTimeZone];
+        notification.applicationIconBadgeNumber = oldRepos.count;
+        
+        // schedule notification
+        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    }
 }
 
 @end
