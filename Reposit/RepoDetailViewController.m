@@ -57,6 +57,11 @@
     
     // set up graph
     self.graphView.repository = self.repository;
+    
+    // notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -80,18 +85,20 @@
     _repository = repository;
     self.navigationItem.title = _repository.name;
     self.authorLabel.text = _repository.owner;
-    self.authorLabel.textColor = [UIColor grayColor];
 }
 
 #pragma mark - UIPickerViewDelegate
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    [self configureAppearanceForPickerView:pickerView];
+    
     
     // center text in label in picker view
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 37)];
     label.text = ((NSNumber *)(self.pickerOptions[row])).stringValue;
     label.textAlignment = NSTextAlignmentCenter;
     label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor whiteColor];
     return label;
 }
 
@@ -103,6 +110,45 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     return self.pickerOptions.count;
+}
+
+- (void)configureAppearanceForPickerView:(UIPickerView *)pickerView {
+    // mess with appearances
+    
+    for (CALayer *layer in pickerView.layer.sublayers) {
+        layer.backgroundColor = self.toolBar.barTintColor.CGColor;
+    }
+    
+    [pickerView.layer.sublayers[0] setBackgroundColor:[UIColor clearColor]];
+    [pickerView.layer.sublayers[0] setOpaque:NO];
+    
+    // evil hack to grab views related to the gray thing behind the keyboard
+    UIView *pickerViewContainerView = [[[UIApplication sharedApplication].windows[1] subviews][0] subviews][0];
+    UIView *keyboardInputBackdropView;
+    UIView *pickerViewBackgroundView;
+    if (pickerViewContainerView.subviews.count) {
+        keyboardInputBackdropView = pickerViewContainerView.subviews[0];
+        pickerViewBackgroundView = keyboardInputBackdropView.subviews[0];
+        
+        // ruin apple UI dreams by deleting gray bg view
+        for (UIView *subview in pickerViewBackgroundView.subviews) {
+            [subview removeFromSuperview];
+        }
+    }
+    
+    if (!(pickerViewBackgroundView.subviews.count)) {
+        UIView *dimView = [[UIView alloc] initWithFrame:pickerViewContainerView.frame];
+        
+        dimView.layer.backgroundColor = [UIColor blackColor].CGColor;
+        dimView.layer.opaque = NO;
+        dimView.layer.opacity = 0.8;
+        
+        [pickerViewBackgroundView addSubview:dimView];
+    }
+}
+
+- (void)keyboardWillShow {
+    [self configureAppearanceForPickerView:self.pickerView];
 }
 
 #pragma mark - PickerViewToolBarButtonDelegate
