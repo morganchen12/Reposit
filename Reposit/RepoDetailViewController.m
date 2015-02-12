@@ -61,7 +61,12 @@
     // notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow)
-                                                 name:UIKeyboardWillShowNotification object:nil];
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,10 +75,6 @@
     // set up author label
     self.authorLabel.text = self.repository.owner;
     self.authorLabel.textColor = [UIColor grayColor];
-    
-    // set up picker view
-    NSInteger row = [self.pickerOptions indexOfObject:self.repository.reminderPeriod];
-    [self.pickerView selectRow:row inComponent:0 animated:NO];
     
     // set up text field
     self.textField.text = [self.repository.reminderPeriod stringValue];
@@ -148,7 +149,15 @@
 }
 
 - (void)keyboardWillShow {
+    // set up picker view
+    NSInteger row = [self.pickerOptions indexOfObject:self.repository.reminderPeriod];
+    [self.pickerView selectRow:row inComponent:0 animated:NO];
     [self configureAppearanceForPickerView:self.pickerView];
+    self.pickerView.userInteractionEnabled = NO;
+}
+
+- (void)keyboardDidShow {
+    self.pickerView.userInteractionEnabled = YES;
 }
 
 #pragma mark - PickerViewToolBarButtonDelegate
