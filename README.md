@@ -7,11 +7,5 @@ Have a bug report or feature suggestion? File an issue [here](https://github.com
 ##Coming soon
 
 - iOS < 8 support
-- OAuth
-- Private repositories
 
 ##Screenshots
-
-![Screenshot](screenshots/screen1.png?raw=true)
-![Screenshot](screenshots/screen2.png?raw=true)
-![Screenshot](screenshots/screen3.png?raw=true)
