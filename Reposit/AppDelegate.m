@@ -25,14 +25,14 @@
     // initialize GitHubHelper and attempt to sign into GitHub
     [[GitHubHelper sharedHelper] signInToGitHub];
     
-    // initialize LocalNotificationHelper
-    [LocalNotificationHelper sharedHelper];
-    
     // ask for local notifications permission
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
         UIUserNotificationType types = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:types categories:nil]];
     }
+    
+    // initialize LocalNotificationHelper
+    [LocalNotificationHelper sharedHelper];
     
     // clear notification icons
     application.applicationIconBadgeNumber = 0;
