@@ -14,7 +14,10 @@
 #import "PickerViewToolBar.h"
 #import "UserGraphView.h"
 
-@interface RepoDetailViewController ()
+@interface RepoDetailViewController () <UIPickerViewDataSource,
+                                        UIPickerViewDelegate,
+                                        UIToolbarDelegate,
+                                        PickerViewToolBarButtonDelegate>
 
 @property (nonatomic, readonly) NSArray *pickerOptions;
 
@@ -28,7 +31,7 @@
 
 @end
 
-@implementation RepoDetailViewController
+@implementation RepoDetailViewController 
 
 #pragma mark - Lifecycle
 
