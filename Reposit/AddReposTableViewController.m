@@ -17,7 +17,7 @@
 static const float kCellPopulationAnimationDelay    = 0.01;
 static const float kCellPopulationAnimationDuration = 0.4;
 
-@interface AddReposTableViewController ()
+@interface AddReposTableViewController () <UISearchBarDelegate>
 
 @property (nonatomic, readwrite) NSArray *fetchedRepositories;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

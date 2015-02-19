@@ -14,9 +14,7 @@
 #import "UserHelper.h"
 #import "Repository.h"
 
-// animation constants
-static const float kCellPopulationAnimationDelay    = 0.05;
-static const float kCellPopulationAnimationDuration = 0.3;
+#import "UITableViewCell+Configurations.h"
 
 @interface RepoTableViewController ()
 
@@ -70,68 +68,8 @@ static const float kCellPopulationAnimationDuration = 0.3;
     
     // assemble "username / Repository" format for cell text from core data objects
     Repository *repo = (Repository *)(self.repositories[indexPath.row]);
-    NSString *fullname = [NSString stringWithFormat:@"%@ / %@", repo.owner, repo.name];
     
-    cell.textLabel.text = fullname;
-    cell.detailTextLabel.textColor = [UIColor grayColor];
-    cell.detailTextLabel.text = @"  Checking recent commits...";
-    
-    // check if user has recently committed to their projects
-    // note: this method may cause excessive api calls for a large number of Repository objects
-    // (i.e. scrolling would call this method repeatedly), but it's generally unlikely that a
-    // user has enough side projects to actually fill the entire page. If the GitHub API rate
-    // limit becomes problematic, look here
-    [[GitHubHelper sharedHelper] currentUserDidCommitToRepo:repo completion:^(NSInteger daysSinceCommit) {
-        
-        // recent commits found
-        if (daysSinceCommit != NSNotFound) {
-            
-            // animate fade out label
-            [UIView animateWithDuration:kCellPopulationAnimationDuration
-                                  delay:kCellPopulationAnimationDelay
-                                options:kNilOptions animations:^{
-                                    cell.detailTextLabel.alpha = 0.0;
-                                } completion:^(BOOL finished) {
-                                    
-                                }];
-            
-            // use spaces as poor man's indentation
-            // update label on case-by-case basis for commits pushed today and yesterday
-            if (daysSinceCommit == 0) {
-                cell.detailTextLabel.text = @"  Last commit today";
-            }
-            else if (daysSinceCommit == 1) {
-                cell.detailTextLabel.text = @"  Last commit yesterday";
-            }
-            
-            // otherwise, generalize "x days ago"
-            else {
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"  Last commit %li days ago", (long)daysSinceCommit];
-            }
-            
-            // darkish green
-            UIColor *green = [UIColor colorWithRed:0.07058823529
-                                             green:0.38823529411
-                                              blue:0.1725490196
-                                             alpha:1.0];
-            cell.detailTextLabel.textColor = green;
-        }
-        
-        // no recent commits, berate user
-        else {
-            cell.detailTextLabel.text = @"  No recent commits";
-            cell.detailTextLabel.textColor = [UIColor grayColor];
-        }
-        
-        // animate fade in label
-        [UIView animateWithDuration:kCellPopulationAnimationDuration
-                              delay:(kCellPopulationAnimationDelay)
-                            options:kNilOptions animations:^{
-                                cell.detailTextLabel.alpha = 1.0;
-                            } completion:^(BOOL finished) {
-                                
-                            }];
-    }];
+    [cell configureForRepoTableViewWithRepository:repo];
     
     return cell;
 }
