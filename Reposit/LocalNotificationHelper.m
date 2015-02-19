@@ -68,10 +68,10 @@ static const NSTimeInterval kSecondsInDay = 86400;
         NSTimeInterval timeIntervalSinceNow;
         
         if (repo.daysSinceCommit.integerValue == NSNotFound) {
-            timeIntervalSinceNow = repo.reminderPeriod.doubleValue * kSecondsInDay;
+            timeIntervalSinceNow = (1 + repo.reminderPeriod.doubleValue) * kSecondsInDay;
         }
         else {
-            timeIntervalSinceNow = (repo.reminderPeriod.doubleValue - repo.daysSinceCommit.doubleValue) * kSecondsInDay;
+            timeIntervalSinceNow = (1 + repo.reminderPeriod.doubleValue - repo.daysSinceCommit.doubleValue) * kSecondsInDay;
         }
         
         // configure notification

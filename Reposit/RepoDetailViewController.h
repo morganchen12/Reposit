@@ -10,10 +10,7 @@
 @class Repository;
 @protocol PickerViewToolBarButtonDelegate;
 
-@interface RepoDetailViewController : UIViewController <UIPickerViewDataSource,
-                                                        UIPickerViewDelegate,
-                                                        UIToolbarDelegate,
-                                                        PickerViewToolBarButtonDelegate>
+@interface RepoDetailViewController : UIViewController
 
 @property (nonatomic, readwrite, weak) Repository *repository;
 

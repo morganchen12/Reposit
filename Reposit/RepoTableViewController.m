@@ -14,9 +14,8 @@
 #import "UserHelper.h"
 #import "Repository.h"
 
-// animation constants
-static const float kCellPopulationAnimationDelay    = 0.05;
-static const float kCellPopulationAnimationDuration = 0.3;
+#import "UITableViewCell+Configurations.h"
+#import "UILabel+Configurations.h"
 
 @interface RepoTableViewController ()
 
@@ -43,7 +42,6 @@ static const float kCellPopulationAnimationDuration = 0.3;
         self.repositories = [UserHelper currentHelper].getRepos;
         [self.tableView reloadData];
     }
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -70,68 +68,9 @@ static const float kCellPopulationAnimationDuration = 0.3;
     
     // assemble "username / Repository" format for cell text from core data objects
     Repository *repo = (Repository *)(self.repositories[indexPath.row]);
-    NSString *fullname = [NSString stringWithFormat:@"%@ / %@", repo.owner, repo.name];
     
-    cell.textLabel.text = fullname;
-    cell.detailTextLabel.textColor = [UIColor grayColor];
-    cell.detailTextLabel.text = @"  Checking recent commits...";
-    
-    // check if user has recently committed to their projects
-    // note: this method may cause excessive api calls for a large number of Repository objects
-    // (i.e. scrolling would call this method repeatedly), but it's generally unlikely that a
-    // user has enough side projects to actually fill the entire page. If the GitHub API rate
-    // limit becomes problematic, look here
-    [[GitHubHelper sharedHelper] currentUserDidCommitToRepo:repo completion:^(NSInteger daysSinceCommit) {
-        
-        // recent commits found
-        if (daysSinceCommit != NSNotFound) {
-            
-            // animate fade out label
-            [UIView animateWithDuration:kCellPopulationAnimationDuration
-                                  delay:kCellPopulationAnimationDelay
-                                options:kNilOptions animations:^{
-                                    cell.detailTextLabel.alpha = 0.0;
-                                } completion:^(BOOL finished) {
-                                    
-                                }];
-            
-            // use spaces as poor man's indentation
-            // update label on case-by-case basis for commits pushed today and yesterday
-            if (daysSinceCommit == 0) {
-                cell.detailTextLabel.text = @"  Last commit today";
-            }
-            else if (daysSinceCommit == 1) {
-                cell.detailTextLabel.text = @"  Last commit yesterday";
-            }
-            
-            // otherwise, generalize "x days ago"
-            else {
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"  Last commit %li days ago", (long)daysSinceCommit];
-            }
-            
-            // darkish green
-            UIColor *green = [UIColor colorWithRed:0.07058823529
-                                             green:0.38823529411
-                                              blue:0.1725490196
-                                             alpha:1.0];
-            cell.detailTextLabel.textColor = green;
-        }
-        
-        // no recent commits, berate user
-        else {
-            cell.detailTextLabel.text = @"  No recent commits";
-            cell.detailTextLabel.textColor = [UIColor grayColor];
-        }
-        
-        // animate fade in label
-        [UIView animateWithDuration:kCellPopulationAnimationDuration
-                              delay:(kCellPopulationAnimationDelay)
-                            options:kNilOptions animations:^{
-                                cell.detailTextLabel.alpha = 1.0;
-                            } completion:^(BOOL finished) {
-                                
-                            }];
-    }];
+    // configure cell for given repository
+    [cell configureForRepoTableViewWithRepository:repo];
     
     return cell;
 }
@@ -140,7 +79,7 @@ static const float kCellPopulationAnimationDuration = 0.3;
     
     if (self.repositories.count) {
         
-        // clean up first-time user experience view if necessary
+        // clean up empty table view background view if necessary
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         self.tableView.backgroundView = nil;
     }
@@ -152,11 +91,9 @@ static const float kCellPopulationAnimationDuration = 0.3;
                                                                           0,
                                                                           self.view.bounds.size.width,
                                                                           self.view.bounds.size.height)];
-        messageLabel.text = @"No active repositories :(\n\nTap the '+' in the upper right corner to get started.";
-        messageLabel.textColor = [UIColor blackColor];
-        messageLabel.numberOfLines = 0;
-        messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.font = [UIFont systemFontOfSize:22];
+        
+        [messageLabel configureForRepoTableViewBackground];
+        
         [messageLabel sizeToFit];
         
         self.tableView.backgroundView = messageLabel;
@@ -176,7 +113,7 @@ static const float kCellPopulationAnimationDuration = 0.3;
         [[UserHelper currentHelper] deleteRepository:self.repositories[indexPath.row]];
         [[UserHelper currentHelper] saveContext];
         
-        // delete object from local array, preserving order
+        // animate deletion in table view
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }

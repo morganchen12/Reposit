@@ -13,11 +13,12 @@
 #import "UserHelper.h"
 #import "SessionHelper.h"
 
-// animation constants
-static const float kCellPopulationAnimationDelay    = 0.01;
-static const float kCellPopulationAnimationDuration = 0.4;
+#import "UILabel+Configurations.h"
+#import "UISearchBar+Configurations.h"
+#import "UIRefreshControl+Configurations.h"
+#import "UITableViewCell+Configurations.h"
 
-@interface AddReposTableViewController ()
+@interface AddReposTableViewController () <UISearchBarDelegate>
 
 @property (nonatomic, readwrite) NSArray *fetchedRepositories;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -38,29 +39,25 @@ static NSString *kNoResultsMessage = @"No results";
 
     self.selectedIndexPaths = [[NSMutableArray alloc] init];
     
-    UIColor *tealish = [UIColor colorWithRed: 0.0 / 255
-                                       green:81.0 / 255
-                                        blue:92.0 / 255
-                                       alpha:1.0];
-    self.refreshControl.backgroundColor = tealish;
-    self.refreshControl.tintColor = [UIColor whiteColor];
+    // configure refresh control
+    [self.refreshControl configureForAddReposTableViewController];
     [self.refreshControl addTarget:self action:@selector(refreshRepos) forControlEvents:UIControlEventValueChanged];
     
-    self.searchBar.tintColor = tealish;
+    // configure appearance and stuff
+    [self.searchBar configureForAddRepoTableViewController];
     self.searchBar.delegate = self;
-    self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    self.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     
     if (!(self.messageLabel)) {
         UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,
                                                                           0,
                                                                           self.view.bounds.size.width,
                                                                           self.view.bounds.size.height)];
+        
+        // text left out of config method due to its dynamic nature--maybe this is bad?
         messageLabel.text = kLoadingMessage;
-        messageLabel.textColor = [UIColor darkGrayColor];
-        messageLabel.numberOfLines = 0;
-        messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.font = [UIFont systemFontOfSize:22];
+        
+        // configure
+        [messageLabel configureForAddRepoTableViewBackground];
         [messageLabel sizeToFit];
         self.messageLabel = messageLabel;
     }
@@ -125,18 +122,26 @@ static NSString *kNoResultsMessage = @"No results";
     }
     
     [self.refreshControl beginRefreshing];
-    NSInteger offset = self.tableView.contentOffset.y-self.refreshControl.frame.size.height-(self.searchBar.frame.size.height+20);
+    
+    NSInteger offset = self.tableView.contentOffset.y -
+                       self.refreshControl.frame.size.height -
+                       self.searchBar.frame.size.height +
+                       20;
+    
+    // programatically scroll up to show loading
     [self.tableView setContentOffset:CGPointMake(0, offset) animated:YES];
     [self.refreshControl sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 #pragma mark - UITableViewDelegate
 
+// check cells initially as they are selected
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.selectedIndexPaths addObject:indexPath];
     [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
 }
 
+// uncheck cells
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.selectedIndexPaths removeObject:indexPath];
     [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
@@ -145,7 +150,6 @@ static NSString *kNoResultsMessage = @"No results";
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
     return self.fetchedRepositories.count;
 }
 
@@ -153,47 +157,18 @@ static NSString *kNoResultsMessage = @"No results";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddRepoCell" forIndexPath:indexPath];
     
-    UIColor *tealish = [UIColor colorWithRed:0.0   / 255
-                                       green:144.0 / 255
-                                        blue:163.0 / 255
-                                       alpha:1.0];
-    cell.tintColor = tealish;
-    
     OCTResponse *response = (OCTResponse *)(self.fetchedRepositories[indexPath.row]);
-    NSDictionary *result = (NSDictionary *)(response.parsedResult);
     
-    cell.textLabel.text = result[@"name"]; // use @"full_name" maybe
+    [cell configureForAddRepoTableViewWithParsedResult:response.parsedResult];
     
-    // set description if provided
-    cell.detailTextLabel.textColor = [UIColor grayColor];
-    NSString *description = result[@"description"];
-    if (description && (NSNull *)description != [NSNull null]) {
-        cell.detailTextLabel.text = description;
-    }
-    else {
-        cell.detailTextLabel.text = @"";
-    }
-    
-    // check marks
+    // maintain checkmarks as cells are reused
+    // could use a dict instead of array to check for selected indexes if this becomes slow
     if ([self.selectedIndexPaths containsObject:indexPath]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
-    
-    // animate
-    cell.textLabel.alpha = 0.0;
-    cell.detailTextLabel.alpha = 0.0;
-    
-    [UIView animateWithDuration:kCellPopulationAnimationDuration
-                          delay:(kCellPopulationAnimationDelay)
-                        options:kNilOptions animations:^{
-                            cell.textLabel.alpha = 1.0;
-                            cell.detailTextLabel.alpha = 1.0;
-                        } completion:^(BOOL finished) {
-                            
-                        }];
     
     return cell;
 }

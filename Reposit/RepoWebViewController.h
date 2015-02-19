@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class Repository;
 
-@interface RepoWebViewController : UIViewController <UIWebViewDelegate>
+@interface RepoWebViewController : UIViewController
 
 @property (nonatomic, readwrite, weak) Repository *repository;
 
