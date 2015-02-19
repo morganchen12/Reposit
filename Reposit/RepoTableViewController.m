@@ -15,6 +15,7 @@
 #import "Repository.h"
 
 #import "UITableViewCell+Configurations.h"
+#import "UILabel+Configurations.h"
 
 @interface RepoTableViewController ()
 
@@ -41,7 +42,6 @@
         self.repositories = [UserHelper currentHelper].getRepos;
         [self.tableView reloadData];
     }
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -69,6 +69,7 @@
     // assemble "username / Repository" format for cell text from core data objects
     Repository *repo = (Repository *)(self.repositories[indexPath.row]);
     
+    // configure cell for given repository
     [cell configureForRepoTableViewWithRepository:repo];
     
     return cell;
@@ -78,7 +79,7 @@
     
     if (self.repositories.count) {
         
-        // clean up first-time user experience view if necessary
+        // clean up empty table view background view if necessary
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         self.tableView.backgroundView = nil;
     }
@@ -90,11 +91,9 @@
                                                                           0,
                                                                           self.view.bounds.size.width,
                                                                           self.view.bounds.size.height)];
-        messageLabel.text = @"No active repositories :(\n\nTap the '+' in the upper right corner to get started.";
-        messageLabel.textColor = [UIColor blackColor];
-        messageLabel.numberOfLines = 0;
-        messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.font = [UIFont systemFontOfSize:22];
+        
+        [messageLabel configureForRepoTableViewBackground];
+        
         [messageLabel sizeToFit];
         
         self.tableView.backgroundView = messageLabel;
@@ -114,7 +113,7 @@
         [[UserHelper currentHelper] deleteRepository:self.repositories[indexPath.row]];
         [[UserHelper currentHelper] saveContext];
         
-        // delete object from local array, preserving order
+        // animate deletion in table view
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }

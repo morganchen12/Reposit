@@ -82,4 +82,38 @@ static const float kCellPopulationAnimationDuration = 0.3;
 
 }
 
+- (void)configureForAddRepoTableViewWithParsedResult:(NSDictionary *)result {
+    UIColor *tealish = [UIColor colorWithRed:0.0   / 255
+                                       green:144.0 / 255
+                                        blue:163.0 / 255
+                                       alpha:1.0];
+    self.tintColor = tealish;
+    
+    self.textLabel.text = result[@"name"]; // use @"full_name" maybe
+    
+    // set description if provided
+    self.detailTextLabel.textColor = [UIColor grayColor];
+    NSString *description = result[@"description"];
+    if (description && (NSNull *)description != [NSNull null]) {
+        self.detailTextLabel.text = description;
+    }
+    else {
+        self.detailTextLabel.text = @"";
+    }
+    
+    // animate
+    self.textLabel.alpha = 0.0;
+    self.detailTextLabel.alpha = 0.0;
+    
+    [UIView animateWithDuration:kCellPopulationAnimationDuration
+                          delay:(kCellPopulationAnimationDelay)
+                        options:kNilOptions animations:^{
+                            self.textLabel.alpha = 1.0;
+                            self.detailTextLabel.alpha = 1.0;
+                        } completion:^(BOOL finished) {
+                            
+                        }];
+
+}
+
 @end

@@ -30,6 +30,10 @@
 		8DA8DC631A5B7E62006D3D3C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DA8DC621A5B7E62006D3D3C /* Media.xcassets */; };
 		8DBCC45E1A5BBA2C0084BE1F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DBCC45D1A5BBA2C0084BE1F /* LaunchScreen.xib */; };
 		8DCF3AF41A96866D00FBD2BB /* UITableViewCell+Configurations.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCF3AF31A96866D00FBD2BB /* UITableViewCell+Configurations.m */; };
+		8DCF3AF71A9688DB00FBD2BB /* UILabel+Configurations.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCF3AF61A9688DB00FBD2BB /* UILabel+Configurations.m */; };
+		8DCF3AFA1A968C8900FBD2BB /* UISearchBar+Configurations.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCF3AF91A968C8900FBD2BB /* UISearchBar+Configurations.m */; };
+		8DCF3AFD1A968E2600FBD2BB /* UIRefreshControl+Configurations.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCF3AFC1A968E2600FBD2BB /* UIRefreshControl+Configurations.m */; };
+		8DCF3B001A96AA7700FBD2BB /* UIPickerView+Configurations.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCF3AFF1A96AA7700FBD2BB /* UIPickerView+Configurations.m */; };
 		8DFADDB51A5A470600D1CD04 /* LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFADDB41A5A470600D1CD04 /* LocalNotificationHelper.m */; };
 		8DFB4C7D1A56208900FA334B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB4C7C1A56208900FA334B /* main.m */; };
 		8DFB4C801A56208900FA334B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB4C7F1A56208900FA334B /* AppDelegate.m */; };
@@ -87,6 +91,14 @@
 		8DBCC45D1A5BBA2C0084BE1F /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		8DCF3AF21A96866D00FBD2BB /* UITableViewCell+Configurations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+Configurations.h"; sourceTree = "<group>"; };
 		8DCF3AF31A96866D00FBD2BB /* UITableViewCell+Configurations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+Configurations.m"; sourceTree = "<group>"; };
+		8DCF3AF51A9688DB00FBD2BB /* UILabel+Configurations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Configurations.h"; sourceTree = "<group>"; };
+		8DCF3AF61A9688DB00FBD2BB /* UILabel+Configurations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Configurations.m"; sourceTree = "<group>"; };
+		8DCF3AF81A968C8900FBD2BB /* UISearchBar+Configurations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchBar+Configurations.h"; sourceTree = "<group>"; };
+		8DCF3AF91A968C8900FBD2BB /* UISearchBar+Configurations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchBar+Configurations.m"; sourceTree = "<group>"; };
+		8DCF3AFB1A968E2600FBD2BB /* UIRefreshControl+Configurations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIRefreshControl+Configurations.h"; sourceTree = "<group>"; };
+		8DCF3AFC1A968E2600FBD2BB /* UIRefreshControl+Configurations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+Configurations.m"; sourceTree = "<group>"; };
+		8DCF3AFE1A96AA7700FBD2BB /* UIPickerView+Configurations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIPickerView+Configurations.h"; sourceTree = "<group>"; };
+		8DCF3AFF1A96AA7700FBD2BB /* UIPickerView+Configurations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIPickerView+Configurations.m"; sourceTree = "<group>"; };
 		8DFADDB31A5A470600D1CD04 /* LocalNotificationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationHelper.h; sourceTree = "<group>"; };
 		8DFADDB41A5A470600D1CD04 /* LocalNotificationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotificationHelper.m; sourceTree = "<group>"; };
 		8DFB4C771A56208900FA334B /* Reposit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reposit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -183,6 +195,14 @@
 				8DFB4C811A56208900FA334B /* Reposit.xcdatamodeld */,
 				8DCF3AF21A96866D00FBD2BB /* UITableViewCell+Configurations.h */,
 				8DCF3AF31A96866D00FBD2BB /* UITableViewCell+Configurations.m */,
+				8DCF3AF51A9688DB00FBD2BB /* UILabel+Configurations.h */,
+				8DCF3AF61A9688DB00FBD2BB /* UILabel+Configurations.m */,
+				8DCF3AF81A968C8900FBD2BB /* UISearchBar+Configurations.h */,
+				8DCF3AF91A968C8900FBD2BB /* UISearchBar+Configurations.m */,
+				8DCF3AFB1A968E2600FBD2BB /* UIRefreshControl+Configurations.h */,
+				8DCF3AFC1A968E2600FBD2BB /* UIRefreshControl+Configurations.m */,
+				8DCF3AFE1A96AA7700FBD2BB /* UIPickerView+Configurations.h */,
+				8DCF3AFF1A96AA7700FBD2BB /* UIPickerView+Configurations.m */,
 				8DFB4C7A1A56208900FA334B /* Supporting Files */,
 				8D9EF2551A756B8E00E36EB4 /* Frameworks */,
 			);
@@ -358,11 +378,14 @@
 			files = (
 				8D3D6DE51A58980E003F8C42 /* AddReposTableViewController.m in Sources */,
 				8DFB4C831A56208900FA334B /* Reposit.xcdatamodeld in Sources */,
+				8DCF3AFA1A968C8900FBD2BB /* UISearchBar+Configurations.m in Sources */,
 				8DA3D9AC1A5625D2005AA177 /* RepoTableViewController.m in Sources */,
 				8DFB4C801A56208900FA334B /* AppDelegate.m in Sources */,
+				8DCF3AFD1A968E2600FBD2BB /* UIRefreshControl+Configurations.m in Sources */,
 				8D9EF2661A7571FB00E36EB4 /* Secret.m in Sources */,
 				8D603E5B1A8426810004E53A /* UserGraphView.m in Sources */,
 				8D805A2B1A59C3BD003C97B2 /* RepoDetailViewController.m in Sources */,
+				8DCF3B001A96AA7700FBD2BB /* UIPickerView+Configurations.m in Sources */,
 				8DA3D9AF1A5628BD005AA177 /* GitHubHelper.m in Sources */,
 				8D2D0A401A7C3EA000E31B14 /* Repository.m in Sources */,
 				8D3D6DEF1A58CEE6003F8C42 /* RepoWebViewController.m in Sources */,
@@ -370,6 +393,7 @@
 				8D1443CE1A816F3700FD17CA /* KeychainWrapper.m in Sources */,
 				8D603E581A83FBBD0004E53A /* PickerViewToolBar.m in Sources */,
 				8D2D0A3D1A7C3E5B00E31B14 /* User.m in Sources */,
+				8DCF3AF71A9688DB00FBD2BB /* UILabel+Configurations.m in Sources */,
 				8DFADDB51A5A470600D1CD04 /* LocalNotificationHelper.m in Sources */,
 				8DA483BE1A76E857002EE56E /* UserHelper.m in Sources */,
 				8DFB4C7D1A56208900FA334B /* main.m in Sources */,

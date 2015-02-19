@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UILabel_Configurations : UITableViewCell
+@interface UILabel (Configurations)
+
+- (void)configureForRepoTableViewBackground;
+- (void)configureForAddRepoTableViewBackground;
+- (void)configureForPickerView;
 
 @end

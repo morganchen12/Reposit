@@ -12,5 +12,6 @@
 @interface UITableViewCell (Configurations)
 
 - (void)configureForRepoTableViewWithRepository:(Repository *)repo;
+- (void)configureForAddRepoTableViewWithParsedResult:(NSDictionary *)result;
 
 @end

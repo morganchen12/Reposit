@@ -14,6 +14,9 @@
 #import "PickerViewToolBar.h"
 #import "UserGraphView.h"
 
+#import "UILabel+Configurations.h"
+#import "UIPickerView+Configurations.h"
+
 @interface RepoDetailViewController () <UIPickerViewDataSource,
                                         UIPickerViewDelegate,
                                         UIToolbarDelegate,
@@ -93,16 +96,24 @@
 
 #pragma mark - UIPickerViewDelegate
 
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    [self configureAppearanceForPickerView:pickerView];
+- (UIView *)pickerView:(UIPickerView *)pickerView
+            viewForRow:(NSInteger)row
+          forComponent:(NSInteger)component
+           reusingView:(UIView *)view {
     
+    [pickerView configureForTextFieldInputView];
     
-    // center text in label in picker view
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 37)];
+    UILabel *label = (UILabel *)view;
+    
+    // if view doesn't already exist, create and configure it
+    if (!label) {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 37)];
+        [label configureForPickerView];
+    }
+    
+    // set appropriate text for label
     label.text = ((NSNumber *)(self.pickerOptions[row])).stringValue;
-    label.textAlignment = NSTextAlignmentCenter;
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor whiteColor];
+    
     return label;
 }
 
@@ -116,46 +127,11 @@
     return self.pickerOptions.count;
 }
 
-- (void)configureAppearanceForPickerView:(UIPickerView *)pickerView {
-    // mess with appearances
-    
-    for (CALayer *layer in pickerView.layer.sublayers) {
-        layer.backgroundColor = self.toolBar.barTintColor.CGColor;
-    }
-    
-    [pickerView.layer.sublayers[0] setBackgroundColor:[UIColor clearColor]];
-    [pickerView.layer.sublayers[0] setOpaque:NO];
-    
-    // evil hack to grab views related to the gray thing behind the keyboard
-    UIView *pickerViewContainerView = [[[UIApplication sharedApplication].windows[1] subviews][0] subviews][0];
-    UIView *keyboardInputBackdropView;
-    UIView *pickerViewBackgroundView;
-    if (pickerViewContainerView.subviews.count) {
-        keyboardInputBackdropView = pickerViewContainerView.subviews[0];
-        pickerViewBackgroundView = keyboardInputBackdropView.subviews[0];
-        
-        // ruin apple UI dreams by deleting gray bg view
-        for (UIView *subview in pickerViewBackgroundView.subviews) {
-            [subview removeFromSuperview];
-        }
-    }
-    
-    if (!(pickerViewBackgroundView.subviews.count)) {
-        UIView *dimView = [[UIView alloc] initWithFrame:pickerViewContainerView.frame];
-        
-        dimView.layer.backgroundColor = [UIColor blackColor].CGColor;
-        dimView.layer.opaque = NO;
-        dimView.layer.opacity = 0.8;
-        
-        [pickerViewBackgroundView addSubview:dimView];
-    }
-}
-
 - (void)keyboardWillShow {
     // set up picker view
     NSInteger row = [self.pickerOptions indexOfObject:self.repository.reminderPeriod];
     [self.pickerView selectRow:row inComponent:0 animated:NO];
-    [self configureAppearanceForPickerView:self.pickerView];
+    [self.pickerView configureForTextFieldInputView];
     self.pickerView.userInteractionEnabled = NO;
 }
 

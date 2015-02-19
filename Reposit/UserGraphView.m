@@ -69,6 +69,9 @@ static const NSInteger kLabelValueOffset = 10;
         return;
     }
     
+    self.opaque = NO;
+    self.alpha = 0;
+    
     // inset graph by 16 points to be consistent with margins
     CGRect graphContainer = CGRectInset(self.bounds, 8, 8);
     
@@ -301,6 +304,11 @@ static const NSInteger kLabelValueOffset = 10;
     
     // pop context off of stack for sake of completeness
     CGContextRestoreGState(context);
+    
+    // fade in
+    [UIView animateWithDuration:0.3 animations:^{
+        self.alpha = 1;
+    }];
 }
 
 - (NSArray *)mapStatsToPoints {
