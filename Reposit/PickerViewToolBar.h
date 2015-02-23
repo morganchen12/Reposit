@@ -21,6 +21,7 @@
 
 @property (nonatomic, weak) UIPickerView *pickerView;
 @property (nonatomic, weak) id<PickerViewToolBarButtonDelegate> buttonDelegate;
+@property (nonatomic, weak) UITextField *textField;
 
 #pragma mark - Initializers and Life Cycle methods
 

@@ -57,6 +57,7 @@
     self.pickerView.dataSource = self;
     self.toolBar.pickerView = self.pickerView;
     self.toolBar.buttonDelegate = self;
+    self.toolBar.textField = self.textField;
     
     self.textField.inputView = self.pickerView;
     self.textField.inputAccessoryView = self.toolBar;
@@ -72,6 +73,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShow)
                                                  name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(textFieldDidChange)
+                                                 name:UITextFieldTextDidChangeNotification
                                                object:nil];
 }
 
@@ -132,6 +137,9 @@
     NSInteger row = [self.pickerOptions indexOfObject:self.repository.reminderPeriod];
     [self.pickerView selectRow:row inComponent:0 animated:NO];
     [self.pickerView configureForTextFieldInputView];
+    
+    // disable picker view until keyboard showing animation is complete
+    // to avoid crash bug
     self.pickerView.userInteractionEnabled = NO;
 }
 
@@ -145,7 +153,7 @@
     [self.textField resignFirstResponder];
 }
 
-- (void)toolBarSaveButtonPressed {
+- (void)textFieldDidChange {
     NSNumber *selection = self.pickerOptions[[self.pickerView selectedRowInComponent:0]];
     self.repository.reminderPeriod = selection;
     self.textField.text = [selection stringValue];

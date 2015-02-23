@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6724" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7515.2" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7512"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -9,6 +9,7 @@
         <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="iCG-C1-44a" customClass="PickerViewToolBar">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+            <gestureRecognizers/>
             <items>
                 <barButtonItem systemItem="cancel" id="MPe-Wd-6fc">
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -24,7 +25,18 @@
                     </connections>
                 </barButtonItem>
             </items>
+            <connections>
+                <outlet property="cancelButton" destination="MPe-Wd-6fc" id="6Cw-b3-IP4"/>
+                <outlet property="panRecognizer" destination="nzr-eD-2oY" id="A3r-Gs-QGX"/>
+                <outlet property="saveButton" destination="O1y-tL-VK3" id="6SI-60-7KS"/>
+                <outletCollection property="gestureRecognizers" destination="nzr-eD-2oY" appends="YES" id="vcw-fB-yiq"/>
+            </connections>
             <point key="canvasLocation" x="421" y="376"/>
         </toolbar>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="nzr-eD-2oY">
+            <connections>
+                <action selector="panHandler:" destination="iCG-C1-44a" id="FgS-3R-nwh"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
 </document>
