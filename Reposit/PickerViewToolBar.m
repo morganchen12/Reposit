@@ -79,15 +79,19 @@ static const NSTimeInterval kAnimationDuration = 0.25;
     if (sender.state == UIGestureRecognizerStateEnded) {
         CGFloat keyboardViewHeight = [UIScreen mainScreen].bounds.size.height - self.initialY;
         
+        // reenable everything at the end of animation
         void (^reenableInputBlock)() = ^{
             self.pickerView.userInteractionEnabled = YES;
             self.cancelButton.enabled = YES;
             self.saveButton.enabled = YES;
         };
         
+        // should never be less than 0 because keyboardViewHeight > translation.y
+        double fractionOfViewLeftToDismiss = (keyboardViewHeight - translation.y) / keyboardViewHeight;
+        
         if ((translation.y > keyboardViewHeight / 2) || ([sender velocityInView:self].y > kVelocityToDismissKeyboard)) {
             tempFrame.origin.y = [UIScreen mainScreen].bounds.size.height;
-            [UIView animateWithDuration:kAnimationDuration animations:^{
+            [UIView animateWithDuration:kAnimationDuration*fractionOfViewLeftToDismiss animations:^{
                 self.superview.frame = tempFrame;
             } completion:^(BOOL finished) {
                 if (finished) {
@@ -100,7 +104,7 @@ static const NSTimeInterval kAnimationDuration = 0.25;
         }
         else {
             tempFrame.origin.y = self.initialY;
-            [UIView animateWithDuration:kAnimationDuration animations:^{
+            [UIView animateWithDuration:1.8*kAnimationDuration * (1 - fractionOfViewLeftToDismiss) animations:^{
                 self.superview.frame = tempFrame;
             } completion:^(BOOL finished) {
                 reenableInputBlock();
