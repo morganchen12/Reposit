@@ -153,7 +153,7 @@
     [self.textField resignFirstResponder];
 }
 
-- (void)textFieldDidChange {
+- (void)toolBarSaveButtonPressed {
     NSNumber *selection = self.pickerOptions[[self.pickerView selectedRowInComponent:0]];
     self.repository.reminderPeriod = selection;
     self.textField.text = [selection stringValue];
