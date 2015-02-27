@@ -39,6 +39,11 @@ static const NSTimeInterval kAnimationDuration = 0.25;
     return self;
 }
 
+- (void)dealloc {
+    // prevent message sends to deallocated objects
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 + (instancetype)toolBarFromNib {
     PickerViewToolBar *toolBar = [[NSBundle mainBundle] loadNibNamed:@"PickerViewToolBar" owner:nil options:nil][0];
     return toolBar;
