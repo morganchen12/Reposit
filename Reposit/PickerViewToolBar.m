@@ -85,7 +85,7 @@ static const NSTimeInterval kAnimationDuration = 0.25;
         CGFloat keyboardViewHeight = [UIScreen mainScreen].bounds.size.height - self.initialY;
         
         // reenable everything at the end of animation
-        void (^reenableInputBlock)() = ^{
+        void (^reenableInput)() = ^{
             self.pickerView.userInteractionEnabled = YES;
             self.cancelButton.enabled = YES;
             self.saveButton.enabled = YES;
@@ -103,7 +103,7 @@ static const NSTimeInterval kAnimationDuration = 0.25;
                     [UIView setAnimationsEnabled:NO];
                     [self.textField resignFirstResponder];
                     
-                    reenableInputBlock();
+                    reenableInput();
                 }
             }];
         }
@@ -112,7 +112,7 @@ static const NSTimeInterval kAnimationDuration = 0.25;
             [UIView animateWithDuration:1.8*kAnimationDuration * (1 - fractionOfViewLeftToDismiss) animations:^{
                 self.superview.frame = tempFrame;
             } completion:^(BOOL finished) {
-                reenableInputBlock();
+                reenableInput();
             }];
         }
     }
