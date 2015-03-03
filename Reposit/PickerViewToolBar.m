@@ -49,6 +49,8 @@ static const NSTimeInterval kAnimationDuration = 0.25;
     return toolBar;
 }
 
+#pragma mark - Delegate methods
+
 - (IBAction)cancelButtonPressed:(id)sender {
     [self.buttonDelegate toolBarCancelButtonPressed];
 }
