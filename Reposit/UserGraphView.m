@@ -144,17 +144,7 @@ static const NSInteger kLabelValueOffset = 10;
     
     CGContextBeginPath (context);
     CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
-    
-    // vertical lines
-    for (NSInteger i = 0; i < numPoints; i++) {
-        // move to desired x, then draw line to full height of graph
-        CGContextMoveToPoint(context, points[i].x, graphRect.origin.y);
-        CGContextAddLineToPoint(context, points[i].x, graphRect.origin.y + graphRect.size.height);
-        
-        // then move back to x axis
-        CGContextMoveToPoint(context, points[i].x, graphRect.origin.y);
-    }
-    
+
     // horizontal lines
     int numVerticalLines = newMaxY/10;
     if (newMaxY < 50) {
