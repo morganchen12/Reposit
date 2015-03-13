@@ -17,3 +17,7 @@ Carthage/Build
 
 # Ignore GitHub API ID/Secret
 Reposit/Secret.m
+
+
+# Ignore Derived Data
+DerivedData/
