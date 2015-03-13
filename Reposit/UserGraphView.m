@@ -157,6 +157,9 @@ static const NSInteger kLabelValueOffset = 10;
     
     // horizontal lines
     int numVerticalLines = newMaxY/10;
+    if (newMaxY < 50) {
+        numVerticalLines = newMaxY/5;
+    }
     for (NSInteger i = 0; i < numVerticalLines; i++) {
         // move to desired y, then draw line to full width of graph
         float y = (i+1)*(graphRect.size.height / numVerticalLines) + graphRect.origin.y;
