@@ -223,21 +223,20 @@ static const NSInteger kLabelValueOffset = 10;
     CGContextClip(context);
     
     // draw gradient
-    UIColor *almostTransparent = [UIColor colorWithRed:0.0   / 255
+    UIColor *startingColor = [UIColor colorWithRed:0.0   / 255
                                                  green:144.0 / 255
                                                   blue:163.0 / 255
-                                                 alpha:0.3];
-    UIColor *transparent = [UIColor colorWithRed:0.0   / 255
+                                                 alpha:0.4];
+    UIColor *endingColor = [UIColor colorWithRed:0.0   / 255
                                            green:144.0 / 255
                                             blue:163.0 / 255
-                                           alpha:0.0];
-   
+                                           alpha:0.1];
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGFloat locations[] = {0.0, 1.0};
-    NSArray *colors = @[(__bridge id)(almostTransparent.CGColor), (__bridge id)(transparent.CGColor)];
+    NSArray *colors = @[(__bridge id)(startingColor.CGColor), (__bridge id)(endingColor.CGColor)];
     CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)colors, locations);
     
-    CGPoint startPoint = CGPointMake(graphRect.origin.x, graphRect.origin.y + graphRect.size.height);
+    CGPoint startPoint = CGPointMake(graphRect.origin.x, graphRect.origin.y + adjustedHeight);
     CGPoint endPoint = CGPointMake(graphRect.origin.x, graphRect.origin.y);
     
     CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, kNilOptions);
