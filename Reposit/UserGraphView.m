@@ -209,6 +209,7 @@ static const NSInteger kLabelValueOffset = 10;
     CGContextStrokePath(context);
     
     // reconstruct path
+    // draw path for gradient
     CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
     CGContextBeginPath(context);
     CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
@@ -252,19 +253,7 @@ static const NSInteger kLabelValueOffset = 10;
     CGColorSpaceRelease(colorSpace);
     
     // draw circles at data points
-    // set color and line width
     float rectOffset = 1.0;
-    UIColor *pointColor = [UIColor colorWithRed:0.0   / 255
-                                       green:99.0 / 255
-                                        blue:112.0 / 255
-                                       alpha:1.0];
-    
-    CGContextSetStrokeColorWithColor(context, pointColor.CGColor);
-    CGContextSetLineWidth(context, 2.0);
-    
-    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
     
     for (NSInteger i = 0; i < numPoints; i++) {
         CGContextMoveToPoint(context, points[i].x, points[i].y);
@@ -274,8 +263,6 @@ static const NSInteger kLabelValueOffset = 10;
         CGContextAddEllipseInRect(context, rect);
         
         CGContextStrokePath(context);
-
-        CGContextClosePath(context);
     }
     
     // no memory leaks
