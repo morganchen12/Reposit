@@ -195,20 +195,7 @@ static const NSInteger kLabelValueOffset = 10;
     
     CGContextSetStrokeColorWithColor(context, tealish.CGColor);
     CGContextSetLineWidth(context, 1.0);
-    
-    // draw graph
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
-    
-    for (NSInteger i = 0; i < numPoints; i++) {
-        CGContextAddLineToPoint(context, points[i].x, points[i].y);
-        CGContextMoveToPoint(context, points[i].x, points[i].y);
-    }
-    
-    // save g state before and restore after to maintain path
-    CGContextStrokePath(context);
-    
-    // reconstruct path
+
     // draw path for gradient
     CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
     CGContextBeginPath(context);
