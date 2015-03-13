@@ -12,7 +12,6 @@
 #import <OctoKit/OctoKit.h>
 
 static const float kGraphInset = 60.0;
-static const NSInteger kNumVerticalLines = 10;
 static const NSInteger kGraphAxesLabelFontSize = 10;
 static const NSInteger kLabelValueOffset = 10;
 
@@ -117,10 +116,23 @@ static const NSInteger kLabelValueOffset = 10;
     graphRect.size.width -= kGraphInset;
     graphRect.size.height -= kGraphInset;
     
+    // calculate graph height to be next multiple of 10 above largest value
+    int maxY = (int)self.largestValue;
+    int newMaxY = maxY;
+    
+    int remainder = 1;
+    while (remainder != 0) {
+        newMaxY++;
+        remainder = newMaxY % 10;
+    }
+    
+    float adjustedHeight = graphRect.size.height * ((float)maxY/newMaxY);
+    
+    
     // scale point doubles to height/width of graph
     for (NSInteger i = 0; i < numPoints; i++) {
         int x = ((i+1) * graphRect.size.width / (numPoints)) + graphRect.origin.x;
-        int y = ([pointHeights[i] floatValue] * graphRect.size.height) + graphRect.origin.y;
+        int y = ([pointHeights[i] floatValue] * adjustedHeight) + graphRect.origin.y;
         
         points[i] = CGPointMake(x, y);
     }
@@ -144,9 +156,10 @@ static const NSInteger kLabelValueOffset = 10;
     }
     
     // horizontal lines
-    for (NSInteger i = 0; i < kNumVerticalLines; i++) {
+    int numVerticalLines = newMaxY/10;
+    for (NSInteger i = 0; i < numVerticalLines; i++) {
         // move to desired y, then draw line to full width of graph
-        float y = (i+1)*(graphRect.size.height / kNumVerticalLines) + graphRect.origin.y;
+        float y = (i+1)*(graphRect.size.height / numVerticalLines) + graphRect.origin.y;
         
         CGContextMoveToPoint(context, graphRect.origin.x, y);
         CGContextAddLineToPoint(context, graphRect.origin.x + graphRect.size.width, y);
@@ -273,7 +286,7 @@ static const NSInteger kLabelValueOffset = 10;
     NSString *xMaxLabel = @"0";
     
     NSString *yMinLabel = @"0";
-    NSString *yMaxLabel = [NSString stringWithFormat:@"%ld", (long)(self.largestValue)];
+    NSString *yMaxLabel = [NSString stringWithFormat:@"%ld", (long)newMaxY];
     
     CGSize xMinLabelSize = [xMinLabel sizeWithAttributes:xAxisLabelAttributes];
     CGSize xMaxLabelSize = [xMaxLabel sizeWithAttributes:xAxisLabelAttributes];
