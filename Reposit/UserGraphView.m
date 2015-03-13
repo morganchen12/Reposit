@@ -183,6 +183,7 @@ static const NSInteger kLabelValueOffset = 10;
                             graphRect.origin.y + graphRect.size.height);
     CGContextStrokePath(context);
     
+    
     // set color and line width
     UIColor *tealish = [UIColor colorWithRed:0.0   / 255
                                        green:144.0 / 255
@@ -230,6 +231,7 @@ static const NSInteger kLabelValueOffset = 10;
                                            green:144.0 / 255
                                             blue:163.0 / 255
                                            alpha:0.0];
+   
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGFloat locations[] = {0.0, 1.0};
     NSArray *colors = @[(__bridge id)(almostTransparent.CGColor), (__bridge id)(transparent.CGColor)];
@@ -247,10 +249,36 @@ static const NSInteger kLabelValueOffset = 10;
     CGGradientRelease(gradient);
     CGColorSpaceRelease(colorSpace);
     
+    // draw circles at data points
+    // set color and line width
+    float rectOffset = 1.0;
+    UIColor *pointColor = [UIColor colorWithRed:0.0   / 255
+                                       green:99.0 / 255
+                                        blue:112.0 / 255
+                                       alpha:1.0];
+    
+    CGContextSetStrokeColorWithColor(context, pointColor.CGColor);
+    CGContextSetLineWidth(context, 2.0);
     
     CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
+    CGContextBeginPath(context);
     CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
     
+    for (NSInteger i = 0; i < numPoints; i++) {
+        CGContextMoveToPoint(context, points[i].x, points[i].y);
+        CGContextBeginPath(context);
+
+        CGRect rect= CGRectMake ((points[i].x - rectOffset), (points[i].y - rectOffset), rectOffset*2, rectOffset*2);
+        CGContextAddEllipseInRect(context, rect);
+        
+        CGContextStrokePath(context);
+
+        CGContextClosePath(context);
+    }
+    
+    // no memory leaks
+    free(points);
+
     // save state and flip context again so labels are right side up
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, 0.0, graphContainer.size.height);
