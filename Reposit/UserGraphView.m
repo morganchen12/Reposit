@@ -65,7 +65,8 @@ static const NSInteger kLabelValueOffset = 10;
     if (!(self.stats)) {
         // do nothing in here
         
-        return;
+//        return;
+        self.stats = @{ @"all" : @[@4, @23, @34, @7, @18] , @"owner" : @[@4, @23, @34, @7, @18] };
     }
     
     self.opaque = NO;
