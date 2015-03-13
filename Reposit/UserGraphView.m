@@ -170,6 +170,19 @@ static const NSInteger kLabelValueOffset = 10;
     
     CGContextStrokePath(context);
     
+    // draw axes
+    CGContextSetStrokeColorWithColor(context, [UIColor lightGrayColor].CGColor);
+    CGContextBeginPath(context);
+    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
+    CGContextAddLineToPoint(context,
+                            graphRect.origin.x + graphRect.size.width,
+                            graphRect.origin.y);
+    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
+    CGContextAddLineToPoint(context,
+                            graphRect.origin.x,
+                            graphRect.origin.y + graphRect.size.height);
+    CGContextStrokePath(context);
+    
     // set color and line width
     UIColor *tealish = [UIColor colorWithRed:0.0   / 255
                                        green:144.0 / 255
@@ -234,21 +247,9 @@ static const NSInteger kLabelValueOffset = 10;
     CGGradientRelease(gradient);
     CGColorSpaceRelease(colorSpace);
     
-    // no memory leaks
-    free(points);
     
-    // draw axes
-    CGContextSetStrokeColorWithColor(context, [UIColor lightGrayColor].CGColor);
-    CGContextBeginPath(context);
     CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
-    CGContextAddLineToPoint(context,
-                            graphRect.origin.x + graphRect.size.width,
-                            graphRect.origin.y);
     CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
-    CGContextAddLineToPoint(context,
-                            graphRect.origin.x,
-                            graphRect.origin.y + graphRect.size.height);
-    CGContextStrokePath(context);
     
     // save state and flip context again so labels are right side up
     CGContextSaveGState(context);
