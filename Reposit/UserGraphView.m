@@ -252,8 +252,11 @@ static const NSInteger kLabelValueOffset = 10;
     CGContextScaleCTM(context, 1.0, -1.0);
     
     // label axes
-    
+
     // y-axis
+    // rotate context (radians)
+    CGContextRotateCTM(context, -1.57);
+    
     NSString *yAxisLabel = @"Commits";
     NSDictionary *yAxisLabelAttributes = @{
                                            NSFontAttributeName: [UIFont systemFontOfSize:kGraphAxesLabelFontSize],
@@ -261,21 +264,24 @@ static const NSInteger kLabelValueOffset = 10;
                                            };
     
     CGSize sizeForYAxisLabel = [yAxisLabel sizeWithAttributes:yAxisLabelAttributes];
-    [yAxisLabel drawInRect:CGRectMake(graphContainer.origin.x,
-                                      (graphContainer.origin.y + graphRect.size.height) / 2,
-                                      sizeForYAxisLabel.width,
-                                      sizeForYAxisLabel.height)
-            withAttributes:yAxisLabelAttributes];
+        [yAxisLabel drawInRect:CGRectMake((graphContainer.origin.x - graphRect.size.height)/2 - sizeForYAxisLabel.width / 2,
+                                     graphContainer.origin.y + kLabelValueOffset,
+                                     sizeForYAxisLabel.width,
+                                     sizeForYAxisLabel.height)
+                withAttributes:yAxisLabelAttributes];
     
+    // unrotate context (radians)
+    CGContextRotateCTM(context, 1.57);
+
     // x-axis
     NSString *xAxisLabel = @"Weeks ago";
     NSDictionary *xAxisLabelAttributes = yAxisLabelAttributes;
     CGSize sizeForXAxisLabel = [xAxisLabel sizeWithAttributes:xAxisLabelAttributes];
     [xAxisLabel drawInRect:CGRectMake((graphContainer.origin.x + graphContainer.size.width) / 2,
-                                      graphRect.size.height + graphContainer.origin.y + kGraphInset / 2 - sizeForXAxisLabel.height / 2,
+                                      graphContainer.origin.y + graphRect.size.height + kGraphInset / 2 - sizeForXAxisLabel.height / 2,
                                       sizeForXAxisLabel.width,
                                       sizeForXAxisLabel.height)
-            withAttributes:xAxisLabelAttributes];
+                withAttributes:xAxisLabelAttributes];
     
     // label axes with min and max values
     NSString *xMinLabel = [NSString stringWithFormat:@"%ld", (long)numPoints];
