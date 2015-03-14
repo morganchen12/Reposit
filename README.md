@@ -21,6 +21,8 @@ of your tracked repos
 
 
 ##Screenshots
+![](Screenshots/reposit_screenshot_001.png)
+
 <img src="https://github.com/morganchen12/Reposit/blob/master/Screenshots/reposit_screenshot_001.png" height="600">
   <img src="https://github.com/morganchen12/Reposit/blob/master/Screenshots/reposit_screenshot_002.png" height="600">
   <img src="https://github.com/morganchen12/Reposit/blob/master/Screenshots/reposit_screenshot_003.png" height="600">
