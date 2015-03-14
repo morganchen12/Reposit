@@ -12,7 +12,6 @@
 #import <OctoKit/OctoKit.h>
 
 static const float kGraphInset = 60.0;
-static const NSInteger kNumVerticalLines = 10;
 static const NSInteger kGraphAxesLabelFontSize = 10;
 static const NSInteger kLabelValueOffset = 10;
 
@@ -117,10 +116,23 @@ static const NSInteger kLabelValueOffset = 10;
     graphRect.size.width -= kGraphInset;
     graphRect.size.height -= kGraphInset;
     
+    // calculate graph height to be next multiple of 10 above largest value
+    int maxY = (int)self.largestValue;
+    int newMaxY = maxY;
+    
+    int remainder = 1;
+    while (remainder != 0) {
+        newMaxY++;
+        remainder = newMaxY % 10;
+    }
+    
+    float adjustedHeight = graphRect.size.height * ((float)maxY/newMaxY);
+    
+    
     // scale point doubles to height/width of graph
     for (NSInteger i = 0; i < numPoints; i++) {
         int x = ((i+1) * graphRect.size.width / (numPoints)) + graphRect.origin.x;
-        int y = ([pointHeights[i] floatValue] * graphRect.size.height) + graphRect.origin.y;
+        int y = ([pointHeights[i] floatValue] * adjustedHeight) + graphRect.origin.y;
         
         points[i] = CGPointMake(x, y);
     }
@@ -131,22 +143,15 @@ static const NSInteger kLabelValueOffset = 10;
     CGContextSetLineWidth(context, 0.5);
     
     CGContextBeginPath (context);
-    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
-    
-    // vertical lines
-    for (NSInteger i = 0; i < numPoints; i++) {
-        // move to desired x, then draw line to full height of graph
-        CGContextMoveToPoint(context, points[i].x, graphRect.origin.y);
-        CGContextAddLineToPoint(context, points[i].x, graphRect.origin.y + graphRect.size.height);
-        
-        // then move back to x axis
-        CGContextMoveToPoint(context, points[i].x, graphRect.origin.y);
-    }
     
     // horizontal lines
-    for (NSInteger i = 0; i < kNumVerticalLines; i++) {
+    int numVerticalLines = newMaxY/10;
+    if (newMaxY < 50) {
+        numVerticalLines = newMaxY/5;
+    }
+    for (NSInteger i = 0; i < numVerticalLines; i++) {
         // move to desired y, then draw line to full width of graph
-        float y = (i+1)*(graphRect.size.height / kNumVerticalLines) + graphRect.origin.y;
+        float y = (i+1)*(graphRect.size.height / numVerticalLines) + graphRect.origin.y;
         
         CGContextMoveToPoint(context, graphRect.origin.x, y);
         CGContextAddLineToPoint(context, graphRect.origin.x + graphRect.size.width, y);
@@ -155,7 +160,25 @@ static const NSInteger kLabelValueOffset = 10;
         CGContextMoveToPoint(context, graphRect.origin.x, y);
     }
     
+    // vertical line
+    CGContextMoveToPoint(context, graphRect.origin.x + graphRect.size.width, graphRect.origin.y);
+    CGContextAddLineToPoint(context, graphRect.origin.x + graphRect.size.width, graphRect.origin.y + graphRect.size.height);
+    
     CGContextStrokePath(context);
+    
+    // draw axes
+    CGContextSetStrokeColorWithColor(context, [UIColor lightGrayColor].CGColor);
+    CGContextBeginPath(context);
+    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
+    CGContextAddLineToPoint(context,
+                            graphRect.origin.x + graphRect.size.width,
+                            graphRect.origin.y);
+    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
+    CGContextAddLineToPoint(context,
+                            graphRect.origin.x,
+                            graphRect.origin.y + graphRect.size.height);
+    CGContextStrokePath(context);
+    
     
     // set color and line width
     UIColor *tealish = [UIColor colorWithRed:0.0   / 255
@@ -165,20 +188,8 @@ static const NSInteger kLabelValueOffset = 10;
     
     CGContextSetStrokeColorWithColor(context, tealish.CGColor);
     CGContextSetLineWidth(context, 1.0);
-    
-    // draw graph
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
-    
-    for (NSInteger i = 0; i < numPoints; i++) {
-        CGContextAddLineToPoint(context, points[i].x, points[i].y);
-        CGContextMoveToPoint(context, points[i].x, points[i].y);
-    }
-    
-    // save g state before and restore after to maintain path
-    CGContextStrokePath(context);
-    
-    // reconstruct path
+
+    // draw path for gradient
     CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
     CGContextBeginPath(context);
     CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
@@ -196,20 +207,20 @@ static const NSInteger kLabelValueOffset = 10;
     CGContextClip(context);
     
     // draw gradient
-    UIColor *almostTransparent = [UIColor colorWithRed:0.0   / 255
+    UIColor *startingColor = [UIColor colorWithRed:0.0   / 255
                                                  green:144.0 / 255
                                                   blue:163.0 / 255
-                                                 alpha:0.3];
-    UIColor *transparent = [UIColor colorWithRed:0.0   / 255
+                                                 alpha:0.4];
+    UIColor *endingColor = [UIColor colorWithRed:0.0   / 255
                                            green:144.0 / 255
                                             blue:163.0 / 255
-                                           alpha:0.0];
+                                           alpha:0.1];
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGFloat locations[] = {0.0, 1.0};
-    NSArray *colors = @[(__bridge id)(almostTransparent.CGColor), (__bridge id)(transparent.CGColor)];
+    NSArray *colors = @[(__bridge id)(startingColor.CGColor), (__bridge id)(endingColor.CGColor)];
     CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)colors, locations);
     
-    CGPoint startPoint = CGPointMake(graphRect.origin.x, graphRect.origin.y + graphRect.size.height);
+    CGPoint startPoint = CGPointMake(graphRect.origin.x, graphRect.origin.y + adjustedHeight);
     CGPoint endPoint = CGPointMake(graphRect.origin.x, graphRect.origin.y);
     
     CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, kNilOptions);
@@ -221,30 +232,33 @@ static const NSInteger kLabelValueOffset = 10;
     CGGradientRelease(gradient);
     CGColorSpaceRelease(colorSpace);
     
+    // draw circles at data points
+    float rectOffset = 1.0;
+    
+    for (NSInteger i = 0; i < numPoints; i++) {
+        CGContextMoveToPoint(context, points[i].x, points[i].y);
+        CGContextBeginPath(context);
+
+        CGRect rect= CGRectMake ((points[i].x - rectOffset), (points[i].y - rectOffset), rectOffset*2, rectOffset*2);
+        CGContextAddEllipseInRect(context, rect);
+        
+        CGContextStrokePath(context);
+    }
+    
     // no memory leaks
     free(points);
-    
-    // draw axes
-    CGContextSetStrokeColorWithColor(context, [UIColor lightGrayColor].CGColor);
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
-    CGContextAddLineToPoint(context,
-                            graphRect.origin.x + graphRect.size.width,
-                            graphRect.origin.y);
-    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
-    CGContextAddLineToPoint(context,
-                            graphRect.origin.x,
-                            graphRect.origin.y + graphRect.size.height);
-    CGContextStrokePath(context);
-    
+
     // save state and flip context again so labels are right side up
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, 0.0, graphContainer.size.height);
     CGContextScaleCTM(context, 1.0, -1.0);
     
     // label axes
-    
+
     // y-axis
+    // rotate context (radians)
+    CGContextRotateCTM(context, -1.57);
+    
     NSString *yAxisLabel = @"Commits";
     NSDictionary *yAxisLabelAttributes = @{
                                            NSFontAttributeName: [UIFont systemFontOfSize:kGraphAxesLabelFontSize],
@@ -252,28 +266,31 @@ static const NSInteger kLabelValueOffset = 10;
                                            };
     
     CGSize sizeForYAxisLabel = [yAxisLabel sizeWithAttributes:yAxisLabelAttributes];
-    [yAxisLabel drawInRect:CGRectMake(graphContainer.origin.x,
-                                      (graphContainer.origin.y + graphRect.size.height) / 2,
-                                      sizeForYAxisLabel.width,
-                                      sizeForYAxisLabel.height)
-            withAttributes:yAxisLabelAttributes];
+        [yAxisLabel drawInRect:CGRectMake((graphContainer.origin.x - graphRect.size.height)/2 - sizeForYAxisLabel.width / 2,
+                                     graphContainer.origin.y + kLabelValueOffset,
+                                     sizeForYAxisLabel.width,
+                                     sizeForYAxisLabel.height)
+                withAttributes:yAxisLabelAttributes];
     
+    // unrotate context (radians)
+    CGContextRotateCTM(context, 1.57);
+
     // x-axis
     NSString *xAxisLabel = @"Weeks ago";
     NSDictionary *xAxisLabelAttributes = yAxisLabelAttributes;
     CGSize sizeForXAxisLabel = [xAxisLabel sizeWithAttributes:xAxisLabelAttributes];
     [xAxisLabel drawInRect:CGRectMake((graphContainer.origin.x + graphContainer.size.width) / 2,
-                                      graphRect.size.height + graphContainer.origin.y + kGraphInset / 2 - sizeForXAxisLabel.height / 2,
+                                      graphContainer.origin.y + graphRect.size.height + kGraphInset / 2 - sizeForXAxisLabel.height / 2,
                                       sizeForXAxisLabel.width,
                                       sizeForXAxisLabel.height)
-            withAttributes:xAxisLabelAttributes];
+                withAttributes:xAxisLabelAttributes];
     
     // label axes with min and max values
     NSString *xMinLabel = [NSString stringWithFormat:@"%ld", (long)numPoints];
     NSString *xMaxLabel = @"0";
     
     NSString *yMinLabel = @"0";
-    NSString *yMaxLabel = [NSString stringWithFormat:@"%ld", (long)(self.largestValue)];
+    NSString *yMaxLabel = [NSString stringWithFormat:@"%ld", (long)newMaxY];
     
     CGSize xMinLabelSize = [xMinLabel sizeWithAttributes:xAxisLabelAttributes];
     CGSize xMaxLabelSize = [xMaxLabel sizeWithAttributes:xAxisLabelAttributes];
