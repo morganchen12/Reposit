@@ -22,14 +22,13 @@ of your tracked repos
 
 ##Screenshots
 ![](Screenshots/reposit_screenshot_01.png)
+  ![](Screenshots/reposit_screenshot_02.png)
+  ![](Screenshots/reposit_screenshot_03.png)
+  ![](Screenshots/reposit_screenshot_04.png)
+  ![](Screenshots/reposit_screenshot_05.png)
+  ![](Screenshots/reposit_screenshot_06.png)
+  ![](Screenshots/reposit_screenshot_07.png)
 
-<img src="https://github.com/morganchen12/Reposit/blob/master/Screenshots/reposit_screenshot_001.png" height="600">
-  <img src="https://github.com/morganchen12/Reposit/blob/master/Screenshots/reposit_screenshot_002.png" height="600">
-  <img src="https://github.com/morganchen12/Reposit/blob/master/Screenshots/reposit_screenshot_003.png" height="600">
-  <img src="https://github.com/morganchen12/Reposit/blob/master/Screenshots/reposit_screenshot_004.png" height="600">
-  <img src="https://github.com/morganchen12/Reposit/blob/master/Screenshots/reposit_screenshot_005.png" height="600">
-  <img src="https://github.com/morganchen12/Reposit/blob/master/Screenshots/reposit_screenshot_006.png" height="600">
-  <img src="https://github.com/morganchen12/Reposit/blob/master/Screenshots/reposit_screenshot_007.png" height="600">
 
 ##Contribute
 
