@@ -143,8 +143,7 @@ static const NSInteger kLabelValueOffset = 10;
     CGContextSetLineWidth(context, 0.5);
     
     CGContextBeginPath (context);
-    CGContextMoveToPoint(context, graphRect.origin.x, graphRect.origin.y);
-
+    
     // horizontal lines
     int numVerticalLines = newMaxY/10;
     if (newMaxY < 50) {
@@ -160,6 +159,10 @@ static const NSInteger kLabelValueOffset = 10;
         // then move back to y axis
         CGContextMoveToPoint(context, graphRect.origin.x, y);
     }
+    
+    // vertical line
+    CGContextMoveToPoint(context, graphRect.origin.x + graphRect.size.width, graphRect.origin.y);
+    CGContextAddLineToPoint(context, graphRect.origin.x + graphRect.size.width, graphRect.origin.y + graphRect.size.height);
     
     CGContextStrokePath(context);
     
